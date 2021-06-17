@@ -7,6 +7,19 @@ class BeachesController < MyplaceonlineController
     category_name.singularize
   end
 
+  def simple_index_filters
+    [
+      { name: :fires_allowed },
+      { name: :fires_disallowed },
+      { name: :free },
+      { name: :paid },
+      { name: :tents_allowed },
+      { name: :tents_disallowed },
+      { name: :canopies_allowed },
+      { name: :canopies_disallowed },
+    ]
+  end
+
   protected
     def insecure
       true
@@ -17,6 +30,14 @@ class BeachesController < MyplaceonlineController
         :crowded,
         :notes,
         :rating,
+        :fires_allowed,
+        :fires_disallowed,
+        :free,
+        :paid,
+        :tents_allowed,
+        :tents_disallowed,
+        :canopies_allowed,
+        :canopies_disallowed,
         location_attributes: LocationsController.param_names,
       )
     end

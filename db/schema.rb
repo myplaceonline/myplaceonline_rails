@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_16_010109) do
+ActiveRecord::Schema.define(version: 2021_06_17_194337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -453,6 +453,14 @@ ActiveRecord::Schema.define(version: 2021_06_16_010109) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public"
+    t.boolean "fires_allowed"
+    t.boolean "fires_disallowed"
+    t.boolean "free"
+    t.boolean "paid"
+    t.boolean "tents_allowed"
+    t.boolean "tents_disallowed"
+    t.boolean "canopies_allowed"
+    t.boolean "canopies_disallowed"
     t.index ["identity_id"], name: "index_beaches_on_identity_id"
     t.index ["location_id"], name: "index_beaches_on_location_id"
   end

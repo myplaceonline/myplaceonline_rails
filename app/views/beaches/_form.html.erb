@@ -15,6 +15,16 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_SELECT,
+    name: :rating,
+    value: obj.rating,
+    placeholder: "myplaceonline.general.rating",
+    select_options: Myp::RATINGS,
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_BOOLEAN,
     name: :crowded,
     value: obj.crowded,
@@ -24,11 +34,73 @@
 <%=
   input_field(
     form: f,
-    type: Myp::FIELD_SELECT,
-    name: :rating,
-    value: obj.rating,
-    placeholder: "myplaceonline.general.rating",
-    select_options: Myp::RATINGS,
+    type: Myp::FIELD_BOOLEAN,
+    name: :fires_allowed,
+    value: obj.fires_allowed,
+    placeholder: "myplaceonline.beaches.fires_allowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :fires_disallowed,
+    value: obj.fires_disallowed,
+    placeholder: "myplaceonline.beaches.fires_disallowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :free,
+    value: obj.free,
+    placeholder: "myplaceonline.beaches.free"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :paid,
+    value: obj.paid,
+    placeholder: "myplaceonline.beaches.paid"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :tents_allowed,
+    value: obj.tents_allowed,
+    placeholder: "myplaceonline.beaches.tents_allowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :tents_disallowed,
+    value: obj.tents_disallowed,
+    placeholder: "myplaceonline.beaches.tents_disallowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :canopies_allowed,
+    value: obj.canopies_allowed,
+    placeholder: "myplaceonline.beaches.canopies_allowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :canopies_disallowed,
+    value: obj.canopies_disallowed,
+    placeholder: "myplaceonline.beaches.canopies_disallowed"
   )
 %>
 <%=

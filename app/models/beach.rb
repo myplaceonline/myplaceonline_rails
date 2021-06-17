@@ -7,6 +7,7 @@ class Beach < ApplicationRecord
       { name: :location, type: ApplicationRecord::PROPERTY_TYPE_CHILD },
       { name: :crowded, type: ApplicationRecord::PROPERTY_TYPE_BOOLEAN },
       { name: :notes, type: ApplicationRecord::PROPERTY_TYPE_MARKDOWN },
+      { name: :free, type: ApplicationRecord::PROPERTY_TYPE_BOOLEAN },
     ]
   end
   
@@ -17,7 +18,7 @@ class Beach < ApplicationRecord
   child_property(name: :location, required: true)
 
   def self.skip_check_attributes
-    ["crowded"]
+    ["crowded","fires_allowed","fires_disallowed","free","paid","tents_allowed","tents_disallowed","canopies_allowed","canopies_disallowed"]
   end
 
   def self.category_split_button_link
