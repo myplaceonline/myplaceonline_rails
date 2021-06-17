@@ -40,6 +40,8 @@ class BeachesController < MyplaceonlineController
         :canopies_allowed,
         :canopies_disallowed,
         :dogs_allowed,
+        :open_time,
+        :close_time,
         location_attributes: LocationsController.param_names,
       )
     end

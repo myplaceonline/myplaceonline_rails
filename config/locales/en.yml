@@ -4063,6 +4063,8 @@ en:
       canopies_allowed: "Canopies allowed"
       canopies_disallowed: "Canopies disallowed"
       dogs_allowed: "Dogs allowed"
+      open_time: "Open Time"
+      close_time: "Close Time"
     imports:
       import_name: "Name"
       import_type: "Type"

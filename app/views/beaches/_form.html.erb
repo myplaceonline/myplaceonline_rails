@@ -115,6 +115,24 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_TEXT,
+    name: :open_time,
+    value: obj.open_time,
+    placeholder: "myplaceonline.beaches.open_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :close_time,
+    value: obj.close_time,
+    placeholder: "myplaceonline.beaches.close_time"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
