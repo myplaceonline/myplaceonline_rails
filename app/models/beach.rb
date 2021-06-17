@@ -18,7 +18,7 @@ class Beach < ApplicationRecord
   child_property(name: :location, required: true)
 
   def self.skip_check_attributes
-    ["crowded","fires_allowed","fires_disallowed","free","paid","tents_allowed","tents_disallowed","canopies_allowed","canopies_disallowed"]
+    ["crowded","fires_allowed","fires_disallowed","free","paid","tents_allowed","tents_disallowed","canopies_allowed","canopies_disallowed","dogs_allowed"]
   end
 
   def self.category_split_button_link

@@ -4062,6 +4062,7 @@ en:
       tents_disallowed: "Tents disallowed"
       canopies_allowed: "Canopies allowed"
       canopies_disallowed: "Canopies disallowed"
+      dogs_allowed: "Dogs allowed"
     imports:
       import_name: "Name"
       import_type: "Type"

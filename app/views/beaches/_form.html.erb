@@ -106,6 +106,15 @@
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :dogs_allowed,
+    value: obj.dogs_allowed,
+    placeholder: "myplaceonline.beaches.dogs_allowed"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,

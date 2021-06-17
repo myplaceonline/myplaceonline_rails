@@ -17,6 +17,7 @@ class BeachesController < MyplaceonlineController
       { name: :tents_disallowed },
       { name: :canopies_allowed },
       { name: :canopies_disallowed },
+      { name: :dogs_allowed },
     ]
   end
 
@@ -38,6 +39,7 @@ class BeachesController < MyplaceonlineController
         :tents_disallowed,
         :canopies_allowed,
         :canopies_disallowed,
+        :dogs_allowed,
         location_attributes: LocationsController.param_names,
       )
     end
