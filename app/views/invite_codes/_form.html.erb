@@ -75,6 +75,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :prefer_multi_profiles,
+    value: obj.prefer_multi_profiles,
+    placeholder: "myplaceonline.invite_codes.prefer_multi_profiles"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,

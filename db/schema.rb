@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_17_202413) do
+ActiveRecord::Schema.define(version: 2021_06_30_234704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3863,6 +3863,7 @@ ActiveRecord::Schema.define(version: 2021_06_17_202413) do
     t.boolean "controversial"
     t.boolean "sexual"
     t.boolean "disable_signup_extras"
+    t.boolean "prefer_multi_profiles"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
     t.index ["parent_id"], name: "index_invite_codes_on_parent_id"
     t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"

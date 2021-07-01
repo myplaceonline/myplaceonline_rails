@@ -45,6 +45,7 @@ class InviteCodesController < MyplaceonlineController
         :sexual,
         :controversial,
         :disable_signup_extras,
+        :prefer_multi_profiles,
         website_domain_attributes: [:id],
         parent_attributes: [:id],
       )
