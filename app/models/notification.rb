@@ -194,12 +194,13 @@ class Notification < ApplicationRecord
           # https://docs.expo.io/versions/latest/guides/push-notifications/#message-format
           notifications = NotificationRegistration.where(user_id: identity.user_id).map do |notification_registration|
             {
-              to: notification_registration.token,
-              body: body_app_markdown,
-              sound: "default",
-              badge: 0,
-              priority: "high",
-              data: data,
+              "to" => notification_registration.token,
+              "body" => body_app_markdown,
+              "sound" => "default",
+              "badge" => 0,
+              "priority" => "high",
+              "data" => data,
+              "content-available" => 1,
             }
           end
           
