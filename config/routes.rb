@@ -467,7 +467,11 @@ Rails.application.routes.draw do
       },
     ],
     restaurants: [
-      { instance: false, link: "random" }
+      { instance: false, link: "random" },
+      {
+        subresources: true,
+        name: :restaurant_dishes
+      },
     ],
     retirement_plans: [
       {

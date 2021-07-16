@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_234704) do
+ActiveRecord::Schema.define(version: 2021_07_16_004355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -453,17 +453,6 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public"
-    t.boolean "fires_allowed"
-    t.boolean "fires_disallowed"
-    t.boolean "free"
-    t.boolean "paid"
-    t.boolean "tents_allowed"
-    t.boolean "tents_disallowed"
-    t.boolean "canopies_allowed"
-    t.boolean "canopies_disallowed"
-    t.boolean "dogs_allowed"
-    t.text "open_time"
-    t.text "close_time"
     t.index ["identity_id"], name: "index_beaches_on_identity_id"
     t.index ["location_id"], name: "index_beaches_on_location_id"
   end
@@ -3863,7 +3852,6 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
     t.boolean "controversial"
     t.boolean "sexual"
     t.boolean "disable_signup_extras"
-    t.boolean "prefer_multi_profiles"
     t.index ["identity_id"], name: "index_invite_codes_on_identity_id"
     t.index ["parent_id"], name: "index_invite_codes_on_parent_id"
     t.index ["website_domain_id"], name: "index_invite_codes_on_website_domain_id"
@@ -6288,6 +6276,35 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
     t.index ["identity_id"], name: "index_research_papers_on_identity_id"
   end
 
+  create_table "restaurant_dish_files", force: :cascade do |t|
+    t.bigint "restaurant_dish_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_restaurant_dish_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_restaurant_dish_files_on_identity_id"
+    t.index ["restaurant_dish_id"], name: "index_restaurant_dish_files_on_restaurant_dish_id"
+  end
+
+  create_table "restaurant_dishes", force: :cascade do |t|
+    t.string "dish_name"
+    t.bigint "restaurant_id"
+    t.decimal "cost", precision: 10, scale: 2
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_restaurant_dishes_on_identity_id"
+    t.index ["restaurant_id"], name: "index_restaurant_dishes_on_restaurant_id"
+  end
+
   create_table "restaurant_pictures", id: :serial, force: :cascade do |t|
     t.integer "restaurant_id"
     t.integer "identity_file_id"
@@ -6731,20 +6748,6 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
     t.string "stoic_faults"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
-  end
-
-  create_table "steakhouses", force: :cascade do |t|
-    t.bigint "location_id"
-    t.text "notes"
-    t.integer "visit_count"
-    t.datetime "archived"
-    t.integer "rating"
-    t.boolean "is_public"
-    t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["identity_id"], name: "index_steakhouses_on_identity_id"
-    t.index ["location_id"], name: "index_steakhouses_on_location_id"
   end
 
   create_table "stock_files", force: :cascade do |t|
@@ -9025,6 +9028,11 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
   add_foreign_key "reputation_reports", "identities"
   add_foreign_key "research_papers", "documents"
   add_foreign_key "research_papers", "identities"
+  add_foreign_key "restaurant_dish_files", "identities"
+  add_foreign_key "restaurant_dish_files", "identity_files"
+  add_foreign_key "restaurant_dish_files", "restaurant_dishes"
+  add_foreign_key "restaurant_dishes", "identities"
+  add_foreign_key "restaurant_dishes", "restaurants"
   add_foreign_key "restaurant_pictures", "identities"
   add_foreign_key "restaurant_pictures", "identity_files"
   add_foreign_key "restaurant_pictures", "restaurants"
@@ -9081,8 +9089,6 @@ ActiveRecord::Schema.define(version: 2021_06_30_234704) do
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "statuses", "identities", name: "statuses_identity_id_fk"
-  add_foreign_key "steakhouses", "identities"
-  add_foreign_key "steakhouses", "locations"
   add_foreign_key "stock_files", "identities"
   add_foreign_key "stock_files", "identity_files"
   add_foreign_key "stock_files", "stocks"

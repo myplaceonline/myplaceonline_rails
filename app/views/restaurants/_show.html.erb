@@ -10,3 +10,7 @@
       placeholder: "myplaceonline.restaurants.picture"
   }
 %>
+<% obj.restaurant_dishes.each do |x| %>
+  <%= table_row_heading(t("myplaceonline.restaurants.dish")) %>
+  <%= render partial: "restaurant_dishes/show", locals: { obj: x } %>
+<% end %>

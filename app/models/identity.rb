@@ -628,6 +628,7 @@ class Identity < ApplicationRecord
       :soccer_fields => soccer_fields.to_a.map{|x| x.as_json},
       :health_changes => health_changes.to_a.map{|x| x.as_json},
       :locks => locks.to_a.map{|x| x.as_json},
+      :restaurant_dishes => restaurant_dishes.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

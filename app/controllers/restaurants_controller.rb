@@ -59,6 +59,26 @@ class RestaurantsController < MyplaceonlineController
     result
   end
   
+  def footer_items_show
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.restaurants.add_dish"),
+        link: new_restaurant_restaurant_dish_path(@obj),
+        icon: "plus"
+      }
+    end
+    
+    result << {
+      title: I18n.t("myplaceonline.restaurants.dishes"),
+      link: restaurant_restaurant_dishes_path(@obj),
+      icon: "bars"
+    }
+    
+    result
+  end
+  
   protected
     def insecure
       true
@@ -72,7 +92,8 @@ class RestaurantsController < MyplaceonlineController
         :ethical_meat,
         :rooftop,
         location_attributes: LocationsController.param_names,
-        restaurant_pictures_attributes: FilesController.multi_param_names
+        restaurant_pictures_attributes: FilesController.multi_param_names,
+        restaurant_dishes_attributes: RestaurantDish.params,
       )
     end
 

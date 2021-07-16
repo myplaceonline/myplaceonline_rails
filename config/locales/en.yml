@@ -264,6 +264,7 @@ en:
       reputation_report_messages: "Messages"
       reputation_reports: "Reputation Reports"
       research_papers: "Research Papers"
+      restaurant_dishes: "Restaurant Dishes"
       restaurants: "Restaurants"
       retirement_plan_amounts: "Retirement Plan Amounts"
       retirement_plans: "Retirement Plans"
@@ -2005,6 +2006,9 @@ en:
       not_visited: "Not Visited"
       ethical_meat: "Ethical Meat"
       rooftop: "Rooftop"
+      add_dish: "Add Dish"
+      dishes: "Dishes"
+      dish: "Dish"
     promotions:
       promotion_name: "Description"
       started: "Started"
@@ -4592,3 +4596,7 @@ en:
       location: "Location"
     steakhouses:
       location: "Location"
+    restaurant_dishes:
+      dish_name: "Name"
+      cost: "Cost"
+      back: "Restaurant"

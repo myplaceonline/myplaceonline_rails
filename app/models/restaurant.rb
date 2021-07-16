@@ -27,4 +27,6 @@ class Restaurant < ApplicationRecord
   def self.category_split_button_icon
     "navigation"
   end
+  
+  child_properties(name: :restaurant_dishes, sort: "dish_name ASC")
 end
