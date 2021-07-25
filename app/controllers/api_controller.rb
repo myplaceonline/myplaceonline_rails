@@ -842,9 +842,20 @@ class ApiController < ApplicationController
               status = 201
               messages = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
               
+              used_code = invite_code
+              
+              if !used_code.blank?
+                used_code_obj = InviteCode.where(code: used_code).take
+                if !used_code_obj.nil?
+                  if used_code_obj.hidesuggestion?
+                    used_code = "dream"
+                  end
+                end
+              end
+              
               Myp.send_support_email_safe(
                 "New User #{user.email}",
-                "New User #{user.email} with code #{invite_code}",
+                "New User #{user.email} with code #{used_code}",
                 request: request,
               )
             else
