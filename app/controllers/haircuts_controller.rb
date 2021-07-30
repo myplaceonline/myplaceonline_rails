@@ -13,7 +13,7 @@ class HaircutsController < MyplaceonlineController
       result = Myp.appendstr(result, obj.cutter.display, " - ")
     end
     if !obj.location.nil?
-      result = Myp.appendstr(result, obj.location.display_really_simple, " - ")
+      #result = Myp.appendstr(result, obj.location.display_really_simple, " - ")
     end
     return result
   end
