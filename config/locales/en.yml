@@ -2990,6 +2990,7 @@ en:
       controversial: "Controversial"
       disable_signup_extras: "Disable signup extras"
       prefer_multi_profiles: "Prefer Multiple Profiles"
+      secondary_email: "Use secondary email for notifications"
     happy_things:
       happy_thing_name: "Name"
       reminder: "Next Happy Thing %{name} %{delta}"

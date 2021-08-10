@@ -84,6 +84,15 @@
   )
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :secondary_email,
+    value: obj.secondary_email,
+    placeholder: "myplaceonline.invite_codes.secondary_email"
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website_domain,

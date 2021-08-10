@@ -66,8 +66,12 @@ module Myp
     display: nil,
     display_prefix: nil,
     display_prefix_suffix: nil,
-    email_only: false
+    email_only: false,
+    use_secondary: false
   )
+    if use_secondary
+      name = "kevin"
+    end
     if host.blank?
       host = Myp.top_host
     end
@@ -1964,7 +1968,7 @@ module Myp
   
   # This is used to send emails to administrators of domains hosted by this website; therefore,
   # it suppresses any emails to unknown domains
-  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false)
+  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false, use_secondary: false)
     
     Rails.logger.debug{"Myp.send_support_email_safe subject: #{subject}, email: #{email}"}
     
@@ -1977,7 +1981,7 @@ module Myp
       end
       
       # Protect email servers from simple DoS
-      sleep(1.0)
+      #sleep(1.0)
       
       if body_plain.blank?
         body_plain = Myp.html_to_markdown(body_html)
@@ -1993,7 +1997,7 @@ module Myp
         body_html << "\n-->\n"
       end
       
-      to = Myp.create_email
+      to = Myp.create_email(use_secondary: use_secondary)
       
       # Now check if the to address is valid
       if Myp.is_supported_host?(host: Myp.email_to_host(email: to))

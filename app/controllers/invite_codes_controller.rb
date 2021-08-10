@@ -46,6 +46,7 @@ class InviteCodesController < MyplaceonlineController
         :controversial,
         :disable_signup_extras,
         :prefer_multi_profiles,
+        :secondary_email,
         website_domain_attributes: [:id],
         parent_attributes: [:id],
       )

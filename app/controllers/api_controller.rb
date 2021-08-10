@@ -843,12 +843,13 @@ class ApiController < ApplicationController
               messages = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
               
               used_code = invite_code
+              use_secondary = false
               
               if !used_code.blank?
                 used_code_obj = InviteCode.where(code: used_code).take
                 if !used_code_obj.nil?
-                  if used_code_obj.hidesuggestion?
-                    used_code = "dream"
+                  if used_code_obj.secondary_email?
+                    use_secondary = true
                   end
                 end
               end
@@ -857,6 +858,7 @@ class ApiController < ApplicationController
                 "New User #{user.email}",
                 "New User #{user.email} with code #{used_code}",
                 request: request,
+                use_secondary: use_secondary
               )
             else
               # Unclear why this would happen as we just created the user
