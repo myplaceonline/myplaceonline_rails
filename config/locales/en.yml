@@ -3919,6 +3919,7 @@ en:
       location: "Location"
       shadedareas: "Shaded Areas"
       treeshade: "Tree Shade"
+      coal_disposal: "Coal Disposal"
     maps:
       map: "Map"
       full_map: "Full Map"

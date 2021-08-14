@@ -11,6 +11,14 @@ class PicnicLocationsController < MyplaceonlineController
     true
   end
 
+  def simple_index_filters
+    [
+      { name: :shadedareas },
+      { name: :treeshade },
+      { name: :coal_disposal },
+    ]
+  end
+
   protected
     def insecure
       true
@@ -21,6 +29,7 @@ class PicnicLocationsController < MyplaceonlineController
         :rating,
         :shadedareas,
         :treeshade,
+        :coal_disposal,
         location_attributes: LocationsController.param_names
       )
     end
