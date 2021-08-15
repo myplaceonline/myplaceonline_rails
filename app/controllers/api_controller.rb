@@ -846,7 +846,7 @@ class ApiController < ApplicationController
               use_secondary = false
               
               if !used_code.blank?
-                used_code_obj = InviteCode.where(code: used_code).take
+                used_code_obj = InviteCode.where(code: used_code.downcase.strip).take
                 if !used_code_obj.nil?
                   if used_code_obj.secondary_email?
                     use_secondary = true
