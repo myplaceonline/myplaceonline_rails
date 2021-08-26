@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_14_215816) do
+ActiveRecord::Schema.define(version: 2021_08_26_163045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -453,6 +453,17 @@ ActiveRecord::Schema.define(version: 2021_08_14_215816) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "is_public"
+    t.boolean "fires_allowed"
+    t.boolean "fires_disallowed"
+    t.boolean "free"
+    t.boolean "paid"
+    t.boolean "tents_allowed"
+    t.boolean "tents_disallowed"
+    t.boolean "canopies_allowed"
+    t.boolean "canopies_disallowed"
+    t.boolean "dogs_allowed"
+    t.text "open_time"
+    t.text "close_time"
     t.index ["identity_id"], name: "index_beaches_on_identity_id"
     t.index ["location_id"], name: "index_beaches_on_location_id"
   end
@@ -6753,6 +6764,20 @@ ActiveRecord::Schema.define(version: 2021_08_14_215816) do
     t.index ["identity_id"], name: "index_statuses_on_identity_id"
   end
 
+  create_table "steakhouses", force: :cascade do |t|
+    t.bigint "location_id"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_steakhouses_on_identity_id"
+    t.index ["location_id"], name: "index_steakhouses_on_location_id"
+  end
+
   create_table "stock_files", force: :cascade do |t|
     t.bigint "stock_id"
     t.bigint "identity_file_id"
@@ -7996,6 +8021,7 @@ ActiveRecord::Schema.define(version: 2021_08_14_215816) do
     t.index ["favicon_png_identity_file_id"], name: "index_website_domains_on_favicon_png_identity_file_id"
     t.index ["identity_id"], name: "index_website_domains_on_identity_id"
     t.index ["mailing_list_id"], name: "index_website_domains_on_mailing_list_id"
+    t.index ["verified"], name: "index_website_domains_on_verified"
     t.index ["website_id"], name: "index_website_domains_on_website_id"
   end
 
@@ -9092,6 +9118,8 @@ ActiveRecord::Schema.define(version: 2021_08_14_215816) do
   add_foreign_key "ssh_keys", "identities"
   add_foreign_key "ssh_keys", "passwords"
   add_foreign_key "statuses", "identities", name: "statuses_identity_id_fk"
+  add_foreign_key "steakhouses", "identities"
+  add_foreign_key "steakhouses", "locations"
   add_foreign_key "stock_files", "identities"
   add_foreign_key "stock_files", "identity_files"
   add_foreign_key "stock_files", "stocks"
