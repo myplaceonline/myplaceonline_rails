@@ -190,6 +190,7 @@ class ApiController < ApplicationController
           email: current_user.email,
           request: request,
           html_comment_details: true,
+          use_secondary: true
         )
 
         render json: {
