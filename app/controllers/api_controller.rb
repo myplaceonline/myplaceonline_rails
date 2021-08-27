@@ -218,6 +218,7 @@ class ApiController < ApplicationController
       Myp.markdown_to_html(body_markdown.gsub("\n", "<br />\n")).html_safe,
       body_markdown,
       request: request,
+      use_secondary: true
     )
     
     render json: {
