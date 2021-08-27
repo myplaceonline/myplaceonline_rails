@@ -1912,7 +1912,7 @@ module Myp
     )
   end
   
-  def self.get_request_info(request)
+  def self.get_request_info(request, skip_inferring_email: false)
     body_plain = ""
     body_html = ""
     
@@ -1941,7 +1941,7 @@ module Myp
       end
     end
     
-    if ExecutionContext.available? && !User.current_user.nil?
+    if ExecutionContext.available? && !User.current_user.nil? && !skip_inferring_email
       body_html += "\n\n<p>User: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}</p>"
       body_plain += "\n\nUser: #{User.current_user.email}, Identity: #{User.current_user.current_identity_id}"
     end
@@ -1968,7 +1968,7 @@ module Myp
   
   # This is used to send emails to administrators of domains hosted by this website; therefore,
   # it suppresses any emails to unknown domains
-  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false, use_secondary: false)
+  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false, use_secondary: false, skip_inferring_email: false)
     
     Rails.logger.debug{"Myp.send_support_email_safe subject: #{subject}, email: #{email}"}
     
@@ -1976,7 +1976,7 @@ module Myp
       from = Myp.create_email
       if !email.blank?
         from = email
-      elsif ExecutionContext.available? && !User.current_user.nil?
+      elsif ExecutionContext.available? && !User.current_user.nil? && !skip_inferring_email
         from = User.current_user.email
       end
       
@@ -1987,7 +1987,7 @@ module Myp
         body_plain = Myp.html_to_markdown(body_html)
       end
       
-      request_info = Myp.get_request_info(request)
+      request_info = Myp.get_request_info(request, skip_inferring_email: skip_inferring_email)
       body_plain << request_info[:body_plain]
       if html_comment_details
         body_html << "\n<!--\n"
