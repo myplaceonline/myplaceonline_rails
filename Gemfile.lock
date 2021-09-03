@@ -136,14 +136,14 @@ GEM
     doorkeeper-openid_connect (1.7.5)
       doorkeeper (>= 5.2, < 5.5)
       json-jwt (>= 1.11.0)
-    elasticsearch (7.14.0)
-      elasticsearch-api (= 7.14.0)
-      elasticsearch-transport (= 7.14.0)
-    elasticsearch-api (7.14.0)
+    elasticsearch (7.13.3)
+      elasticsearch-api (= 7.13.3)
+      elasticsearch-transport (= 7.13.3)
+    elasticsearch-api (7.13.3)
       multi_json
     elasticsearch-dsl (0.1.10)
     elasticsearch-rails (5.1.0)
-    elasticsearch-transport (7.14.0)
+    elasticsearch-transport (7.13.3)
       faraday (~> 1)
       multi_json
     erubi (1.10.0)
@@ -495,7 +495,7 @@ DEPENDENCIES
   devise-doorkeeper (~> 1.1.2)
   doorkeeper (~> 5.4.0)
   doorkeeper-openid_connect (~> 1.7.5)
-  elasticsearch
+  elasticsearch (~> 7.13.3)
   elasticsearch-rails (~> 5.1.0)
   eventmachine
   exponent-server-sdk!
