@@ -36,7 +36,7 @@ class Notification < ApplicationRecord
   def ready_for_another?
     # Exponential backoff of notifications
     result = DateTime.now.utc > self.updated_at + (2 ** self.count).days
-    ::Rails.logger.debug{"Notification.ready_for_another? checking now: #{DateTime.now.utc}, self.updated_at: #{self.updated_at}, days: #{(2 ** self.count).days}, added: #{self.updated_at + (2 ** self.count).days}, result: #{result}"}
+    ::Rails.logger.info{"Notification.ready_for_another? checking now: #{DateTime.now.utc}, self.updated_at: #{self.updated_at}, days: #{(2 ** self.count).days}, added: #{self.updated_at + (2 ** self.count).days}, result: #{result}"}
     return result
   end
   
@@ -57,7 +57,7 @@ class Notification < ApplicationRecord
     
     some_sent = false
     
-    ::Rails.logger.debug{"Notification.try_send_notifications identity: #{identity}, notification_category: #{notification_category}"}
+    ::Rails.logger.info{"Notification.try_send_notifications identity: #{identity.id}, notification_category: #{notification_category}"}
     
     if Notification.try_send_notification(
           identity,
@@ -113,7 +113,7 @@ class Notification < ApplicationRecord
       some_sent = true
     end
 
-    ::Rails.logger.debug{"Notification.try_send_notifications some_sent: #{some_sent}"}
+    ::Rails.logger.info{"Notification.try_send_notifications some_sent: #{some_sent}"}
 
     return some_sent
   end
@@ -140,7 +140,7 @@ class Notification < ApplicationRecord
       subject: subject,
     })
     
-    ::Rails.logger.debug{"Notification.try_send_notification identity: #{identity}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
+    ::Rails.logger.info{"Notification.try_send_notification identity: #{identity.id}, type: #{notification_type}, data: #{Myp.debug_print(data)}"}
 
     if NotificationPreference.can_send_notification?(
          identity,
@@ -151,6 +151,8 @@ class Notification < ApplicationRecord
          default_app: default_app
        )
       
+      ::Rails.logger.info{"Notification.try_send_notification can_send_notification return true"}
+
       notification = Notification.where(
         identity: identity,
         notification_type: notification_type,
@@ -169,7 +171,7 @@ class Notification < ApplicationRecord
       
       if send_notification && exponential_backoff && !notification.nil?
         if !notification.ready_for_another?
-          ::Rails.logger.debug{"Notification.try_send_notification not ready for another"}
+          ::Rails.logger.info{"Notification.try_send_notification not ready for another #{notification.id}"}
           send_notification = false
         end
       end
@@ -204,7 +206,7 @@ class Notification < ApplicationRecord
             }
           end
           
-          ::Rails.logger.info{"Notification.try_send_notification app identity: #{identity.id}"}
+          ::Rails.logger.info{"Notification.try_send_notification app identity: #{identity.id} registrations: #{notifications.length}"}
   
           if notifications.length > 0
             ::Rails.logger.info{"Notification.try_send_notification for identity #{identity.id}: #{Myp.debug_print(notifications)}"}
@@ -226,7 +228,7 @@ class Notification < ApplicationRecord
         end
         
         if notification.nil?
-          ::Rails.logger.debug{"Notification.try_send_notification creating new notification"}
+          ::Rails.logger.info{"Notification.try_send_notification creating new notification"}
           
           Notification.create!(
             identity: identity,
@@ -238,6 +240,7 @@ class Notification < ApplicationRecord
           )
         else
           notification.count = count + 1
+          ::Rails.logger.info{"Notification.try_send_notification updating notification to count #{notification.count}"}
           notification.save!
         end
         
@@ -267,21 +270,21 @@ class Notification < ApplicationRecord
       )
 
     MyplaceonlineExecutionContext.do_full_identity_context(identity) do
-        return Notification.try_send_notification(
-            identity,
-            notification_type,
-            notification_category,
-            subject,
-            body_short_markdown,
-            body_long_markdown,
-            body_app_markdown,
-            max_notifications: max_notifications,
-            exponential_backoff: exponential_backoff,
-            data: data,
-            default_email: default_email,
-            default_sms: default_sms,
-            default_app: default_app,
-        )
+      return Notification.try_send_notification(
+        identity,
+        notification_type,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        body_app_markdown,
+        max_notifications: max_notifications,
+        exponential_backoff: exponential_backoff,
+        data: data,
+        default_email: default_email,
+        default_sms: default_sms,
+        default_app: default_app,
+      )
     end
   end
   
@@ -301,20 +304,20 @@ class Notification < ApplicationRecord
       )
       
     MyplaceonlineExecutionContext.do_full_identity_context(identity) do
-        return Notification.try_send_notifications(
-            identity,
-            notification_category,
-            subject,
-            body_short_markdown,
-            body_long_markdown,
-            body_app_markdown,
-            max_notifications: max_notifications,
-            exponential_backoff: exponential_backoff,
-            data: data,
-            default_email: default_email,
-            default_sms: default_sms,
-            default_app: default_app,
-        )
+      return Notification.try_send_notifications(
+        identity,
+        notification_category,
+        subject,
+        body_short_markdown,
+        body_long_markdown,
+        body_app_markdown,
+        max_notifications: max_notifications,
+        exponential_backoff: exponential_backoff,
+        data: data,
+        default_email: default_email,
+        default_sms: default_sms,
+        default_app: default_app,
+      )
     end
   end
   
