@@ -180,12 +180,12 @@ class Notification < ApplicationRecord
         when NOTIFICATION_TYPE_EMAIL
           text = body_long_markdown
           body_long_html = Myp.markdown_to_html(body_long_markdown)
-          ::Rails.logger.debug{"Notification.try_send_notification sending email"}
+          ::Rails.logger.info{"Notification.try_send_notification sending email #{identity.id}"}
           identity.send_email(subject, body_long_html, nil, nil, body_long_markdown, nil)
         when NOTIFICATION_TYPE_SMS
           text = body_short_markdown
           body_short_markdown = Myp.markdown_for_plain_email(body_short_markdown)
-          ::Rails.logger.debug{"Notification.try_send_notification sending sms"}
+          ::Rails.logger.info{"Notification.try_send_notification sending sms #{identity.id}"}
           identity.send_sms(body: body_short_markdown)
         when NOTIFICATION_TYPE_APP
           text = body_app_markdown
@@ -204,7 +204,7 @@ class Notification < ApplicationRecord
             }
           end
           
-          ::Rails.logger.debug{"Notification.try_send_notification user: #{identity.user_id}"}
+          ::Rails.logger.info{"Notification.try_send_notification app identity: #{identity.id}"}
   
           if notifications.length > 0
             ::Rails.logger.info{"Notification.try_send_notification for identity #{identity.id}: #{Myp.debug_print(notifications)}"}
