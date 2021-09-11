@@ -168,6 +168,42 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_TEXT,
+      name: :email_name_override,
+      value: obj.email_name_override,
+      placeholder: "myplaceonline.website_domains.email_name_override",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :email_host_override,
+      value: obj.email_host_override,
+      placeholder: "myplaceonline.website_domains.email_host_override",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :email_display_override,
+      value: obj.email_display_override,
+      placeholder: "myplaceonline.website_domains.email_display_override",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
+      type: Myp::FIELD_TEXT,
+      name: :secondary_email_name,
+      value: obj.secondary_email_name,
+      placeholder: "myplaceonline.website_domains.secondary_email_name",
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_TEXT_AREA,
       name: :static_homepage,
       value: obj.static_homepage,

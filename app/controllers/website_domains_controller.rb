@@ -59,6 +59,10 @@ class WebsiteDomainsController < MyplaceonlineController
         :ajax_config,
         :confirm_redirect,
         :url_mappings_json,
+        :email_name_override,
+        :email_host_override,
+        :email_display_override,
+        :secondary_email_name,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [

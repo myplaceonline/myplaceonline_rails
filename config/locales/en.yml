@@ -3197,6 +3197,10 @@ en:
       mailing_list: "Mailing List"
       confirm_redirect: "Confirm redirect"
       url_mappings_json: "URL Mappings JSON"
+      email_name_override: "Email name override"
+      email_host_override: "Email host override"
+      email_display_override: "Email display override"
+      secondary_email_name: "Secondary email name"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"

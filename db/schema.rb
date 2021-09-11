@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_03_150660) do
+ActiveRecord::Schema.define(version: 2021_09_11_210113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8035,6 +8035,10 @@ ActiveRecord::Schema.define(version: 2021_09_03_150660) do
     t.bigint "mailing_list_id"
     t.string "confirm_redirect"
     t.text "url_mappings_json"
+    t.string "email_name_override"
+    t.string "email_host_override"
+    t.string "secondary_email_name"
+    t.string "email_display_override"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"

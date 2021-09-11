@@ -69,21 +69,44 @@ module Myp
     email_only: false,
     use_secondary: false
   )
-    if use_secondary
-      name = "kevin"
-    end
-    if host.blank?
-      host = Myp.top_host
-    end
-    result = name + "@" + host
+    result = ""
     
-    if !email_only
-      if display.blank?
-        display = host.camelize
+    wd = Myp.website_domain
+      
+    if use_secondary
+      if !wd.nil? && !wd.secondary_email_name.blank?
+        name = wd.secondary_email_name
+      else
+        name = "kevin"
       end
+    elsif !wd.nil? && !wd.email_name_override.blank?
+      name = wd.email_name_override
+    end
+    
+    if !wd.nil? && !wd.email_host_override.blank?
+      host = wd.email_host_override
+    else
+      if host.blank?
+        host = Myp.top_host
+      end
+    end
+    
+    result = name + "@" + host
+
+    if !email_only
+        
+      if !wd.nil? && !wd.email_display_override.blank?
+        display = wd.email_display_override
+      else
+        if display.blank?
+          display = host.camelize
+        end
+      end
+      
       if !display_prefix.blank? && !display_prefix_suffix.blank?
         display_prefix = display_prefix + " " + display_prefix_suffix
       end
+      
       if !display.blank? && !display_prefix.blank?
         result = display_prefix.gsub(/[<@>]/, "") + " " + display.gsub(/[<@>]/, "") + " <" + result + ">"
       elsif !display.blank?
