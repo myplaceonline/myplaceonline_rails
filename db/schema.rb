@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_223823) do
+ActiveRecord::Schema.define(version: 2021_09_12_231628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2294,6 +2294,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_223823) do
     t.boolean "range_start_max_disabled"
     t.boolean "range_desired_simple"
     t.boolean "firstuse"
+    t.boolean "skip_suggestions"
     t.index ["identity_id"], name: "index_drom_match_dealbreakers_on_identity_id"
   end
 
