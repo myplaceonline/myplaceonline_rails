@@ -355,6 +355,7 @@ class Identity < ApplicationRecord
   has_many :barbecues, :dependent => :destroy
   has_many :steakhouses, :dependent => :destroy
   has_many :settings, :dependent => :destroy
+  has_many :email_tokens, :dependent => :destroy
   
   child_properties(name: :myplets, sort: "y_coordinate")
 

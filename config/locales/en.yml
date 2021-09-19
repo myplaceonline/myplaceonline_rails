@@ -3063,7 +3063,7 @@ en:
       past: "Unsubscribed"
       invalid_token: "Invalid Token"
       reply_hint: "Reply to this email to chat with %{respond_to}."
-      unsubscribed_all: "Successfully unsubscribed from all categories."
+      unsubscribed_all: "Successfully unsubscribed."
       unsubscribed_category: "Successfully unsubscribed from %{category} posts."
       link_unsubscribe_all: "Unsubscribe from all emails from %{user}"
       link_unsubscribe_category: "Unsubscribe from %{user}'s '%{category}' emails"
