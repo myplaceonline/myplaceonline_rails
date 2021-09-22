@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_12_231628) do
+ActiveRecord::Schema.define(version: 2021_09_21_233222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2390,6 +2390,16 @@ ActiveRecord::Schema.define(version: 2021_09_12_231628) do
     t.index ["drom_match_match_id"], name: "index_drom_match_match_messages_on_drom_match_match_id"
     t.index ["identity_file_id"], name: "index_drom_match_match_messages_on_identity_file_id"
     t.index ["identity_id"], name: "index_drom_match_match_messages_on_identity_id"
+  end
+
+  create_table "drom_match_match_suggestions", force: :cascade do |t|
+    t.text "notes"
+    t.bigint "identity_id", null: false
+    t.integer "suggestion_type"
+    t.text "pattern"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_drom_match_match_suggestions_on_identity_id"
   end
 
   create_table "drom_match_matches", force: :cascade do |t|
@@ -8537,6 +8547,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_231628) do
   add_foreign_key "drom_match_match_messages", "drom_match_matches"
   add_foreign_key "drom_match_match_messages", "identities"
   add_foreign_key "drom_match_match_messages", "identity_files"
+  add_foreign_key "drom_match_match_suggestions", "identities"
   add_foreign_key "drom_match_matches", "identities"
   add_foreign_key "drom_match_matches", "identities", column: "target_identity_id"
   add_foreign_key "drom_match_place_packages", "drom_match_cities"
