@@ -185,6 +185,8 @@ class Notification < ApplicationRecord
           if ::EmailUnsubscription.can_send?(identity.user.email)
             ::Rails.logger.info{"Notification.try_send_notification sending email #{identity.id}"}
             identity.send_email(subject, body_long_html, nil, nil, body_long_markdown, nil)
+          else
+            ::Rails.logger.info{"Notification.try_send_notification unsubscribed, not sending"}
           end
         when NOTIFICATION_TYPE_SMS
           text = body_short_markdown

@@ -63,7 +63,7 @@ Rails.application.configure do
   config.action_view.raise_on_missing_translations = true
   
   config.assets.raise_runtime_errors = true
-  config.default_url_options = { host: 'localhost', port: 3000 }
+  config.default_url_options = { protocol: 'http', host: 'localhost', port: 3000 }
   config.action_mailer.default_url_options = config.default_url_options
 
   # Use an evented file watcher to asynchronously detect changes in source code,
