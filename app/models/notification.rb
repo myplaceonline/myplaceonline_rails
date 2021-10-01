@@ -176,6 +176,10 @@ class Notification < ApplicationRecord
         end
       end
       
+      if identity.isdisabled?
+        send_notification = false
+      end
+      
       if send_notification
         
         case notification_type
