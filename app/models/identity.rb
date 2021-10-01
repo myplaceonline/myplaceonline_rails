@@ -801,14 +801,14 @@ class Identity < ApplicationRecord
     
   end
   
-  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil)
+  def send_email(subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil, use_secondary_for_reply_to: false)
     emails_processed = []
     self.emails.each do |email|
-      Myp.send_email(email, subject, body, cc, bcc, body_plain, reply_to)
+      Myp.send_email(email, subject, body, cc, bcc, body_plain, reply_to, use_secondary_for_reply_to: use_secondary_for_reply_to)
       emails_processed << email
     end
     if !user.nil? && !emails_processed.any?{|e| e == user.email }
-      Myp.send_email(user.email, subject, body, cc, bcc, body_plain, reply_to)
+      Myp.send_email(user.email, subject, body, cc, bcc, body_plain, reply_to, use_secondary_for_reply_to: use_secondary_for_reply_to)
     end
   end
   

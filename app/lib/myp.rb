@@ -2035,11 +2035,13 @@ module Myp
     end
   end
   
-  def self.send_email(to, subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil, from_prefix: nil)
+  def self.send_email(to, subject, body, cc = nil, bcc = nil, body_plain = nil, reply_to = nil, from_prefix: nil, use_secondary_for_reply_to: false)
     begin
-      from = Myp.create_email
+      if use_secondary_for_reply_to && reply_to.blank?
+        reply_to = Myp.create_email(use_secondary: true)
+      end
+      Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}, reply_to: #{reply_to}"}
       UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to, from_prefix: from_prefix).deliver_now
-      Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}"}
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body + ", Email Problem: " + Myp.error_details(e)
     end
