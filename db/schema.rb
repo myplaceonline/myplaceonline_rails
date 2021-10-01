@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_21_233222) do
+ActiveRecord::Schema.define(version: 2021_10_01_001250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3633,6 +3633,7 @@ ActiveRecord::Schema.define(version: 2021_09_21_233222) do
     t.string "pants_length"
     t.decimal "current_city_latitude", precision: 24, scale: 20
     t.decimal "current_city_longitude", precision: 24, scale: 20
+    t.boolean "isdisabled"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
