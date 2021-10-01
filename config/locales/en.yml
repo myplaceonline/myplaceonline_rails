@@ -602,6 +602,7 @@ en:
       list: "List %{category}"
       invalid_email: "Invalid email"
       rating: "Rating"
+      clone: "Clone"
     site_contacts:
       name: "Name"
       email: "Email"

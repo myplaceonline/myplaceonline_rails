@@ -21,7 +21,36 @@ class InviteCodesController < MyplaceonlineController
     do_update_before_save
   end
 
+  def footer_items_show
+    result = super
+    
+    if !MyplaceonlineExecutionContext.offline?
+      result = [{
+        title: I18n.t("myplaceonline.general.clone"),
+        link: new_invite_code_path(clone: @obj.id),
+        icon: "refresh"
+      }] + result
+    end
+    
+    result
+  end
+
   protected
+    def build_new_model
+      if !params[:clone].blank?
+        ic = InviteCode.where(id: params[:clone]).take!
+        @obj.max_uses = ic.max_uses
+        @obj.context_ids = ic.context_ids
+        @obj.controversial = ic.controversial
+        @obj.sexual = ic.sexual
+        @obj.disable_signup_extras = ic.disable_signup_extras
+        @obj.prefer_multi_profiles = ic.prefer_multi_profiles
+        @obj.secondary_email = ic.secondary_email
+        @obj.hidesuggestion = ic.hidesuggestion
+        @obj.website_domain_id = ic.website_domain_id
+      end
+    end
+
     def additional_sorts
       [
         [I18n.t("myplaceonline.invite_codes.code"), default_sort_columns[0]]
