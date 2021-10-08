@@ -1116,6 +1116,12 @@ class ApiController < ApplicationController
             
             identity_to_delete.destroy!
           end
+          
+          Myp.send_support_email_safe(
+            "Profile deleted: #{identity_to_delete.id}",
+            "Profile deleted: #{identity_to_delete.id}",
+            request: request,
+          )
         end
         result = true
         status = 200
