@@ -180,6 +180,8 @@ class Notification < ApplicationRecord
         send_notification = false
       end
       
+      ::Rails.logger.debug{"Notification.try_send_notification send_notification: #{send_notification}"}
+      
       if send_notification
         
         case notification_type
