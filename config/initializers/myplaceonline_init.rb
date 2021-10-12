@@ -32,9 +32,10 @@ end
 
 if Myp.is_web_server? || Rails.env.test?
   ActiveSupport.on_load(:after_initialize) do
-    if Myp.database_exists? && !Rails.env.test?
-      Myp.crontab
-    end
+    #if Myp.database_exists? && !Rails.env.test?
+    #  Myp.crontab
+    #end
+      
     # Initialize any caches after Rails has loaded so that we have access to things like the asset pipeline digests
     Myp.reinitialize_in_rails_context
   end
