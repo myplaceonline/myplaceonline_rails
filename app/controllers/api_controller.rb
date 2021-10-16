@@ -831,7 +831,9 @@ class ApiController < ApplicationController
           status = 401
           messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
         else
-          invite_code = invite_code.downcase.strip.gsub(/ /, "")
+          if !invite_code.blank?
+            invite_code = invite_code.downcase.strip.gsub(/ /, "")
+          end
           user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
           result = user.save
           if result
