@@ -872,6 +872,14 @@ class ApiController < ApplicationController
             end
           else
             # Error creating the user for some reason (e.g. password too short)
+              
+            Myp.send_support_email_safe(
+              "Could not create user",
+              "Could not create user (#{user.errors.full_messages.join("; ")}) for email #{email} and invite code #{invite_code}",
+              request: request,
+              use_secondary: true,
+            )
+
             result = false
             status = 403
             messages = user.errors.full_messages
@@ -986,6 +994,14 @@ class ApiController < ApplicationController
         result = true
         status = 200
       else
+          
+        Myp.send_support_email_safe(
+          "Invalid invite code",
+          "Invalid invite code #{invite_code} for email #{current_user.email}",
+          request: request,
+          use_secondary: true,
+        )
+
         result = false
         status = 403
         messages = [I18n.t("myplaceonline.users.invite_invalid_detailed")]
