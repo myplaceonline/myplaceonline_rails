@@ -14,6 +14,7 @@ class ApiController < ApplicationController
     :add_identity,
     :change_identity,
     :delete_identity,
+    :enable_disable_identity,
     :quickfeedback,
     :update_password,
     :update_email,
@@ -1092,6 +1093,22 @@ class ApiController < ApplicationController
         messages: messages,
       },
       status: status,
+    )
+  end
+  
+  def enable_disable_identity
+    authorize! :edit, current_user
+    
+    current_user.current_identity.isdisabled = !current_user.current_identity.isdisabled?
+    current_user.current_identity.save!
+
+    render(
+      json: {
+        status: 200,
+        result: true,
+        messages: [],
+      },
+      status: 200,
     )
   end
   

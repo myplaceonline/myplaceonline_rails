@@ -86,6 +86,7 @@ Rails.application.routes.draw do
     api/add_identity
     api/change_identity
     api/delete_identity
+    api/enable_disable_identity
     api/update_password
     api/update_email
     api/forgot_password
