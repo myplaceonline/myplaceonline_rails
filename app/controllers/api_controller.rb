@@ -833,7 +833,7 @@ class ApiController < ApplicationController
           messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
         else
           if !invite_code.blank?
-            invite_code = invite_code.downcase.strip.gsub(/ /, "")
+            invite_code = invite_code.downcase.strip.gsub(/ /, "").gsub(/\//, "").gsub(/\n/, "").gsub(/\t/, "")
           end
           user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
           result = user.save
