@@ -1,6 +1,25 @@
 <%# (f: form, markdown_data: string, hidden_field_name: name symbol, non_hidden_url) %>
 
-<% if !MyplaceonlineExecutionContext.offline? %>
+<% if Myp.is_phonegap_request(params, session) %>
+  <%
+  rte_field = nil
+  if !hidden_field_name.nil?
+    if !f.nil?
+      rte_field = f.text_area(hidden_field_name)
+    else
+      rte_field = text_area_tag(hidden_field_name)
+    end
+    %>
+    <%= rte_field %>
+    <%
+  else
+    #rte_field = text_area_tag("rte" + SecureRandom.hex(10), markdown_data)
+    %>
+    <%= raw(Myp.markdown_to_html(markdown_data)) %>
+    <%
+  end
+  %>
+<% elsif !MyplaceonlineExecutionContext.offline? %>
   <%
   rte_container = text_area_tag("rte" + SecureRandom.hex(10))
   rte_container_id = extract_id(rte_container)
