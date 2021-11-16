@@ -659,6 +659,7 @@ en:
       upload: "Upload"
       tips: "Tips"
       hello_world: "Hello World"
+      ckeditor: "CKEditor"
       tips_content: !xml |
         <![CDATA[
         # Tips

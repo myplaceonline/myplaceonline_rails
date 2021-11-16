@@ -1,6 +1,6 @@
 <%# (f: form, markdown_data: string, hidden_field_name: name symbol, non_hidden_url) %>
 
-<% if Myp.is_phonegap_request(params, session) %>
+<% if Myp.is_phonegap_request(params, session) && !Myp.param_bool(params, :showckeditor, default_value: false) %>
   <%
   rte_field = nil
   if !hidden_field_name.nil?

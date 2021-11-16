@@ -11,6 +11,7 @@ class InfoController < ApplicationController
   def index; end
   def credits; end
   def diagnostics; end
+  def ckeditor; end
 
   def faq
   end

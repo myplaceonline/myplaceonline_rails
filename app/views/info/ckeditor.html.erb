@@ -1,0 +1,14 @@
+<% content_for :heading do -%><%= t("myplaceonline.info.ckeditor") %><% end -%>
+
+<h1><%= t("myplaceonline.info.ckeditor") %></h1>
+
+<%= form_for Location.new do |f| %>
+<%=
+  render partial: 'myplaceonline/rte', locals: {
+    f: f,
+    markdown_data: "Hello World",
+    hidden_field_name: nil,
+    non_hidden_url: nil,
+  }
+%>
+<% end %>
