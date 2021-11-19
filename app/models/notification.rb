@@ -222,13 +222,45 @@ class Notification < ApplicationRecord
             ::Rails.logger.info{"Notification.try_send_notification for identity #{identity.id}: #{Myp.debug_print(notifications)}"}
             
             if ENV["SKIP_NOTIFICATIONS"] != "true"
-              client = Exponent::Push::Client.new(gzip: false)
-              handler = client.send_messages(notifications)
+                
+              maxretries = 5
+              sleeptimeseconds = 2
+              iterationcount = 0
               
-              ::Rails.logger.info{"Notification.try_send_notification send_messages returned"}
-              
-              if !handler.nil? && !handler.errors.nil? && handler.errors.size > 0
-                ::Rails.logger.info{"Notification.try_send_notification expo responses: #{Myp.debug_print(handler.errors)}"}
+              while iterationcount < maxretries
+                
+                ::Rails.logger.info{"Notification.try_send_notification iteration #{iterationcount}"}
+                
+                begin
+
+                  client = Exponent::Push::Client.new(gzip: false)
+                  handler = client.send_messages(notifications)
+                
+                  ::Rails.logger.info{"Notification.try_send_notification send_messages returned"}
+                
+                  if !handler.nil? && !handler.errors.nil? && handler.errors.size > 0
+                    ::Rails.logger.info{"Notification.try_send_notification expo responses: #{Myp.debug_print(handler.errors)}"}
+                    
+                    raise handler.errors.join(",")
+                  end
+                    
+                  # Execution successful so break out of the retry loop
+                  break
+                  
+                rescue => expoException
+                  exceptionContents = expoException.to_s
+                  
+                  if exceptionContents.match(/429/).nil? && exceptionContents.match(/5[0-9][0-9]/).nil?
+                    # Unexpected exception
+                    raise expoException
+                  else
+                    # Exponential backoff: https://docs.expo.dev/push-notifications/sending-notifications/#retry-on-failure
+                    sleep(sleeptimeseconds)
+                    sleeptimeseconds = sleeptimeseconds * 2
+                  end
+                end
+                
+                iterationcount = iterationcount + 1
               end
             end
           end
