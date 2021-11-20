@@ -241,7 +241,7 @@ class Notification < ApplicationRecord
                   if !handler.nil? && !handler.errors.nil? && handler.errors.size > 0
                     ::Rails.logger.info{"Notification.try_send_notification expo responses: #{Myp.debug_print(handler.errors)}"}
                     
-                    raise handler.errors.join(",")
+                    #raise handler.errors.join(",")
                   end
                     
                   # Execution successful so break out of the retry loop
