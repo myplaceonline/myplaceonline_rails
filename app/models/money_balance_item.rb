@@ -36,7 +36,7 @@ class MoneyBalanceItem < ApplicationRecord
       amount: Myp.number_to_currency(amount.abs),
       time: Myp.display_time(item_time, User.current_user, :super_short_datetime_year),
     })
-    I18n.t(name, i18n_data)
+    I18n.t(name, **i18n_data)
   end
 
   def self.build(params = nil)
@@ -86,7 +86,7 @@ class MoneyBalanceItem < ApplicationRecord
         time: item_time
       })
     end
-    I18n.t(name, i18n_data)
+    I18n.t(name, **i18n_data)
   end
 
   def final_search_result
