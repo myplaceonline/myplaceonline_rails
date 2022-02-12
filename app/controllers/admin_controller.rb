@@ -231,4 +231,10 @@ class AdminController < ApplicationController
     redirect_to admin_path,
           :flash => { :notice => "Reset successful" }
   end
+
+  def throw_server_exception
+    Rails.logger.info{"AdminController.throw_server_exception started"}
+    
+    raise ActionController::InvalidAuthenticityToken
+  end
 end

@@ -116,6 +116,7 @@ Rails.application.routes.draw do
     admin/run_crontab
     admin/run_load_feeds
     admin/reset_user_index
+    admin/throw_server_exception
   ))
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"

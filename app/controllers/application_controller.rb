@@ -137,6 +137,7 @@ class ApplicationController < ActionController::Base
         else
           redirect_to(new_path, :flash => { :notice => exception.notice })
         end
+      elsif exception.is_a?(ActionController::InvalidAuthenticityToken)
       else
         Rails.logger.debug{"ApplicationController.catchall unknown".red}
         Myp.handle_exception(exception, session[:myp_email], request)

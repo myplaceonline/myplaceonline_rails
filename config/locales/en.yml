@@ -3312,6 +3312,7 @@ en:
       run_load_feeds: "Load Feeds"
       crontab_run: "Crontab completed"
       load_feeds_run: "Feeds Run Started"
+      throw_server_exception: "Throw Server Exception"
     share:
       link: "Link"
     trip_pictures:
