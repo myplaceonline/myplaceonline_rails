@@ -1080,6 +1080,7 @@ en:
       combine_destination: "Destination Contact"
       combine_complete: "Contacts successfully combined"
       location: "Location"
+      ssn: "Social Security Number"
     files:
       name: "Name"
       download: "Download"

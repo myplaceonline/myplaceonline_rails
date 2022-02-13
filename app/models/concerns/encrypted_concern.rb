@@ -27,6 +27,7 @@ module EncryptedConcern extend ActiveSupport::Concern
       end
 
       define_method(name) do
+        result = ""
         if !send("#{name}_encrypted?")
           result = super()
           Rails.logger.debug{"EncryptedConcern '#{name}' check unencrypted for #{result}"}

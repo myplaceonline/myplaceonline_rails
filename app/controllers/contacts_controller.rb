@@ -138,7 +138,28 @@ class ContactsController < MyplaceonlineController
     result
   end
   
+  def do_update_before_save
+    Rails.logger.debug{"do_update_before_save: #{Myp.debug_print(@obj)}"}
+    @obj.contact_identity.encrypt = current_user.encrypt_by_default
+  end
+
   protected
+
+    def sensitive
+      true
+    end
+    
+    def before_edit
+      @obj.contact_identity.encrypt = @obj.contact_identity.ssn_encrypted?
+    end
+
+    def edit_prerespond
+      @encrypt = current_user.encrypt_by_default
+    end
+    
+    def build_new_model
+      @encrypt = current_user.encrypt_by_default
+    end
 
     def additional_sorts
       [

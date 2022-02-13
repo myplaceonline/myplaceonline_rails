@@ -264,4 +264,8 @@ class Contact < ApplicationRecord
     Myp.warn("Combining contacts for #{User.current_user}, dest: #{self}, source: #{source}")
     self.save!
   end
+
+  def self.skip_check_attributes
+    ["identity_type", "encrypt"]
+  end
 end

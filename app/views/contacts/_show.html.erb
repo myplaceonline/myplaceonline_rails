@@ -18,6 +18,7 @@
 <%= attribute_table_row_reference(t("myplaceonline.contacts.company"), "company_path", obj.contact_identity.company) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.likes"), obj.contact_identity.likes) %>
 <%= attribute_table_row_markdown(t("myplaceonline.contacts.gift_ideas"), obj.contact_identity.gift_ideas) %>
+<%= attribute_table_row(t("myplaceonline.contacts.ssn"), obj.contact_identity.ssn) %>
 <%= attribute_table_row(t("myplaceonline.contacts.ktn"), obj.contact_identity.ktn) %>
 <%= attribute_table_row(t("myplaceonline.contacts.new_years_resolution"), obj.contact_identity.new_years_resolution) %>
 <% obj.contact_identity.identity_emails.each do |email| %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_01_001250) do
+ActiveRecord::Schema.define(version: 2022_02_12_234512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3634,8 +3634,11 @@ ActiveRecord::Schema.define(version: 2021_10_01_001250) do
     t.decimal "current_city_latitude", precision: 24, scale: 20
     t.decimal "current_city_longitude", precision: 24, scale: 20
     t.boolean "isdisabled"
+    t.string "ssn"
+    t.bigint "ssn_encrypted_id"
     t.index ["company_id"], name: "index_identities_on_company_id"
     t.index ["identity_id"], name: "index_identities_on_identity_id"
+    t.index ["ssn_encrypted_id"], name: "index_identities_on_ssn_encrypted_id"
     t.index ["user_id"], name: "index_identities_on_user_id"
     t.index ["website_domain_id"], name: "index_identities_on_website_domain_id"
   end
@@ -8722,6 +8725,7 @@ ActiveRecord::Schema.define(version: 2021_10_01_001250) do
   add_foreign_key "hypothesis_experiments", "identities", name: "hypothesis_experiments_identity_id_fk"
   add_foreign_key "ideas", "identities", name: "ideas_identity_id_fk"
   add_foreign_key "identities", "companies"
+  add_foreign_key "identities", "encrypted_values", column: "ssn_encrypted_id"
   add_foreign_key "identities", "identities"
   add_foreign_key "identities", "users", name: "identities_user_id_fk"
   add_foreign_key "identities", "website_domains"

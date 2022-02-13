@@ -1,6 +1,7 @@
 class Identity < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
   include AllowExistingConcern
+  include EncryptedConcern
 
   def self.properties
     [
@@ -429,8 +430,22 @@ class Identity < ApplicationRecord
       end
     end
   end
+  
+  belongs_to :ssn_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
+  belongs_to_encrypted :ssn
+  before_validation :ssn_finalize
+
+  validate do
+    if ssn.blank? && ssn_encrypted.nil?
+      #errors.add(:ssn, I18n.t("myplaceonline.general.non_blank"))
+    end
+  end
 
   def as_json(options={})
+    if ssn_encrypted?
+      options[:except] ||= %w(ssn)
+    end
+
     super.as_json(options).merge({
       :category_points_amounts => category_points_amounts.to_a.map{|x| x.as_json},
       :passwords => passwords.to_a.sort{ |a,b| a.name.downcase <=> b.name.downcase }.map{|x| x.as_json},
@@ -861,10 +876,12 @@ class Identity < ApplicationRecord
       :last_name,
       :nickname,
       :birthday,
+      :encrypt,
       :notes,
       :likes,
       :gift_ideas,
       :ktn,
+      :ssn,
       :sex_type,
       :new_years_resolution,
       :display_note,
@@ -935,7 +952,7 @@ class Identity < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["identity_type"]
+    ["identity_type", "encrypt"]
   end
   
   def parent_company

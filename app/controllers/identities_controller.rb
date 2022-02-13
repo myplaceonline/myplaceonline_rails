@@ -39,6 +39,22 @@ class IdentitiesController < MyplaceonlineController
   end
 
   protected
+    def sensitive
+      true
+    end
+    
+    def before_edit
+      @obj.encrypt = @obj.ssn_encrypted?
+    end
+    
+    def edit_prerespond
+      @encrypt = current_user.encrypt_by_default
+    end
+    
+    def build_new_model
+      @encrypt = current_user.encrypt_by_default
+    end
+
     def additional_sorts
       [
         [I18n.t("myplaceonline.identities.website_domain_id"), default_sort_columns[0]],
