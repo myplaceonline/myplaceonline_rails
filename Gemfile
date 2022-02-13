@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "i18n", "~> 1.8.11"
 gem "irb"
 gem "rake"
 gem "rails", ">=6.1"
