@@ -276,8 +276,8 @@ var myplaceonline = function(mymodule) {
     }
     jserrors++;
     if (jserrors <= maxjserrors) {
-      if (sendDebug(msg, true, errorObj) && !inPhoneGap) {
-        alert(msg);
+      if (sendDebug(msg, true, errorObj)) {
+        //alert(msg);
         
         // TODO: create some sort of UI element
         // that shows that their browser session might be in a weird state,
