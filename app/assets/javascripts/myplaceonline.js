@@ -276,7 +276,7 @@ var myplaceonline = function(mymodule) {
     }
     jserrors++;
     if (jserrors <= maxjserrors) {
-      if (sendDebug(msg, true, errorObj)) {
+      if (sendDebug(msg, true, errorObj) && !inPhoneGap) {
         alert(msg);
         
         // TODO: create some sort of UI element
