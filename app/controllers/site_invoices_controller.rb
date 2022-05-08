@@ -1,7 +1,7 @@
-require "paypal-sdk-rest"
+#require "paypal-sdk-rest"
 
 class SiteInvoicesController < MyplaceonlineController
-  include PayPal::SDK::REST
+#  include PayPal::SDK::REST
 
   def use_bubble?
     true
