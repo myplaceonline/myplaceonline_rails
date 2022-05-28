@@ -556,7 +556,6 @@ DEPENDENCIES
   simple-rss
   spring
   sprockets
-  stringio (~> 3.0.1)
   thin
   time_difference
   twilio-ruby
