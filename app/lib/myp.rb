@@ -542,7 +542,7 @@ module Myp
         @@all_website_domain_homepages.clear
         Rails.logger.debug{"Myp.reinitialize_in_rails_context query verified website domains"}
         WebsiteDomain.where(verified: true).order(:id).each do |website_domain|
-          Rails.logger.debug{"Myp.reinitialize_in_rails_context domain id: #{website_domain.id}, name: #{website_domain.display}"}
+          Rails.logger.info{"Myp.reinitialize_in_rails_context domain id: #{website_domain.id}, name: #{website_domain.display}"}
           if !website_domain.hosts.blank?
             if website_domain.default_domain
               @@default_website_domain = website_domain
