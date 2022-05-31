@@ -234,7 +234,7 @@ class User < ApplicationRecord
   end
   
   def needs_identity?
-    !self.id.nil? && self.current_identity_id.nil?
+    !self.id.nil? && self.domain_identity.nil?
   end
   
   def check_invite_code(website_domain, redirect)
