@@ -63,6 +63,7 @@ class WebsiteDomainsController < MyplaceonlineController
         :email_host_override,
         :email_display_override,
         :secondary_email_name,
+        :allow_public,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [
