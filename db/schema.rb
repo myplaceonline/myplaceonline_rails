@@ -7857,7 +7857,7 @@ ActiveRecord::Schema.define(version: 2022_06_26_161254) do
     t.boolean "simulated"
     t.string "email"
     t.string "phone"
-    t.integer "order"
+    t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["identity_id"], name: "index_wager_ref_team_members_on_identity_id"
