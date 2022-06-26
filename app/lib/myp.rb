@@ -3820,6 +3820,7 @@ module Myp
       token: nil,
       refresh_token: nil,
       expires_in: nil,
+      user: nil,
     }
 
     if email.blank?
@@ -3868,6 +3869,8 @@ module Myp
                 end
               end
 
+              resultobj[:user] = user
+
               Myp.send_support_email_safe(
                 "New User #{user.email}",
                 "New User #{user.email} with code #{used_code}",
@@ -3911,6 +3914,7 @@ module Myp
               resultobj[:result] = true
               resultobj[:status] = 200
               resultobj[:messages] = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
+              resultobj[:user] = user
             else
               resultobj[:result] = false
               resultobj[:status] = 403
