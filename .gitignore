@@ -42,6 +42,7 @@ Gemfile_engines.lock
 /engines_config
 
 db/migrate/*.drom_match.rb
+db/migrate/*.wager_ref.rb
 
 node_modules/
 yarn.lock

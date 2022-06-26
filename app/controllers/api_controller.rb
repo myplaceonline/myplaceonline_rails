@@ -801,134 +801,17 @@ class ApiController < ApplicationController
   
   # curl --header "Content-Type: application/json" --request POST --data '{"email": "email", "password": "password"}' http://localhost:3000/api/login_or_register
   def login_or_register
-    status = 500
-    result = false
-    messages = []
-    token = nil
-    refresh_token = nil
-    expires_in = nil
-    
-    email = params[:email]
-    password = params[:password]
-    invite_code = params[:invite_code]
-    login_only = params[:login_only]
-    
-    if email.blank?
-      result = false
-      status = 500
-      messages = [I18n.t("myplaceonline.errors.noemail")]
-    elsif password.blank?
-      result = false
-      status = 500
-      messages = [I18n.t("myplaceonline.errors.nopassword")]
-    else
-      user = User.where(email: email).take
-      
-      # Register a new user
-      if user.nil? && !login_only
-        if Myp.requires_invite_code && invite_code.blank?
-          # Registration without an invite code
-          result = false
-          status = 401
-          messages = [I18n.t("myplaceonline.general.requires_invite_code_short")]
-        else
-          if !invite_code.blank?
-            invite_code = invite_code.downcase.strip.gsub(/ /, "").gsub(/\//, "").gsub(/\n/, "").gsub(/\t/, "")
-          end
-          user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
-          result = user.save
-          if result
-            authorization_result = get_oauth_token(user)
-            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
-              token = authorization_result.token.plaintext_token
-              refresh_token = authorization_result.token.plaintext_refresh_token
-              expires_in = authorization_result.token.expires_in_seconds
-              result = true
-              status = 201
-              messages = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
-              
-              used_code = invite_code
-              use_secondary = false
-              
-              if !used_code.blank?
-                used_code_obj = InviteCode.where(code: used_code.downcase.strip).take
-                if !used_code_obj.nil?
-                  if used_code_obj.secondary_email?
-                    use_secondary = true
-                  end
-                end
-              end
-              
-              Myp.send_support_email_safe(
-                "New User #{user.email}",
-                "New User #{user.email} with code #{used_code}",
-                request: request,
-                use_secondary: use_secondary
-              )
-            else
-              # Unclear why this would happen as we just created the user
-              result = false
-              status = 403
-              messages = [authorization_result.description + " #{authorization_result.name.to_s}"]
-            end
-          else
-            # Error creating the user for some reason (e.g. password too short)
-              
-            Myp.send_support_email_safe(
-              "Could not create user",
-              "Could not create user (#{user.errors.full_messages.join("; ")}) for email #{email} and invite code #{invite_code}",
-              request: request,
-              use_secondary: true,
-            )
-
-            result = false
-            status = 403
-            messages = user.errors.full_messages
-          end
-        end
-      elsif user.nil? && login_only
-        result = false
-        status = 500
-        messages = [I18n.t("myplaceonline.errors.usernotfound")]
-      else
-        # Log in an existing user
-        if user.valid_password?(password)
-          if user.active_for_authentication?
-            authorization_result = get_oauth_token(user)
-            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
-              token = authorization_result.token.plaintext_token
-              refresh_token = authorization_result.token.plaintext_refresh_token
-              expires_in = authorization_result.token.expires_in_seconds
-              result = true
-              status = 200
-              messages = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
-            else
-              result = false
-              status = 403
-            end
-          else
-            result = false
-            status = 409
-            messages = [I18n.t("myplaceonline.users.pending_confirmation")]
-          end
-        else
-          result = false
-          status = 404
-          messages = [I18n.t("myplaceonline.errors.invalidpassword")]
-        end
-      end
-    end
-    
+    resultobj = Myp.do_login_or_register(request)
     render(
       json: {
-        status: status,
-        result: result,
-        messages: messages,
-        token: token,
-        refresh_token: refresh_token,
-        expires_in: expires_in,
+        status: resultobj[:status],
+        result: resultobj[:result],
+        messages: resultobj[:messages],
+        token: resultobj[:token],
+        refresh_token: resultobj[:refresh_token],
+        expires_in: resultobj[:expires_in],
       },
-      status: status,
+      status: resultobj[:status],
     )
   end
   
@@ -942,7 +825,7 @@ class ApiController < ApplicationController
     
     incoming_token = params[:refresh_token]
     if !incoming_token.blank?
-      refresh_result = get_oauth_refresh_token(incoming_token)
+      refresh_result = Myp.get_oauth_refresh_token(incoming_token)
       if !refresh_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
         result = true
         status = 200
@@ -1528,22 +1411,5 @@ class ApiController < ApplicationController
         id: newfile.id,
         singularNamePrefix: singularNamePrefix,
       }
-    end
-    
-    def get_oauth_token(user)
-      app = Doorkeeper::Application.where(name: "Internal").take!
-      client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
-      authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
-      authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
-      return authorization_result
-    end
-    
-    def get_oauth_refresh_token(refreshToken)
-      accessToken = Doorkeeper::AccessToken.by_refresh_token(refreshToken)
-      Rails.logger.debug{"get_oauth_refresh_token accessToken: #{accessToken.inspect}"}
-      app = Doorkeeper::Application.where(name: "Internal").take!
-      client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
-      authorization_result = Doorkeeper::OAuth::RefreshTokenRequest.new(Doorkeeper.configuration, accessToken, client).authorize()
-      return authorization_result
     end
 end

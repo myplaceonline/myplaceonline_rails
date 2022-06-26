@@ -3789,6 +3789,146 @@ module Myp
   def self.praise_or_shame?
     return MyplaceonlineExecutionContext.host == "praiseorshame.com"
   end
+
+  def self.get_oauth_token(user)
+    app = Doorkeeper::Application.where(name: "Internal").take!
+    client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
+    authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
+    authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
+    return authorization_result
+  end
+
+  def self.get_oauth_refresh_token(refreshToken)
+    accessToken = Doorkeeper::AccessToken.by_refresh_token(refreshToken)
+    Rails.logger.debug{"get_oauth_refresh_token accessToken: #{accessToken.inspect}"}
+    app = Doorkeeper::Application.where(name: "Internal").take!
+    client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
+    authorization_result = Doorkeeper::OAuth::RefreshTokenRequest.new(Doorkeeper.configuration, accessToken, client).authorize()
+    return authorization_result
+  end
+
+  def self.do_login_or_register(request)
+    email = request.params[:email]
+    password = request.params[:password]
+    invite_code = request.params[:invite_code]
+    login_only = request.params[:login_only]
+
+    resultobj = {
+      status: 500,
+      result: false,
+      messages: [],
+      token: nil,
+      refresh_token: nil,
+      expires_in: nil,
+    }
+
+    if email.blank?
+      resultobj[:result] = false
+      resultobj[:status] = 500
+      resultobj[:messages] = [I18n.t("myplaceonline.errors.noemail")]
+    elsif password.blank?
+      resultobj[:result] = false
+      resultobj[:status] = 500
+      resultobj[:messages] = [I18n.t("myplaceonline.errors.nopassword")]
+    else
+      user = User.where(email: email).take
+
+      # Register a new user
+      if user.nil? && !login_only
+        if Myp.requires_invite_code && invite_code.blank?
+          # Registration without an invite code
+          resultobj[:result] = false
+          resultobj[:status] = 401
+          resultobj[:messages] = [I18n.t("myplaceonline.general.requires_invite_code_short")]
+        else
+          if !invite_code.blank?
+            invite_code = invite_code.downcase.strip.gsub(/ /, "").gsub(/\//, "").gsub(/\n/, "").gsub(/\t/, "")
+          end
+          user = User.new(email: email, password: password, password_confirmation: password, invite_code: invite_code)
+          resultobj[:result] = user.save
+          if resultobj[:result]
+            authorization_result = Myp.get_oauth_token(user)
+            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+              resultobj[:token] = authorization_result.token.plaintext_token
+              resultobj[:refresh_token] = authorization_result.token.plaintext_refresh_token
+              resultobj[:expires_in] = authorization_result.token.expires_in_seconds
+              resultobj[:result] = true
+              resultobj[:status] = 201
+              resultobj[:messages] = [I18n.t("myplaceonline.general.new_user_created") + " #{DateTime.now}"]
+
+              used_code = invite_code
+              use_secondary = false
+
+              if !used_code.blank?
+                used_code_obj = InviteCode.where(code: used_code.downcase.strip).take
+                if !used_code_obj.nil?
+                  if used_code_obj.secondary_email?
+                    use_secondary = true
+                  end
+                end
+              end
+
+              Myp.send_support_email_safe(
+                "New User #{user.email}",
+                "New User #{user.email} with code #{used_code}",
+                request: request,
+                use_secondary: use_secondary
+              )
+            else
+              # Unclear why this would happen as we just created the user
+              resultobj[:result] = false
+              resultobj[:status] = 403
+              resultobj[:messages] = [authorization_result.description + " #{authorization_result.name.to_s}"]
+            end
+          else
+            # Error creating the user for some reason (e.g. password too short)
+
+            Myp.send_support_email_safe(
+              "Could not create user",
+              "Could not create user (#{user.errors.full_messages.join("; ")}) for email #{email} and invite code #{invite_code}",
+              request: request,
+              use_secondary: true,
+            )
+
+            resultobj[:result] = false
+            resultobj[:status] = 403
+            resultobj[:messages] = user.errors.full_messages
+          end
+        end
+      elsif user.nil? && login_only
+        resultobj[:result] = false
+        resultobj[:status] = 500
+        resultobj[:messages] = [I18n.t("myplaceonline.errors.usernotfound")]
+      else
+        # Log in an existing user
+        if user.valid_password?(password)
+          if user.active_for_authentication?
+            authorization_result = Myp.get_oauth_token(user)
+            if !authorization_result.is_a?(Doorkeeper::OAuth::ErrorResponse)
+              resultobj[:token] = authorization_result.token.plaintext_token
+              resultobj[:refresh_token] = authorization_result.token.plaintext_refresh_token
+              resultobj[:expires_in] = authorization_result.token.expires_in_seconds
+              resultobj[:result] = true
+              resultobj[:status] = 200
+              resultobj[:messages] = [I18n.t("myplaceonline.general.login_successful") + " #{DateTime.now}"]
+            else
+              resultobj[:result] = false
+              resultobj[:status] = 403
+            end
+          else
+            resultobj[:result] = false
+            resultobj[:status] = 409
+            resultobj[:messages] = [I18n.t("myplaceonline.users.pending_confirmation")]
+          end
+        else
+          resultobj[:result] = false
+          resultobj[:status] = 404
+          resultobj[:messages] = [I18n.t("myplaceonline.errors.invalidpassword")]
+        end
+      end
+    end
+    return resultobj
+  end
   
   Rails.logger.info{"Myp static initialization ended"}
 end

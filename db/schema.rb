@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_08_234537) do
+ActiveRecord::Schema.define(version: 2022_06_25_172817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7836,6 +7836,18 @@ ActiveRecord::Schema.define(version: 2022_03_08_234537) do
     t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id"
   end
 
+  create_table "wager_ref_bets", force: :cascade do |t|
+    t.string "key"
+    t.string "title"
+    t.text "stakes"
+    t.text "winConditions"
+    t.integer "status"
+    t.bigint "identity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_wager_ref_bets_on_identity_id"
+  end
+
   create_table "wallet_files", force: :cascade do |t|
     t.bigint "wallet_id"
     t.bigint "identity_file_id"
@@ -9286,6 +9298,7 @@ ActiveRecord::Schema.define(version: 2022_03_08_234537) do
   add_foreign_key "vitamin_ingredients", "vitamins", name: "vitamin_ingredients_vitamin_id_fk"
   add_foreign_key "vitamins", "identities", name: "vitamins_identity_id_fk"
   add_foreign_key "volunteering_activities", "identities"
+  add_foreign_key "wager_ref_bets", "identities"
   add_foreign_key "wallet_files", "identities"
   add_foreign_key "wallet_files", "identity_files"
   add_foreign_key "wallet_files", "wallets"
