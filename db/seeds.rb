@@ -231,7 +231,8 @@ Category.create!([
   {id: 231, name: "barbecues", link: "barbecues", position: 0, parent_id: 2, additional_filtertext: "restaurant food bbq meat steak", icon: "FatCow_Icons16x16/steak_meat.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 232, name: "steakhouses", link: "steakhouses", position: 0, parent_id: 2, additional_filtertext: "meat bbq barbecue restaurant food ribeye", icon: "FatCow_Icons16x16/steak_fish.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
   {id: 233, name: "restaurant_dishes", link: "restaurant_dishes", position: 0, parent_id: 2, additional_filtertext: nil, icon: "FatCow_Icons16x16/dish.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: true},
-  {id: 234, name: "life_changes", link: "life_changes", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_menu.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
+  {id: 234, name: "life_changes", link: "life_changes", position: 0, parent_id: 1, additional_filtertext: nil, icon: "FatCow_Icons16x16/account_menu.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil},
+  {id: 235, name: "merchant_accounts", link: "merchant_accounts", position: 0, parent_id: 51, additional_filtertext: "pos point of sale", icon: "FatCow_Icons16x16/cash_register_right.png", explicit: nil, user_type_mask: nil, experimental: nil, simple: nil, internal: nil}
 ])
 
 # Reinitialize to cache the categories created above

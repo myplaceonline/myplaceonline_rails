@@ -1,0 +1,8 @@
+<%= data_row(heading: t("myplaceonline.merchant_accounts.merchant_account_name"), content: obj.merchant_account_name) %>
+<%= data_row(heading: t("myplaceonline.merchant_accounts.limit_daily"), content: obj.limit_daily, currency: true) %>
+<%= data_row(heading: t("myplaceonline.merchant_accounts.limit_monthly"), content: obj.limit_monthly, currency: true) %>
+<%= data_row(heading: t("myplaceonline.merchant_accounts.currencies_accepted"), content: obj.currencies_accepted, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.merchant_accounts.ship_to_countries"), content: obj.ship_to_countries, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.merchant_account_files) %>

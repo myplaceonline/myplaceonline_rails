@@ -199,6 +199,7 @@ en:
       memberships: "Memberships"
       memes: "Memes"
       memories: "Memories"
+      merchant_accounts: "Merchant Accounts"
       messages: "Messages"
       money_balance_item_templates: "Balance Templates"
       money_balance_items: "Money Balance Items"
@@ -4615,3 +4616,9 @@ en:
       life_change_title: "Name"
       start_day: "Start Day"
       end_day: "End Day"
+    merchant_accounts:
+      merchant_account_name: "Name"
+      limit_daily: "Daily Limit"
+      limit_monthly: "Monthly Limit"
+      currencies_accepted: "Currencies Accepted"
+      ship_to_countries: "Ship to Countries"
