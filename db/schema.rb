@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_26_161254) do
+ActiveRecord::Schema.define(version: 2022_08_20_195756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4134,6 +4134,34 @@ ActiveRecord::Schema.define(version: 2022_06_26_161254) do
     t.index ["from_identity_id"], name: "index_last_text_messages_on_from_identity_id"
     t.index ["phone_number"], name: "index_last_text_messages_on_phone_number"
     t.index ["to_identity_id"], name: "index_last_text_messages_on_to_identity_id"
+  end
+
+  create_table "life_change_files", force: :cascade do |t|
+    t.bigint "life_change_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_life_change_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_life_change_files_on_identity_id"
+    t.index ["life_change_id"], name: "index_life_change_files_on_life_change_id"
+  end
+
+  create_table "life_changes", force: :cascade do |t|
+    t.string "life_change_title"
+    t.date "start_day"
+    t.date "end_day"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_life_changes_on_identity_id"
   end
 
   create_table "life_goals", id: :serial, force: :cascade do |t|
@@ -8829,6 +8857,10 @@ ActiveRecord::Schema.define(version: 2022_06_26_161254) do
   add_foreign_key "jokes", "identities", name: "jokes_identity_id_fk"
   add_foreign_key "last_text_messages", "identities", column: "from_identity_id"
   add_foreign_key "last_text_messages", "identities", column: "to_identity_id"
+  add_foreign_key "life_change_files", "identities"
+  add_foreign_key "life_change_files", "identity_files"
+  add_foreign_key "life_change_files", "life_changes"
+  add_foreign_key "life_changes", "identities"
   add_foreign_key "life_goals", "identities", name: "life_goals_identity_id_fk"
   add_foreign_key "life_highlight_files", "identities"
   add_foreign_key "life_highlight_files", "identity_files"

@@ -1,0 +1,6 @@
+<%= data_row(heading: t("myplaceonline.life_changes.life_change_title"), content: obj.life_change_title) %>
+<%= data_row(heading: t("myplaceonline.life_changes.start_day"), content: obj.start_day) %>
+<%= data_row(heading: t("myplaceonline.life_changes.end_day"), content: obj.end_day) %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.life_change_files) %>

@@ -178,6 +178,7 @@ en:
       jobs: "Jobs"
       jokes: "Jokes"
       joy: "Joy"
+      life_changes: "Life Changes"
       life_goals: "Life Goals"
       life_highlights: "Life Highlights"
       life_insurances: "Life Insurances"
@@ -4610,3 +4611,7 @@ en:
       dish_name: "Name"
       cost: "Cost"
       back: "Restaurant"
+    life_changes:
+      life_change_title: "Name"
+      start_day: "Start Day"
+      end_day: "End Day"

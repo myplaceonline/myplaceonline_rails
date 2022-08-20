@@ -358,7 +358,8 @@ class Identity < ApplicationRecord
   has_many :settings, :dependent => :destroy
   has_many :email_unsubscriptions, :dependent => :destroy
   has_many :email_tokens, :dependent => :destroy
-  
+  has_many :life_changes, :dependent => :destroy
+
   child_properties(name: :myplets, sort: "y_coordinate")
 
   child_properties(name: :identity_phones, foreign_key: "parent_identity_id")
@@ -647,6 +648,7 @@ class Identity < ApplicationRecord
       :health_changes => health_changes.to_a.map{|x| x.as_json},
       :locks => locks.to_a.map{|x| x.as_json},
       :restaurant_dishes => restaurant_dishes.to_a.map{|x| x.as_json},
+      :life_changes => life_changes.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end
