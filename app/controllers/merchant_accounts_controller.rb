@@ -28,6 +28,7 @@ class MerchantAccountsController < MyplaceonlineController
         :notes,
         :rating,
         merchant_account_files_attributes: FilesController.multi_param_names,
+        merchant_account_payments_attributes: MerchantAccountPayment.params,
       )
     end
 end

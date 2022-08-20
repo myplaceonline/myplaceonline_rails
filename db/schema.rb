@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_20_213526) do
+ActiveRecord::Schema.define(version: 2022_08_20_214127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -4741,6 +4741,23 @@ ActiveRecord::Schema.define(version: 2022_08_20_213526) do
     t.index ["merchant_account_id"], name: "index_merchant_account_files_on_merchant_account_id"
   end
 
+  create_table "merchant_account_payments", force: :cascade do |t|
+    t.bigint "merchant_account_id"
+    t.string "payment_name"
+    t.decimal "amount_per_payment", precision: 10, scale: 2
+    t.decimal "percent_total"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_merchant_account_payments_on_identity_file_id"
+    t.index ["identity_id"], name: "index_merchant_account_payments_on_identity_id"
+    t.index ["merchant_account_id"], name: "index_merchant_account_payments_on_merchant_account_id"
+  end
+
   create_table "merchant_accounts", force: :cascade do |t|
     t.string "merchant_account_name"
     t.decimal "limit_daily", precision: 10, scale: 2
@@ -8994,6 +9011,9 @@ ActiveRecord::Schema.define(version: 2022_08_20_213526) do
   add_foreign_key "merchant_account_files", "identities"
   add_foreign_key "merchant_account_files", "identity_files"
   add_foreign_key "merchant_account_files", "merchant_accounts"
+  add_foreign_key "merchant_account_payments", "identities"
+  add_foreign_key "merchant_account_payments", "identity_files"
+  add_foreign_key "merchant_account_payments", "merchant_accounts"
   add_foreign_key "merchant_accounts", "identities"
   add_foreign_key "message_contacts", "contacts"
   add_foreign_key "message_contacts", "identities"

@@ -4622,3 +4622,12 @@ en:
       limit_monthly: "Monthly Limit"
       currencies_accepted: "Currencies Accepted"
       ship_to_countries: "Ship to Countries"
+      payments: "Accepted Payments"
+      delete_payment: "Delete Accepted Payment"
+      add_payment: "Add Accepted Payment"
+      payment: "Accepted Payment"
+    merchant_account_payments:
+      payment_name: "Name"
+      amount_per_payment: "Amount Per Payment"
+      percent_total: "Percent of Total"
+      back: "Merchant Account"

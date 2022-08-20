@@ -60,15 +60,29 @@
   )
 %>
 <%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_SELECT,
-    name: :rating,
-    value: obj.rating,
-    placeholder: "myplaceonline.general.rating",
-    select_options: Myp::RATINGS,
-  )
+  render(layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.merchant_accounts.payments"),
+    childpropertiesname: :merchant_account_payments,
+    childproperties: obj.merchant_account_payments,
+    deletebutton: t("myplaceonline.merchant_accounts.delete_payment"),
+    addbutton: t("myplaceonline.merchant_accounts.add_payment"),
+    expanded: obj.merchant_account_payments.length > 0,
+    formjson: [
+      {
+        type: :renderpartial,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.merchant_accounts.payment"),
+        objform: "merchant_account_payments/form",
+        only_new: true,
+        edit: false,
+        autofocus: true
+      }
+    ]
+  }) do |child_fields, childproperty|
 %>
+  <%= render partial: "merchant_account_payments/form", locals: { obj: childproperty || MerchantAccountPayment.build, edit: edit, autofocus: false, f: child_fields } %>
+<% end %>
 <%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,

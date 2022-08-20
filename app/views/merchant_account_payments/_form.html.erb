@@ -1,0 +1,38 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :payment_name,
+    value: obj.payment_name,
+    placeholder: "myplaceonline.merchant_account_payments.payment_name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :amount_per_payment,
+    value: obj.amount_per_payment,
+    placeholder: "myplaceonline.merchant_account_payments.amount_per_payment"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_DECIMAL,
+    name: :percent_total,
+    value: obj.percent_total,
+    placeholder: "myplaceonline.merchant_account_payments.percent_total"
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.general.notes",
+    collapsed: obj.notes.blank?,
+  )
+%>
