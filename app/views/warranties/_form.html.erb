@@ -13,3 +13,16 @@
     placeholder_prefix: I18n.t("myplaceonline.category.warranties").singularize,
   )
 %>
+<%=
+  render partial: "myplaceonline/pictures_form", locals: {
+    f: f,
+    obj: obj,
+    position_field: :position,
+    pictures_field: :warranty_files,
+    item_placeholder: "myplaceonline.identity_files.file",
+    heading: "myplaceonline.identity_files.files",
+    addbutton: "myplaceonline.identity_files.add_file",
+    addbutton_multi: "myplaceonline.identity_files.add_files",
+    deletebutton: "myplaceonline.identity_files.delete_file"
+  }
+%>

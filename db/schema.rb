@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_20_195756) do
+ActiveRecord::Schema.define(version: 2022_08_20_202918) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -7975,6 +7975,19 @@ ActiveRecord::Schema.define(version: 2022_08_20_195756) do
     t.index ["identity_id"], name: "index_warranties_on_identity_id"
   end
 
+  create_table "warranty_files", force: :cascade do |t|
+    t.bigint "warranty_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_warranty_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_warranty_files_on_identity_id"
+    t.index ["warranty_id"], name: "index_warranty_files_on_warranty_id"
+  end
+
   create_table "web_comics", id: :serial, force: :cascade do |t|
     t.string "web_comic_name"
     t.integer "website_id"
@@ -9361,6 +9374,9 @@ ActiveRecord::Schema.define(version: 2022_08_20_195756) do
   add_foreign_key "wallets", "identities"
   add_foreign_key "wallets", "passwords"
   add_foreign_key "warranties", "identities", name: "warranties_identity_id_fk"
+  add_foreign_key "warranty_files", "identities"
+  add_foreign_key "warranty_files", "identity_files"
+  add_foreign_key "warranty_files", "warranties"
   add_foreign_key "web_comics", "feeds"
   add_foreign_key "web_comics", "identities"
   add_foreign_key "web_comics", "websites"

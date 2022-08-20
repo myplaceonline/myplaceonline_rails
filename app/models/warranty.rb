@@ -2,6 +2,8 @@ class Warranty < ApplicationRecord
   include MyplaceonlineActiveRecordIdentityConcern
 
   validates :warranty_name, presence: true
+
+  child_files
   
   def display
     warranty_name
@@ -15,7 +17,8 @@ class Warranty < ApplicationRecord
       :warranty_start,
       :warranty_end,
       :warranty_condition,
-      :notes
+      :notes,
+      warranty_files_attributes: FilesController.multi_param_names
     ]
   end
 end

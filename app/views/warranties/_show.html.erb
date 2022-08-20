@@ -3,3 +3,4 @@
 <%= attribute_table_row_date(t("myplaceonline.warranties.warranty_end"), obj.warranty_end) %>
 <%= attribute_table_row(t("myplaceonline.warranties.warranty_condition"), obj.warranty_condition) %>
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.warranty_files) %>
