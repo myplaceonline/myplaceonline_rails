@@ -34,7 +34,6 @@
     value: obj.currencies_accepted,
     placeholder: "myplaceonline.merchant_accounts.currencies_accepted",
     collapsed: obj.currencies_accepted.blank?,
-    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
 <%=
@@ -45,7 +44,6 @@
     value: obj.ship_to_countries,
     placeholder: "myplaceonline.merchant_accounts.ship_to_countries",
     collapsed: obj.ship_to_countries.blank?,
-    placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
 <%=
