@@ -95,7 +95,7 @@ module Myplaceonline
             end
           end
         end
-        
+
         # We could load up the user from warden, but that would mean we'd do a SQL request on all requests including
         # images, etc.
         
@@ -164,13 +164,13 @@ module Myplaceonline
           if !i.nil?
             host = host[i + 10..-1]
           end
-          
+
           MyplaceonlineExecutionContext.host = host
           MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
           
           env["rack.session.options"][:domain] = DynamicCookieOptions.cookie_domain
-          
+
           if parsed_query_string["current_identity_id"] != "-1"
             
             if !parsed_query_string["current_identity_id"].blank?
@@ -196,7 +196,7 @@ module Myplaceonline
             end
 
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
-            
+
             @app.call(env)
           else
             request = ActionDispatch::Request.new(env)

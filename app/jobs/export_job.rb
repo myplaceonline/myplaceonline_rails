@@ -83,8 +83,10 @@ class ExportJob < ApplicationJob
       append_message(export, I18n.t("myplaceonline.exports.export_started"))
       
       export.identity.user.identities.each do |i|
+        Rails.logger.debug{"ExportJob processing identity: #{i.id}"}
         if !i.website_domain.display.blank?
           website_domain_name = clean_filename(i.website_domain.display)
+          Rails.logger.debug{"ExportJob processing domain: #{website_domain_name}"}
           domain_dir = dir_path.join(website_domain_name)
           if !Dir.exists?(domain_dir.to_s)
             Dir.mkdir(domain_dir.to_s)
@@ -99,6 +101,8 @@ class ExportJob < ApplicationJob
             Dir.mkdir(identity_dir.to_s)
           end
           
+          Rails.logger.debug{"ExportJob processing into directory: #{identity_dir}"}
+
           urlprefix = Rails.application.routes.url_helpers.root_url(
             protocol: Rails.configuration.default_url_options[:protocol],
             host: Rails.env.production? ? i.website_domain.main_domain : Rails.configuration.default_url_options[:host],

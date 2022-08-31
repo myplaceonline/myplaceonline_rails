@@ -209,7 +209,7 @@ class User < ApplicationRecord
         create_identity = self.check_invite_code(website_domain, false)
         
         if create_identity
-          ::Rails.logger.debug{"Creating identity for #{self.id}"}
+          ::Rails.logger.debug{"Creating identity for #{self.id} and domain #{website_domain.id}"}
           
           # No identity for the current domain, so we create a default one. We can
           # also do any first-time initialization of the user here
