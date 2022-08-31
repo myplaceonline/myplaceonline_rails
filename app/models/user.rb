@@ -158,7 +158,7 @@ class User < ApplicationRecord
   after_commit :on_after_create, on: [:create]
   
   def on_after_create
-    if Myp.requires_invite_code && !invite_code.nil? # Users can be created outside the web process
+    if Myp.requires_invite_code && !invite_code.nil? && !MyplaceonlineExecutionContext.offline? # Users can be created outside the web process
 
       # Save off the entered invite code for post_initialize
       entered_invite_code = EnteredInviteCode.new(
@@ -201,7 +201,7 @@ class User < ApplicationRecord
   end
 
   def post_initialize
-    if self.needs_identity?
+    if self.needs_identity? && !MyplaceonlineExecutionContext.offline?
       MyplaceonlineExecutionContext.do_user(self) do
         # If the domain requires an invite code, then redirect
         website_domain = Myp.website_domain

@@ -55,6 +55,6 @@ class UsersController < MyplaceonlineController
     end
     
     def admin_sees_all?
-      true
+      !MyplaceonlineExecutionContext.offline?
     end
 end

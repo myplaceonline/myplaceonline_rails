@@ -1,4 +1,4 @@
-<% if !obj.current_user_owns? && !MyplaceonlineExecutionContext.offline? %>
+<% if !obj.current_user_owns? %>
   <%= data_row(heading: t("myplaceonline.reputation_reports.user"), content: obj.identity.user) %>
 <% end %>
 <%
