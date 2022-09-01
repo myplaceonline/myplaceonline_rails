@@ -381,7 +381,7 @@ class ExportJob < ApplicationJob
               if !processed_links.has_key?(new_link)
                 processed_links[new_link] = true
                 
-                Rails.logger.debug{"ExportJob scrape new_link: #{new_link}"}
+                Rails.logger.debug{"ExportJob scrape new_link pushing new item: #{new_link}"}
 
                 process.push({
                   dir: dir,

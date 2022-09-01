@@ -52,7 +52,9 @@ class Regimen < ApplicationRecord
   end
 
   def reset
-    regimen_items.update_all(updated_at: reset_time)
+    if !MyplaceonlineExecutionContext.offline?
+      regimen_items.update_all(updated_at: reset_time)
+    end
   end
 
   after_commit :on_after_update, on: [:update]

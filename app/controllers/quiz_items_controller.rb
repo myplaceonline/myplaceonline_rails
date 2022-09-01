@@ -16,18 +16,23 @@ class QuizItemsController < MyplaceonlineController
   end
 
   def footer_items_index
-    super + [
-      {
-        title: I18n.t("myplaceonline.quiz_items.back"),
-        link: quiz_path(@parent),
-        icon: "back"
-      },
-      {
+    result = super
+
+    result << {
+      title: I18n.t("myplaceonline.quiz_items.back"),
+      link: quiz_path(@parent),
+      icon: "back"
+    }
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.quizzes.start"),
         link: quiz_start_path(@parent),
         icon: "navigation"
-      },
-    ]
+      }
+    end
+
+    return result
   end
   
   def footer_items_show
@@ -39,7 +44,7 @@ class QuizItemsController < MyplaceonlineController
       icon: "back"
     }
     
-    if @obj.copyable?
+    if @obj.copyable? && !MyplaceonlineExecutionContext.offline?
       result << {
         title: I18n.t("myplaceonline.quiz_items.copy"),
         link: quiz_quiz_item_copy_path(@parent, @obj),
@@ -47,17 +52,19 @@ class QuizItemsController < MyplaceonlineController
       }
     end
     
-    result << {
-      title: I18n.t("myplaceonline.quiz_items.cut"),
-      link: quiz_quiz_item_cut_path(@parent, @obj),
-      icon: "recycle"
-    }
-    
-    result << {
-      title: I18n.t("myplaceonline.quizzes.start"),
-      link: quiz_start_path(@obj.quiz),
-      icon: "navigation"
-    }
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
+        title: I18n.t("myplaceonline.quiz_items.cut"),
+        link: quiz_quiz_item_cut_path(@parent, @obj),
+        icon: "recycle"
+      }
+
+      result << {
+        title: I18n.t("myplaceonline.quizzes.start"),
+        link: quiz_start_path(@obj.quiz),
+        icon: "navigation"
+      }
+    end
     
     result + super
   end
@@ -148,8 +155,10 @@ class QuizItemsController < MyplaceonlineController
   def ignore
     set_obj
     
-    @obj.ignore = true
-    @obj.save!
+    if !MyplaceonlineExecutionContext.offline?
+      @obj.ignore = true
+      @obj.save!
+    end
     
     redirect_to(
       quiz_start_path(@obj.quiz),

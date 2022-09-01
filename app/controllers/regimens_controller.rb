@@ -20,13 +20,17 @@ class RegimensController < MyplaceonlineController
   end
   
   def footer_items_show
-    super + [
-      {
+    result = super
+
+    if !MyplaceonlineExecutionContext.offline?
+      result << {
         title: I18n.t("myplaceonline.regimens.reset"),
         link: regimen_reset_path(@obj),
         icon: "recycle"
-      },
-    ]
+      }
+    end
+
+    return result
   end
 
   def complete_item
