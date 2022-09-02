@@ -147,6 +147,8 @@ class ExportJob < ApplicationJob
       output_path = uploads_path + output_name
 
       Rails.logger.debug{"ExportJob output_path: #{output_path} with #{dir}"}
+
+      stdout = ""
       
       case export.compression_type
       when Export::COMPRESSION_TYPE_ZIP
