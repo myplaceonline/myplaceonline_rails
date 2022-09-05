@@ -2034,7 +2034,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def map_driving_time?
-      true
+      false
     end
     
     def location_field

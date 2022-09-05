@@ -43,4 +43,16 @@ class LocationsController < MyplaceonlineController
         LocationsController.param_names
       )
     end
+
+    def show_map?
+      true
+    end
+
+    def has_location?(item)
+      true
+    end
+
+    def get_map_location(item)
+      item
+    end
 end
