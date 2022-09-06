@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_20_214127) do
+ActiveRecord::Schema.define(version: 2022_09_05_211553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2959,6 +2959,15 @@ ActiveRecord::Schema.define(version: 2022_08_20_214127) do
     t.datetime "updated_at", null: false
     t.integer "quantity"
     t.index ["identity_id"], name: "index_financial_assets_on_identity_id"
+  end
+
+  create_table "find_humane_humane_locations", force: :cascade do |t|
+    t.bigint "location_id", null: false
+    t.bigint "identity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
+    t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
   end
 
   create_table "flight_legs", id: :serial, force: :cascade do |t|
@@ -8746,6 +8755,8 @@ ActiveRecord::Schema.define(version: 2022_08_20_214127) do
   add_foreign_key "financial_asset_files", "identities"
   add_foreign_key "financial_asset_files", "identity_files"
   add_foreign_key "financial_assets", "identities"
+  add_foreign_key "find_humane_humane_locations", "identities"
+  add_foreign_key "find_humane_humane_locations", "locations"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
   add_foreign_key "flight_legs", "identities"
