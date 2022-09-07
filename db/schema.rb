@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_05_211553) do
+ActiveRecord::Schema.define(version: 2022_09_07_125427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2966,6 +2966,11 @@ ActiveRecord::Schema.define(version: 2022_09_05_211553) do
     t.bigint "identity_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
   end

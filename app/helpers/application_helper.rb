@@ -255,7 +255,7 @@ module ApplicationHelper
         if content.respond_to?("parent_context")
           url = send(content.parent_context.class.name.underscore + "_" + content.class.name.underscore + "_path", content.parent_context, content)
         else
-          url = send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+          url = main_app.send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
         end
       else
         url = options[:reference_url]
