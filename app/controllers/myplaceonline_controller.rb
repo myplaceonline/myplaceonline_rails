@@ -173,9 +173,9 @@ class MyplaceonlineController < ApplicationController
   
   def set_parent
     if nested
-      parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+      parent_id = parent_table_last_name1 + "_id"
       @parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
-      Rails.logger.debug{"MyplaceonlineController.set_parent parent: #{@parent.inspect}"}
+      Rails.logger.debug{"MyplaceonlineController.set_parent parent: #{@parent.inspect} for #{parent_id} = #{params[parent_id]}"}
     end
   end
 
@@ -298,10 +298,10 @@ class MyplaceonlineController < ApplicationController
         end
         
         if nested
-          parent_name = parent_model_last.table_name.singularize.downcase
-          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
+          parent_name = parent_table_last_name2
+          parent_id = parent_table_last_name1 + "_id"
           new_parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
-          Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect}"}
+          Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect} for #{parent_name}"}
           @obj.send("#{parent_name}=", new_parent)
         end
         
@@ -741,7 +741,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def back_to_all_name
-    category.nil? ? I18n.t("myplaceonline.category." + category_name) : category.human_title
+    category_display
   end
   
   def back_to_all_path
@@ -829,7 +829,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new_title
-    I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
+    I18n.t("myplaceonline.general.add") + " " + (category.nil? ? category_display.singularize : category.human_title_singular)
   end
   
   def data_split_icon
@@ -841,7 +841,7 @@ class MyplaceonlineController < ApplicationController
   end
   
   def new_save_text
-    I18n.t("myplaceonline.general.save") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
+    I18n.t("myplaceonline.general.save") + " " + (category.nil? ? category_display.singularize : category.human_title_singular)
   end
   
   def index_destroy_all_link?
@@ -981,7 +981,7 @@ class MyplaceonlineController < ApplicationController
     result = []
     if self.show_index_add
       result << {
-        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular),
+        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? category_display.singularize : category.human_title_singular),
         link: self.new_path,
         icon: "plus"
       }
@@ -1015,14 +1015,14 @@ class MyplaceonlineController < ApplicationController
     
     if self.show_index_add
       result << {
-        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular),
+        title: I18n.t("myplaceonline.general.add") + " " + (category.nil? ? category_display.singularize : category.human_title_singular),
         link: self.new_path,
         icon: "plus"
       }
     end
 
     result << {
-      title: I18n.t("myplaceonline.general.list", category: category.nil? ? I18n.t("myplaceonline.category." + category_name) : category.human_title),
+      title: I18n.t("myplaceonline.general.list", category: category.nil? ? category_display : category.human_title),
       link: index_path,
       icon: "bars"
     }
@@ -1403,7 +1403,7 @@ class MyplaceonlineController < ApplicationController
   end
 
   def form_menu_items(form, new:)
-    main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + (category.nil? ? I18n.t("myplaceonline.category." + category_name).singularize : category.human_title_singular)
+    main_button = new ? new_save_text : I18n.t("myplaceonline.general.save") + " " + (category.nil? ? category_display.singularize : category.human_title_singular)
     
     result = []
 
@@ -1706,8 +1706,9 @@ class MyplaceonlineController < ApplicationController
         additional = ""
       end
       if nested
-        parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-        additional += " AND #{model.table_name}.#{parent_id} = #{ActiveRecord::Base.connection.quote(params[parent_id.to_sym])}"
+        parent_id1 = parent_table_last_name1 + "_id"
+        parent_id2 = parent_table_last_name2 + "_id"
+        additional += " AND #{model.table_name}.#{parent_id2} = #{ActiveRecord::Base.connection.quote(params[parent_id1.to_sym])}"
       end
       Rails.logger.debug{"all query strict: #{strict}, additional: #{additional}"}
       perform_all(initial_or: initial_or, additional: additional)
@@ -1780,12 +1781,13 @@ class MyplaceonlineController < ApplicationController
       # First lookup, then authorize
       begin
         if nested
-          parent_id = parent_model_last.table_name.singularize.downcase + "_id"
-          Rails.logger.debug{"MyplaceonlineController.set_obj parent_id: #{parent_id}, param: #{p[parent_id]}"}
-          if !p[parent_id].nil?
-            @parent = Myp.find_existing_object(parent_model_last, p[parent_id], false)
+          parent_id1 = parent_table_last_name1 + "_id"
+          parent_id2 = parent_table_last_name2 + "_id"
+          Rails.logger.debug{"MyplaceonlineController.set_obj parent_id: #{parent_id1}, param: #{p[parent_id1]}"}
+          if !p[parent_id1].nil?
+            @parent = Myp.find_existing_object(parent_model_last, p[parent_id1], false)
             Rails.logger.debug{"MyplaceonlineController.set_obj parent: #{@parent.inspect}"}
-            @obj = model.where("id = ? and #{parent_id} = ?", p[:id].to_i, p[parent_id.to_sym].to_i).take!
+            @obj = model.where("id = ? and #{parent_id2} = ?", p[:id].to_i, p[parent_id1.to_sym].to_i).take!
           end
         end
         if @obj.nil? || override_existing
@@ -2059,5 +2061,13 @@ class MyplaceonlineController < ApplicationController
     
     def get_map_location(item)
       item.send(self.location_field)
+    end
+
+    def parent_table_last_name1
+      parent_model_last.table_name.singularize.downcase
+    end
+
+    def parent_table_last_name2
+      parent_model_last.table_name.singularize.downcase
     end
 end

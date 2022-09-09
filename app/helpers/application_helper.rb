@@ -255,7 +255,8 @@ module ApplicationHelper
         if content.respond_to?("parent_context")
           url = send(content.parent_context.class.name.underscore + "_" + content.class.name.underscore + "_path", content.parent_context, content)
         else
-          url = main_app.send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore + "_path", content)
+          target_app = options[:target_app].nil? ? main_app : options[:target_app]
+          url = target_app.send((options[:evaluated_class_name].nil? ? content.class.name : options[:evaluated_class_name]).underscore.gsub(/.*\//, "") + "_path", content)
         end
       else
         url = options[:reference_url]
@@ -605,6 +606,7 @@ module ApplicationHelper
       admin_details: false,
       reference_locals: {},
       percentage: false,
+      target_app: nil,
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]
