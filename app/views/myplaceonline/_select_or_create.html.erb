@@ -74,6 +74,12 @@ end
 if !defined?(show_new_collapsible)
   show_new_collapsible = true
 end
+if !defined?(target_app)
+  target_app = nil
+end
+if !defined?(autofocus)
+  autofocus = false
+end
 
 random_name = SecureRandom.hex(10)
 new_item_collapsible_id = random_name + "_new_item"
@@ -133,9 +139,17 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
                   end
               %>
                 <li>
-                  <%= link_to(existingobj.display, send(existingobj_link, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
+                  <% if target_app.nil? %>
+                    <%= link_to(existingobj.display, send(existingobj_link, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
+                  <% else %>
+                    <%= link_to(existingobj.display, target_app.send(existingobj_link, existingobj), onclick: Myp.select_listitem('#' + fieldid)) %>
+                  <% end %>
                   <% if allow_existing_edit %>
-                    <%= link_to(existingobj.display, send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
+                    <% if target_app.nil? %>
+                      <%= link_to(existingobj.display, send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
+                    <% else %>
+                      <%= link_to(existingobj.display, target_app.send(existingobj_link, existingobj), :class => "splitlink", data: { icon: edit ? "edit" : "search" }) %>
+                    <% end %>
                   <% end %>
                 </li>
               <% end %>

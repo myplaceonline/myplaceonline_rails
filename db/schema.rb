@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_09_023461) do
+ActiveRecord::Schema.define(version: 2022_09_14_004270) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2984,8 +2984,10 @@ ActiveRecord::Schema.define(version: 2022_09_09_023461) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.bigint "parent_location_id"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
+    t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
   end
 
   create_table "find_humane_humane_products", force: :cascade do |t|
@@ -8798,6 +8800,7 @@ ActiveRecord::Schema.define(version: 2022_09_09_023461) do
   add_foreign_key "find_humane_humane_location_humane_products", "find_humane_humane_locations"
   add_foreign_key "find_humane_humane_location_humane_products", "find_humane_humane_products"
   add_foreign_key "find_humane_humane_location_humane_products", "identities"
+  add_foreign_key "find_humane_humane_locations", "find_humane_humane_locations", column: "parent_location_id"
   add_foreign_key "find_humane_humane_locations", "identities"
   add_foreign_key "find_humane_humane_locations", "locations"
   add_foreign_key "find_humane_humane_products", "identities"
