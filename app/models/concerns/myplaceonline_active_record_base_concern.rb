@@ -227,12 +227,17 @@ module MyplaceonlineActiveRecordBaseConcern
       after_commit :update_file_folders, on: [:create, :update]
     end
     
-    def child_files(name: nil, suffix: "files")
+    def child_files(
+      name: nil,
+      suffix: "files",
+      model: nil,
+      foreign_key: nil
+    )
       if name.nil?
         name = (self.name.tableize.singularize + "_" + suffix).to_sym
       end
       
-      child_properties(name: name, sort: "position ASC, updated_at ASC")
+      child_properties(name: name, sort: "position ASC, updated_at ASC", model: model, foreign_key: foreign_key)
 
       update_method_name = ("update_file_folders_" + name.to_s).to_sym
       #update_method_name = :update_method_name

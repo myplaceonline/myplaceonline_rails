@@ -315,6 +315,19 @@ class ApiController < ApplicationController
           accumulatedSingularNamePrefix = ""
 
           objclass_index = 1
+
+          objclass_module = nil
+          objclass_prefix = nil
+
+          first_part = spliturl[objclass_index]
+          ::Rails::Engine.subclasses.each do |subclass|
+            if subclass.name.rpartition('::').first.underscore == first_part
+              objclass_module = subclass.name.rpartition('::').first + "::"
+              objclass_prefix = first_part
+              Rails.logger.debug{"found engine: #{objclass_module}"}
+              objclass_index = objclass_index + 1
+            end
+          end
           
           # This upload may come from the root element or from a child form submission
           paramnode = nil
@@ -350,7 +363,15 @@ class ApiController < ApplicationController
           Rails.logger.debug{"objclass: #{objclass}, objid: #{objid}"}
           
           if objid != "new"
-            obj = Myp.find_existing_object(objclass, objid, false)
+
+            search_name = objclass
+            if !objclass_module.nil?
+              search_name = objclass_module + search_name.camelize
+            end
+
+            Rails.logger.debug{"searching: #{search_name}"}
+
+            obj = Myp.find_existing_object(search_name, objid, false)
             authorize! :edit, obj
 
             # Alrighty, we've got the object and the user is authorized, so
@@ -419,7 +440,15 @@ class ApiController < ApplicationController
                   Rails.logger.debug{"prevkey: #{prevkey}"}
                   
                   if !obj.nil?
-                    prevkeyclass = Object.const_get(prevkey.singularize.to_s.camelize)
+
+                    search_prevkey = prevkey.singularize.to_s.camelize
+
+                    if !objclass_prefix.nil? && prevkey.start_with?(objclass_prefix)
+                      search_prevkey = objclass_module + prevkey[objclass_prefix.length+1..-1].singularize.to_s.camelize
+                      Rails.logger.debug{"new search_prevkey: #{search_prevkey}"}
+                    end
+
+                    prevkeyclass = Object.const_get(search_prevkey)
 
                     newfilewrapper = prevkeyclass.new(val)
                     

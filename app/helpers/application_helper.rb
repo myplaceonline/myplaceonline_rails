@@ -326,11 +326,14 @@ module ApplicationHelper
       end
       
       Rails.logger.debug{"ApplicationHelper.display_collection: path: #{path}"}
-      
-      i = path.index("::")
-      
-      if !i.nil?
-        path = path[0..i-1]
+
+      if !options[:engine_override]
+        i = path.index("::")
+        if !i.nil?
+          path = path[0..i-1]
+        end
+      else
+        path = path.split("::").second
       end
       
       path = path.underscore.pluralize
@@ -607,6 +610,7 @@ module ApplicationHelper
       reference_locals: {},
       percentage: false,
       target_app: nil,
+      engine_override: false,
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]
@@ -909,7 +913,7 @@ module ApplicationHelper
         if useParams
           content =
               image_tag(
-                file_thumbnail_name_path(
+                main_app.file_thumbnail_name_path(
                   identity_file,
                   identity_file.thumbnail_name,
                   t: identity_file.updated_at.to_i,
@@ -922,7 +926,7 @@ module ApplicationHelper
         else
           content =
               image_tag(
-                file_thumbnail_name_path(
+                main_app.file_thumbnail_name_path(
                   identity_file,
                   identity_file.thumbnail_name,
                   t: identity_file.updated_at.to_i
@@ -936,7 +940,7 @@ module ApplicationHelper
         if useParams
           content =
               image_tag(
-                file_view_name_path(
+                main_app.file_view_name_path(
                   identity_file,
                   identity_file.urlname,
                   t: identity_file.updated_at.to_i,
@@ -949,7 +953,7 @@ module ApplicationHelper
         else
           content =
               image_tag(
-                file_view_name_path(
+                main_app.file_view_name_path(
                   identity_file,
                   identity_file.urlname,
                   t: identity_file.updated_at.to_i
@@ -963,7 +967,7 @@ module ApplicationHelper
       if link_to_original
         if useParams
           url_or_blank(
-            file_view_name_url(
+            main_app.file_view_name_url(
               identity_file,
               identity_file.urlname,
               t: identity_file.updated_at.to_i,
@@ -976,7 +980,7 @@ module ApplicationHelper
           )
         else
           url_or_blank(
-            file_view_name_url(
+            main_app.file_view_name_url(
               identity_file,
               identity_file.urlname,
               t: identity_file.updated_at.to_i
@@ -1058,7 +1062,7 @@ module ApplicationHelper
       content +=
         "<p>#{
                 url_or_blank(
-                  file_path(
+                  main_app.file_path(
                     identity_file,
                     t: identity_file.updated_at.to_i,
                     token: token
@@ -1070,7 +1074,7 @@ module ApplicationHelper
                 )
              } | #{
                     url_or_blank(
-                      file_download_name_url(
+                      main_app.file_download_name_url(
                         identity_file,
                         identity_file.urlname,
                         t: identity_file.updated_at.to_i,
@@ -1095,14 +1099,14 @@ module ApplicationHelper
       if !identity_file.nil?
         if identity_file.urlname.blank?
           download_path =
-              file_download_url(
+              main_app.file_download_url(
                 identity_file,
                 t: identity_file.updated_at.to_i,
                 token: token
               )
         else
           download_path =
-              file_download_name_url(
+              main_app.file_download_name_url(
                 identity_file,
                 identity_file.urlname,
                 t: identity_file.updated_at.to_i,
@@ -1112,7 +1116,7 @@ module ApplicationHelper
         content =
             "<p>#{
                     url_or_blank(
-                      file_path(
+                      main_app.file_path(
                         identity_file,
                         t: identity_file.updated_at.to_i,
                         token: token

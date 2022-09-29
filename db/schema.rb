@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_14_004270) do
+ActiveRecord::Schema.define(version: 2022_09_29_006069) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2988,6 +2988,19 @@ ActiveRecord::Schema.define(version: 2022_09_14_004270) do
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
+  end
+
+  create_table "find_humane_humane_product_files", force: :cascade do |t|
+    t.bigint "find_humane_humane_product_id", null: false
+    t.bigint "identity_file_id", null: false
+    t.bigint "identity_id", null: false
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["find_humane_humane_product_id"], name: "fhfhhpf_fhhp"
+    t.index ["identity_file_id"], name: "fhfhhpf_if"
+    t.index ["identity_id"], name: "fhfhhpf_i"
   end
 
   create_table "find_humane_humane_products", force: :cascade do |t|
@@ -8803,6 +8816,9 @@ ActiveRecord::Schema.define(version: 2022_09_14_004270) do
   add_foreign_key "find_humane_humane_locations", "find_humane_humane_locations", column: "parent_location_id"
   add_foreign_key "find_humane_humane_locations", "identities"
   add_foreign_key "find_humane_humane_locations", "locations"
+  add_foreign_key "find_humane_humane_product_files", "find_humane_humane_products"
+  add_foreign_key "find_humane_humane_product_files", "identities"
+  add_foreign_key "find_humane_humane_product_files", "identity_files"
   add_foreign_key "find_humane_humane_products", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
