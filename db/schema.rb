@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_29_162340) do
+ActiveRecord::Schema.define(version: 2022_09_29_211563) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3035,6 +3035,13 @@ ActiveRecord::Schema.define(version: 2022_09_29_162340) do
     t.boolean "pastureraised"
     t.boolean "grassfed"
     t.boolean "grassfinished"
+    t.string "producer"
+    t.boolean "vegetariandiet"
+    t.boolean "nocasein"
+    t.boolean "glutenfree"
+    t.boolean "nonitrates"
+    t.boolean "nosoy"
+    t.boolean "freerange"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
