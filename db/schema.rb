@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_29_211563) do
+ActiveRecord::Schema.define(version: 2022_10_01_016038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2959,6 +2959,20 @@ ActiveRecord::Schema.define(version: 2022_09_29_211563) do
     t.datetime "updated_at", null: false
     t.integer "quantity"
     t.index ["identity_id"], name: "index_financial_assets_on_identity_id"
+  end
+
+  create_table "find_humane_ads", force: :cascade do |t|
+    t.string "name"
+    t.string "img"
+    t.string "link"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_find_humane_ads_on_identity_id"
   end
 
   create_table "find_humane_humane_location_humane_products", force: :cascade do |t|
@@ -8830,6 +8844,7 @@ ActiveRecord::Schema.define(version: 2022_09_29_211563) do
   add_foreign_key "financial_asset_files", "identities"
   add_foreign_key "financial_asset_files", "identity_files"
   add_foreign_key "financial_assets", "identities"
+  add_foreign_key "find_humane_ads", "identities"
   add_foreign_key "find_humane_humane_location_humane_products", "find_humane_humane_locations"
   add_foreign_key "find_humane_humane_location_humane_products", "find_humane_humane_products"
   add_foreign_key "find_humane_humane_location_humane_products", "identities"
