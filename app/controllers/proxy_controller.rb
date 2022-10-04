@@ -24,12 +24,12 @@ class ProxyController < ApplicationController
       )
     end
 
-    Rails.logger.debug{"Proxying: #{path}"}
+    Rails.logger.info{"Proxying: #{path}"}
 
     p = params.to_unsafe_hash.dup.except(:controller, :action, :path)
     if p.size > 0
       path = "#{path}?#{p.to_query}"
-      Rails.logger.debug{"Updating path: #{path}"}
+      Rails.logger.info{"Updating path: #{path}"}
     end
 
     reverse_proxy path, path: ""
