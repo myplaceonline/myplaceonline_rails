@@ -16,7 +16,7 @@ class ProxyController < ApplicationController
     path = path.gsub(/(https?):\/([^\/])/, "\\1://\\2")
 
     # Whitelist
-    if path != "https://maps.googleapis.com/maps/api"
+    if !path.start_with?("https://maps.googleapis.com/maps/api")
       return render(
         json: { message: "Not found" },
         status: 404,
