@@ -159,6 +159,8 @@ Rails.application.routes.draw do
 
   match 'urlmappings', :to => 'welcome#urlmappings', via: [:get], as: "welcome_urlmappings"
 
+  match 'proxy/*path' => 'proxy#index', via: [:get, :post, :put, :patch, :delete], format: false
+
   additions = {
     bets: [
       { instance: true, link: "update_status" },
