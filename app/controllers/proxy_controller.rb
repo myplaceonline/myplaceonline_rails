@@ -24,14 +24,36 @@ class ProxyController < ApplicationController
       )
     end
 
-    Rails.logger.info{"Proxying: #{path}"}
+    Rails.logger.debug{"Proxying: #{path}"}
 
     p = params.to_unsafe_hash.dup.except(:controller, :action, :path)
     if p.size > 0
       path = "#{path}?#{p.to_query}"
-      Rails.logger.info{"Updating path: #{path}"}
+      Rails.logger.debug{"Updating path: #{path}"}
     end
 
-    reverse_proxy path, path: ""
+    u = URI.parse(path)
+    fullpath = u.path
+    if !u.query.blank?
+      fullpath = fullpath + "?" + u.query
+    end
+
+    # https://github.com/rest-client/rest-client
+    response = Myp.http_get(url: path)
+    raw_response = response[:raw_response]
+
+    Rails.logger.debug{"Proxy result: #{raw_response.body}"}
+
+    render(plain: raw_response.body, content_type: raw_response.headers[:content_type], status: raw_response.code)
+
+    #reverse_proxy u.scheme + "://" + u.host, path: fullpath do |config|
+    #  config.on_missing do |code, response|
+    #    Rails.logger.warn{"Proxy response on_missing: #{response.uri} #{response.body}"}
+    #    return render(
+    #      json: { message: "Not found" },
+    #      status: 404,
+    #    )
+    #  end
+    #end
   end
 end
