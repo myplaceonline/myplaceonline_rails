@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_01_016038) do
+ActiveRecord::Schema.define(version: 2022_10_06_015451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3056,6 +3056,16 @@ ActiveRecord::Schema.define(version: 2022_10_01_016038) do
     t.boolean "nonitrates"
     t.boolean "nosoy"
     t.boolean "freerange"
+    t.boolean "beef"
+    t.boolean "chicken"
+    t.boolean "pork"
+    t.boolean "fish"
+    t.boolean "eggs"
+    t.boolean "turkey"
+    t.boolean "mutton"
+    t.boolean "lamb"
+    t.boolean "veal"
+    t.boolean "venison"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
