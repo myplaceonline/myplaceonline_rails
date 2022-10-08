@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_08_125565) do
+ActiveRecord::Schema.define(version: 2022_10_08_132882) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2999,6 +2999,11 @@ ActiveRecord::Schema.define(version: 2022_10_08_125565) do
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "parent_location_id"
+    t.boolean "supermarket"
+    t.boolean "restaurant"
+    t.boolean "wifi"
+    t.string "wifipassword"
+    t.boolean "workonlaptop"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3068,8 +3073,6 @@ ActiveRecord::Schema.define(version: 2022_10_08_125565) do
     t.boolean "venison"
     t.boolean "certified_humane_free_range"
     t.boolean "certified_humane_pasture_raised_grass_fed"
-    t.boolean "supermarket"
-    t.boolean "restaurant"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
