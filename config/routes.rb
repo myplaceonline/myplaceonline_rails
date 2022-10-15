@@ -72,6 +72,7 @@ Rails.application.routes.draw do
     help/highlights
     help/category
     api/enter_invite_code
+    api/write_marker
   ))
 
   RouteHelpers.routes_post(self, %w(

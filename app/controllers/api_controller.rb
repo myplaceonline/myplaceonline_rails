@@ -1377,6 +1377,43 @@ class ApiController < ApplicationController
       status: result[:code],
     )
   end
+
+  def write_marker
+    result = {
+      code: 500,
+      successful: false,
+      errors: [],
+    }
+
+    context = params[:context]
+    if !context.blank?
+      found = false
+      if context == "myplaceonline"
+        found = true
+      else
+        ::Rails::Engine.subclasses.each do |subclass|
+          engine_prefix = subclass.name.rpartition('::').first.underscore
+          if subclass.name.rpartition('::').first.underscore == context
+            found = true
+            Rails.logger.info{"writer_marker found engine: #{engine_prefix}"}
+          end
+        end
+      end
+
+      if found
+        filepath = File.join(Dir.tmpdir(), "#{context}.txt")
+        File.write(filepath, "#{Time.now.to_s}")
+
+        result[:code] = 200
+        result[:successful] = true
+      end
+    end
+    
+    render(
+      json: result,
+      status: result[:code],
+    )
+  end
   
   protected
     def json_error(error)
