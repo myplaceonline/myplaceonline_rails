@@ -21,5 +21,5 @@ class Lock < ApplicationRecord
   child_files
 
   child_property(name: :location)
-  child_property(name: :password, required: true)
+  child_property(name: :password)
 end
