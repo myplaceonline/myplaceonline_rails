@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_26_170733) do
+ActiveRecord::Schema.define(version: 2022_10_28_025728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3084,6 +3084,7 @@ ActiveRecord::Schema.define(version: 2022_10_26_170733) do
     t.boolean "ketofriendly"
     t.boolean "paleofriendly"
     t.boolean "dairyfree"
+    t.boolean "nongmo"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
