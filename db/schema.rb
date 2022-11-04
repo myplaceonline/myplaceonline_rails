@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_04_004843) do
+ActiveRecord::Schema.define(version: 2022_11_04_013850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3004,6 +3004,12 @@ ActiveRecord::Schema.define(version: 2022_11_04_004843) do
     t.boolean "wifi"
     t.string "wifipassword"
     t.boolean "workonlaptop"
+    t.boolean "farm_store"
+    t.boolean "farm"
+    t.boolean "farmers_market"
+    t.boolean "csa"
+    t.boolean "farm_stay_bnb"
+    t.boolean "online_shopping"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3090,6 +3096,20 @@ ActiveRecord::Schema.define(version: 2022_11_04_004843) do
     t.boolean "usda_organic"
     t.boolean "food_alliance_certified"
     t.boolean "one_health_certified"
+    t.boolean "dairy"
+    t.boolean "cheese"
+    t.boolean "sweet"
+    t.boolean "pantry"
+    t.boolean "bath_body"
+    t.boolean "goat"
+    t.boolean "bison"
+    t.boolean "leather"
+    t.boolean "duck"
+    t.boolean "agw_certified_regenerative"
+    t.boolean "agw_certified_grassfed"
+    t.boolean "agw_certified_non_gmo"
+    t.boolean "agw_certified_organic"
+    t.boolean "agw_salmon_welfare_certified"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
