@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_07_160229) do
+ActiveRecord::Schema.define(version: 2022_11_07_163674) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3012,6 +3012,7 @@ ActiveRecord::Schema.define(version: 2022_11_07_160229) do
     t.boolean "online_shopping"
     t.boolean "coffeeshop"
     t.boolean "dinein"
+    t.boolean "bakery"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
