@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_07_193049) do
+ActiveRecord::Schema.define(version: 2022_11_08_022136) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3119,6 +3119,9 @@ ActiveRecord::Schema.define(version: 2022_11_07_193049) do
     t.boolean "agw_salmon_welfare_certified"
     t.string "source_name"
     t.string "source_id"
+    t.boolean "animal_welfare_certified_fish_1"
+    t.boolean "animal_welfare_certified_fish_3"
+    t.boolean "animal_welfare_certified_fish_6"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
