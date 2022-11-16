@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_13_150113) do
+ActiveRecord::Schema.define(version: 2022_11_16_224364) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3129,6 +3129,7 @@ ActiveRecord::Schema.define(version: 2022_11_13_150113) do
     t.boolean "whole30approved"
     t.boolean "noartificial"
     t.boolean "nocrates"
+    t.boolean "nongmoproject"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
