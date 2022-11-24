@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_22_131064) do
+ActiveRecord::Schema.define(version: 2022_11_24_031485) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3036,6 +3036,10 @@ ActiveRecord::Schema.define(version: 2022_11_22_131064) do
     t.string "source_id"
     t.text "internalnotes"
     t.boolean "foodtruck"
+    t.string "deliversto"
+    t.string "website"
+    t.boolean "localpickup"
+    t.text "onlinedescription"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
