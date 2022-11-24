@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_24_031485) do
+ActiveRecord::Schema.define(version: 2022_11_24_132243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3040,6 +3040,8 @@ ActiveRecord::Schema.define(version: 2022_11_24_031485) do
     t.string "website"
     t.boolean "localpickup"
     t.text "onlinedescription"
+    t.string "logo"
+    t.boolean "onlineonly"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3159,6 +3161,7 @@ ActiveRecord::Schema.define(version: 2022_11_24_031485) do
     t.boolean "certified_paleo"
     t.boolean "keto_certified"
     t.boolean "halal"
+    t.boolean "certified_humane_grass_fed"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
