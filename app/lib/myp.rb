@@ -2523,9 +2523,26 @@ module Myp
   def self.process_search_results(search_results, parent_category = nil, original_search = nil, display_category_prefix: true, display_category_icon: true)
     # If category isn't blank and it searched a subitem, then we need
     # to map those back to the original category item
+    Rails.logger.debug{"process_search_results search_results: #{search_results.count}"}
+
     if !parent_category.blank?
-      parent_category_class = Object.const_get(Myp.category_to_model_name(parent_category))
-      
+      parent_category_class = nil
+      model_name = Myp.category_to_model_name(parent_category)
+      begin
+        parent_category_class = Object.const_get(model_name)
+      rescue NameError => ne
+        ::Rails::Engine.subclasses.each do |subclass|
+          begin
+            parent_category_class = Object.const_get(subclass.name.rpartition('::').first + "::" + model_name)
+          rescue NameError
+          end
+        end
+
+        if parent_category_class.nil?
+          raise ne
+        end
+      end
+
       Rails.logger.debug{"search_result parent_category class: #{parent_category_class}"}
       
       search_results = search_results.map do |search_result|
