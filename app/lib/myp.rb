@@ -471,7 +471,7 @@ module Myp
         begin
           doc = Nokogiri::HTML(result)
           doc.css('a').each do |link|
-            link['target'] = '_blank'
+            link['rel'] = 'external'
           end
           result = doc.to_s
         rescue Exception => e
