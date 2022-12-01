@@ -142,6 +142,7 @@ var myplaceonline = function(mymodule) {
     }
   });
 
+  /*
   $(document).on("click", "a", function(e) {
     if ($(this).attr('rel') == "external") {
       e.preventDefault();
@@ -153,6 +154,7 @@ var myplaceonline = function(mymodule) {
       return false;
     }
   });
+  */
   
   function jqmSetListMessage(list, message) {
     list.html("<li data-role=\"visible\">" + message + "</li>");
