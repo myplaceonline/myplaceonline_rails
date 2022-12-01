@@ -145,7 +145,11 @@ var myplaceonline = function(mymodule) {
   $(document).on("click", "a", function(e) {
     if ($(this).attr('rel') == "external") {
       e.preventDefault();
-      window.open($(this).attr('href'));
+      if (window.cordova && window.cordova.InAppBrowser && window.cordova.InAppBrowser.open) {
+        window.cordova.InAppBrowser.open($(this).attr('href'));
+      } else {
+        window.open($(this).attr('href'));
+      }
       return false;
     }
   });
