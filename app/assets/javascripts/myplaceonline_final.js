@@ -146,7 +146,7 @@ var myplaceonline = function(mymodule) {
     if ($(this).attr('rel') == "external") {
       e.preventDefault();
       if (window.cordova && window.cordova.InAppBrowser && window.cordova.InAppBrowser.open) {
-        window.cordova.InAppBrowser.open($(this).attr('href'));
+        window.cordova.InAppBrowser.open($(this).attr('href'), '_system', 'hidden=yes,location=no');
       } else {
         window.open($(this).attr('href'));
       }
