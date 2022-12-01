@@ -142,19 +142,19 @@ var myplaceonline = function(mymodule) {
     }
   });
 
-  /*
   $(document).on("click", "a", function(e) {
     if ($(this).attr('rel') == "external") {
       e.preventDefault();
       if (window.cordova && window.cordova.InAppBrowser && window.cordova.InAppBrowser.open) {
         window.cordova.InAppBrowser.open($(this).attr('href'), '_system', 'hidden=yes,location=no');
+      } else if (window.cordova) {
+        window.open($(this).attr('href'), '_system');
       } else {
         window.open($(this).attr('href'));
       }
       return false;
     }
   });
-  */
   
   function jqmSetListMessage(list, message) {
     list.html("<li data-role=\"visible\">" + message + "</li>");
