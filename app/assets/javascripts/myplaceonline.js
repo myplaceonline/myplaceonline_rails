@@ -338,6 +338,11 @@ var myplaceonline = function(mymodule) {
     }
     errorMsg += "\ntype: " + t;
 
+    if (errorMsg.indexOf("jquery-ujs has already been loaded") != -1) {
+      consoleLog("Suppressing error: " + errorMsg);
+      return suppressErrorAlert;
+    }
+
     criticalError(errorMsg, errorObj);
 
     holderrors += "\n\n" + errorMsg;
