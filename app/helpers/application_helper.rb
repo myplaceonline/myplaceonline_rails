@@ -685,7 +685,7 @@ module ApplicationHelper
           content = markdown_post_process(content)
         end
         options[:clipboard_text] = content
-        content = Myp.markdown_to_html(content)
+        content = Myp.markdown_to_html(content, links_target_blank: true)
         content = content.html_safe
         options[:htmlencode_content] = false
         options[:content_classes] = "markdowncell #{options[:content_classes]}"
@@ -1088,7 +1088,7 @@ module ApplicationHelper
                   }</p>".html_safe
       
       if !identity_file.notes.blank?
-        content += Myp.markdown_to_html(identity_file.notes).html_safe
+        content += Myp.markdown_to_html(identity_file.notes, links_target_blank: true).html_safe
       end
       attribute_table_row_content(
         name,
@@ -1137,7 +1137,7 @@ module ApplicationHelper
                         }</p>".html_safe
 
         if !identity_file.notes.blank?
-          content += Myp.markdown_to_html(identity_file.notes).html_safe
+          content += Myp.markdown_to_html(identity_file.notes, links_target_blank: true).html_safe
         end
         attribute_table_row_content(
           name,
@@ -1168,11 +1168,11 @@ module ApplicationHelper
   end
   
   def attribute_table_row_markdown(name, markdown)
-    attribute_table_row(name, Myp.markdown_to_html(markdown), markdown, "markdowncell")
+    attribute_table_row(name, Myp.markdown_to_html(markdown, links_target_blank: true), markdown, "markdowncell")
   end
   
   def markdown_content(markdown)
-    result = Myp.markdown_to_html(markdown)
+    result = Myp.markdown_to_html(markdown, links_target_blank: true)
     if !result.nil?
       result.html_safe
     else

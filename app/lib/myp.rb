@@ -463,12 +463,22 @@ module Myp
     html
   end
   
-  def self.markdown_to_html(markdown)
+  def self.markdown_to_html(markdown, links_target_blank: false)
+    result = nil
     if !markdown.nil?
-      GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, markdown)
-    else
-      nil
+      result = GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, markdown)
+      if links_target_blank
+        begin
+          doc = Nokogiri::HTML(result)
+          doc.css('a').each do |link|
+            link['target'] = '_blank'
+          end
+          result = doc.to_s
+        rescue Exception => e
+        end
+      end
     end
+    return result
   end
   
   def self.parse_yaml_to_html(id)
