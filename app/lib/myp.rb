@@ -3063,6 +3063,8 @@ module Myp
         end
       end
     end
+
+    puts "debug_print called from:\n#{Thread.current.backtrace}"
     
     result
   end

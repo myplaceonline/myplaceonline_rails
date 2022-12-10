@@ -285,9 +285,9 @@ class MyplaceonlineController < ApplicationController
             @obj = model.new(p)
           else
             set_obj(p: p, override_existing: true)
-            Rails.logger.debug{"create: @obj before assign: #{Myp.debug_print(@obj)}"}
+            #Rails.logger.debug{"create: @obj before assign: #{Myp.debug_print(@obj)}"}
             @obj.assign_attributes(p)
-            Rails.logger.debug{"create: updated @obj: #{Myp.debug_print(@obj)}"}
+            #Rails.logger.debug{"create: updated @obj: #{Myp.debug_print(@obj)}"}
           end
         rescue ActiveRecord::RecordNotFound => rnf
           raise Myp::CannotFindNestedAttribute, rnf.message + " (code needs attribute setter override?)"
@@ -415,7 +415,7 @@ class MyplaceonlineController < ApplicationController
         
         do_update_before_save
 
-        Rails.logger.debug{"saving updated obj: #{Myp.debug_print(@obj)}"}
+        #Rails.logger.debug{"saving updated obj: #{Myp.debug_print(@obj)}"}
 
         @obj.save
       ensure
