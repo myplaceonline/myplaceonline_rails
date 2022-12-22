@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_08_220672) do
+ActiveRecord::Schema.define(version: 2022_12_22_215468) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2977,7 +2977,7 @@ ActiveRecord::Schema.define(version: 2022_12_08_220672) do
 
   create_table "find_humane_humane_deliveries", force: :cascade do |t|
     t.string "company"
-    t.bigint "find_humane_humane_location_id"
+    t.bigint "find_humane_humane_location_id", null: false
     t.string "deliversto"
     t.string "website"
     t.text "notes"
@@ -3001,6 +3001,7 @@ ActiveRecord::Schema.define(version: 2022_12_08_220672) do
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "noinherit"
     t.index ["find_humane_humane_location_id"], name: "fhhlp_fhhl"
     t.index ["find_humane_humane_product_id"], name: "fhhlp_fhhp"
     t.index ["identity_id"], name: "fhhlp_i"
