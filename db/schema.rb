@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_31_151878) do
+ActiveRecord::Schema.define(version: 2023_01_06_205083) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2974,6 +2974,7 @@ ActiveRecord::Schema.define(version: 2022_12_31_151878) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "noutm"
     t.boolean "delivery"
+    t.integer "position"
     t.index ["identity_id"], name: "index_find_humane_ads_on_identity_id"
   end
 
