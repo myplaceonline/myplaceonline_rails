@@ -4546,6 +4546,7 @@ en:
       last_success: "Last Success"
       run_data: "Run Data"
       maxdblockid: "Max DB Lock ID"
+      disabled: "Disabled?"
     subscribe:
       title: "Subscribe"
       email_not_specified: "Email not specified"

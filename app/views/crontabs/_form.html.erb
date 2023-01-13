@@ -74,3 +74,12 @@
     placeholder: "myplaceonline.crontabs.last_success"
   )
 %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :disabled,
+    value: obj.disabled,
+    placeholder: "myplaceonline.crontabs.disabled"
+  )
+%>

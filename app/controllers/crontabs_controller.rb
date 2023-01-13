@@ -53,6 +53,7 @@ class CrontabsController < MyplaceonlineController
         :last_success,
         :run_data,
         :notes,
+        :disabled,
       )
     end
 end

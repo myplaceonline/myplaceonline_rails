@@ -50,7 +50,7 @@ class Crontab < ApplicationRecord
         run = true
       end
       
-      if run
+      if run && !crontab.disabled?
         if crontab.identity.user.admin?
           Rails.logger.info{"Crontab.run_crontabs running #{crontab.inspect}"}
           
