@@ -105,7 +105,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     colorize (0.8.1)
-    composite_primary_keys (13.0.5)
+    composite_primary_keys (13.0.7)
       activerecord (~> 6.1.0)
     concurrent-ruby (1.2.0)
     crass (1.0.6)
@@ -220,6 +220,7 @@ GEM
       nokogiri (~> 1.7, >= 1.7.1)
     hashie (5.0.0)
     haversine (0.3.2)
+    hexdump (1.0.0)
     htmlentities (4.3.4)
     http (3.3.0)
       addressable (~> 2.3)
@@ -541,6 +542,7 @@ DEPENDENCIES
   google-api-client
   googlemaps-services
   haversine
+  hexdump
   htmlentities
   i18n (~> 1.8.11)
   immigrant
