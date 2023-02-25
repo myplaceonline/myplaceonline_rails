@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_05_012158) do
+ActiveRecord::Schema.define(version: 2023_02_25_164974) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3006,6 +3006,7 @@ ActiveRecord::Schema.define(version: 2023_02_05_012158) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "noinherit"
+    t.boolean "manuallyadded"
     t.index ["find_humane_humane_location_id"], name: "fhhlp_fhhl"
     t.index ["find_humane_humane_product_id"], name: "fhhlp_fhhp"
     t.index ["identity_id"], name: "fhhlp_i"
