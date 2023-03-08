@@ -58,10 +58,14 @@ class Feed < ApplicationRecord
             title = nil
             if title.blank? && item.respond_to?("title")
               if item.title.respond_to?("content")
-                title = sanitize(item.title.content).strip
+                title = sanitize(item.title.content)
               else
-                title = sanitize(item.title).strip
+                title = sanitize(item.title)
               end
+              if title.blank?
+                title = ""
+              end
+              title = title.strip
             end
             
             feed_link = nil
