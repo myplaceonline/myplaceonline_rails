@@ -20,7 +20,7 @@ module Myp
     Thread.new do
       Myp.failsafe_debug("kill -USR2 received @ #{Time.now}")
       ObjectSpace.each_object(Thread) do |th|
-        Myp.failsafe_debug("ThreadInfo id: #{th}, name: #{th.name}, status: #{th.status}\n\t" + th.backtrace.join("\n\t"))
+        Myp.failsafe_debug("ThreadInfo id: #{th}, name: #{th.name}, status: #{th.status}\n\t #{th.backtrace.nil? ? "" : th.backtrace.join("\n\t")}")
       end
     end
   end
