@@ -2243,6 +2243,7 @@ en:
       type_cosmetologist: "Cosmetologist"
       type_physical_therapy: "Physical Therapist"
       type_endocrinologist: "Endocrinologist"
+      type_urologist: "Urologist"
     dental_insurances:
       insurance_name: "Name"
       insurance_company: "Insurance Company"
