@@ -310,7 +310,7 @@ class Location < ApplicationRecord
   end
 
   def self.skip_check_attributes
-    ["region", "allhours"]
+    ["region", "allhours", "prefer_latlng"]
   end
   
   def ensure_gps

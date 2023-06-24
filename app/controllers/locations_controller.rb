@@ -17,6 +17,7 @@ class LocationsController < MyplaceonlineController
       :bathroom_code,
       :allhours,
       :prefer_latlng,
+      # Remember to add any new boolean attributes to Location.skip_check_attributes
       location_phones_attributes: [:id, :number, :_destroy],
       location_pictures_attributes: FilesController.multi_param_names
     ], include_website) {[
