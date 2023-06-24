@@ -1167,6 +1167,7 @@ en:
       looked_up_postal_code: "Found %{sub_region2}, %{sub_region1} from %{postal_code}"
       bathroom_code: "Bathroom Code"
       allhours: "24 Hours"
+      prefer_latlng: "Prefer latitude/longitude"
     activities:
       name: "Name"
     apartments:

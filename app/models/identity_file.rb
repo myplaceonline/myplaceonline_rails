@@ -577,6 +577,8 @@ class IdentityFile < ApplicationRecord
         result = "application/pgp-encrypted"
       when "gz"
         result = "application/gzip"
+      when "webp"
+        result = "image/webp"
       else
         raise "Unimplemented extension #{ext}"
       end

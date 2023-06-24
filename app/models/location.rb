@@ -181,6 +181,14 @@ class Location < ApplicationRecord
   def geocode_address
     address_one_line(false, address_details: false)
   end
+
+  def navigate_address
+    if self.prefer_latlng?
+      return latitude.to_s + "," + longitude.to_s
+    else
+      return self.geocode_address
+    end
+  end
   
   def address_one_line(usename = true, address_details: true)
     result = nil

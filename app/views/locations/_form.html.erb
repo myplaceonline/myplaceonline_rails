@@ -142,6 +142,15 @@ $("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input
 <%=
   input_field(
     form: f,
+    type: Myp::FIELD_BOOLEAN,
+    name: :prefer_latlng,
+    value: obj.prefer_latlng,
+    placeholder: "myplaceonline.locations.prefer_latlng"
+  )
+%>
+<%=
+  input_field(
+    form: f,
     type: Myp::FIELD_TEXT_AREA,
     name: :notes,
     value: obj.notes,
