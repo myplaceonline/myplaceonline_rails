@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_24_002357) do
+ActiveRecord::Schema.define(version: 2023_06_29_001331) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3183,6 +3183,7 @@ ActiveRecord::Schema.define(version: 2023_06_24_002357) do
     t.decimal "price_amount", precision: 10, scale: 2
     t.string "price_details"
     t.boolean "unvaccinated"
+    t.boolean "accessories"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
