@@ -1,16 +1,17 @@
 class UserMailer < ActionMailer::Base
   def send_support_email(from, to, subject, content, content_plain = nil, reply_to: nil)
-    @from = from
-    @content = content
+    @from = to
+    @content = "From: #{from}<br><br>" + content
     if !content_plain.nil?
-      @content_plain = content_plain
+      @content_plain = "From: #{from}\n\n" + content_plain
     else
       @content_plain = @content
     end
     if reply_to.blank?
       reply_to = @from
     end
-    # Cannot use non-verified from because of Sender Signatures
+    # Cannot use incoming 'from' because we might not have
+    # a sender signature for it.
     mail(from: to, to: to, subject: subject, reply_to: reply_to)
   end
   
