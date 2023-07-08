@@ -10,7 +10,8 @@ class UserMailer < ActionMailer::Base
     if reply_to.blank?
       reply_to = @from
     end
-    mail(from: from, to: to, subject: subject, reply_to: reply_to)
+    # Cannot use non-verified from because of Sender Signatures
+    mail(from: to, to: to, subject: subject, reply_to: reply_to)
   end
   
   def send_email(to, subject, content, cc = nil, bcc = nil, content_plain = nil, reply_to = nil, from_prefix: nil)
