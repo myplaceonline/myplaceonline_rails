@@ -2001,7 +2001,7 @@ module Myp
   
   # This is used to send emails to administrators of domains hosted by this website; therefore,
   # it suppresses any emails to unknown domains
-  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false, use_secondary: false, skip_inferring_email: false)
+  def self.send_support_email_safe(subject, body_html, body_plain = nil, email: nil, request: nil, html_comment_details: false, use_secondary: false, skip_inferring_email: false, host: nil)
     
     Rails.logger.debug{"Myp.send_support_email_safe subject: #{subject}, email: #{email}"}
     
@@ -2030,10 +2030,11 @@ module Myp
         body_html << "\n-->\n"
       end
       
-      to = Myp.create_email(use_secondary: use_secondary)
+      to = Myp.create_email(use_secondary: use_secondary, host: host)
       
       # Now check if the to address is valid
       if Myp.is_supported_host?(host: Myp.email_to_host(email: to))
+        Rails.logger.info{"Myp.send_support_email_safe sending to: #{to} from: #{from}"}
         UserMailer.send_support_email(from, to, subject, body_html, body_plain).deliver_now
       else
         # Maybe somebody trying to use this mechanism to send malicious emails
