@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_01_215938) do
+ActiveRecord::Schema.define(version: 2023_07_14_172151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -2979,6 +2979,7 @@ ActiveRecord::Schema.define(version: 2023_07_01_215938) do
     t.decimal "geofence_center_latitude", precision: 24, scale: 20
     t.decimal "geofence_center_longitude", precision: 24, scale: 20
     t.decimal "geofence_distance", precision: 10, scale: 2
+    t.string "srcset"
     t.index ["identity_id"], name: "index_find_humane_ads_on_identity_id"
   end
 
