@@ -185,6 +185,11 @@ GEM
     faraday-retry (1.0.3)
     faraday_middleware (1.2.0)
       faraday (~> 1.0)
+    ferrum (0.13)
+      addressable (~> 2.5)
+      concurrent-ruby (~> 1.1)
+      webrick (~> 1.7)
+      websocket-driver (>= 0.6, < 0.8)
     ffi (1.15.5)
     file_exists (0.2.0)
     gems (1.2.0)
@@ -242,7 +247,7 @@ GEM
     immigrant (0.3.6)
       activerecord (>= 3.0)
     io-console (0.6.0)
-    irb (1.7.3)
+    irb (1.7.4)
       reline (>= 0.3.6)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
@@ -567,6 +572,7 @@ DEPENDENCIES
   exponent-server-sdk!
   factory_bot_rails
   faraday_middleware
+  ferrum
   file_exists
   geocoder
   github-markup
