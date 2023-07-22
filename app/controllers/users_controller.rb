@@ -50,7 +50,17 @@ class UsersController < MyplaceonlineController
       body = params[:body]
 
       if !subject.blank? && !body.blank?
-        User.current_user.send_email(subject, body)
+        body_html = Myp.markdown_to_html(body)
+        User.current_user.current_identity.send_email(
+          subject,
+          body_html,
+          nil,
+          nil,
+          body
+        )
+        flash[:notice] = "Email queued"
+      else
+        flash[:error] = "Subject or body missing"
       end
     end
   end
