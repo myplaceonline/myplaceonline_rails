@@ -2052,7 +2052,7 @@ module Myp
         reply_to = Myp.create_email(use_secondary: true)
       end
       Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}, reply_to: #{reply_to}"}
-      mail = UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to, from_prefix: from_prefix)
+      mail = UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to, from_prefix)
       Rails.logger.info{"created email: #{mail.class}"}
       mail.deliver_now
     rescue Exception => e
