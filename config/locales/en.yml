@@ -934,6 +934,10 @@ en:
       identity_name_blank: "Name is required"
       identity_id_blank: "Identity is required"
       invalid_identity_id: "Invalid identity"
+      email: "Email"
+      email_subject: "Subject"
+      email_body: "Body"
+      email_send: "Send"
     identities:
       name: "Name"
       phones: "Phone Numbers"

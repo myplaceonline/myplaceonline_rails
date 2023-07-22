@@ -526,6 +526,9 @@ Rails.application.routes.draw do
         name: :trip_stories
       }
     ],
+    users: [
+      { instance: true, link: "email" },
+    ],
     vehicles: [
       {
         subresources: true,

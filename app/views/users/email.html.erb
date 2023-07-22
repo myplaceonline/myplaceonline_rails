@@ -1,0 +1,37 @@
+<% content_for :heading do -%><%= t("myplaceonline.users.email") %><% end -%>
+
+<h1><%= t("myplaceonline.users.email") %></h1>
+
+<%= flashes! %>
+
+<%= form_tag(user_email_path(@obj), method: :post) do %>
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT,
+      name: :subject,
+      placeholder: I18n.t("myplaceonline.users.email_subject")
+    )
+  %>
+  <%=
+    input_field(
+      type: Myp::FIELD_TEXT_AREA,
+      name: :body,
+      placeholder: I18n.t("myplaceonline.users.email_body"),
+      collapsed: false,
+    )
+  %>
+  <%=
+    render(partial: "shared/footer", locals: {
+      items: [
+        {
+          content: submit_tag(t("myplaceonline.users.email_send"), "data-icon" => "action", "data-iconpos" => "top", style: "background-color: green")
+        },
+        {
+          title: I18n.t("myplaceonline.general.back"),
+          link: controller.obj_path,
+          icon: "back"
+        },
+      ]
+    })
+  %>
+<% end %>

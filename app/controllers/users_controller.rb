@@ -28,6 +28,33 @@ class UsersController < MyplaceonlineController
     Myp.display_date_short_year(obj.last_sign_in_at, current_user)
   end
 
+  def footer_items_show
+    result = super
+
+    if !MyplaceonlineExecutionContext.offline? && User.current_user.admin?
+      result << {
+        title: I18n.t("myplaceonline.users.email"),
+        link: user_email_path(@obj),
+        icon: "mail"
+      }
+    end
+
+    result
+  end
+
+  def email
+    set_obj
+
+    if request.post?
+      subject = params[:subject]
+      body = params[:body]
+
+      if !subject.blank? && !body.blank?
+        User.current_user.send_email(subject, body)
+      end
+    end
+  end
+
   protected
     def additional_sorts
       [
