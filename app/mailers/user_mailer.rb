@@ -16,7 +16,6 @@ class UserMailer < ActionMailer::Base
   end
   
   def send_email(to, subject, content, cc = nil, bcc = nil, content_plain = nil, reply_to = nil, from_prefix: nil)
-    Rails.logger.info{"UserMailer.send_email to #{to}: #{subject}"}
     @content = content
     if !content_plain.nil?
       @content_plain = content_plain
@@ -25,9 +24,6 @@ class UserMailer < ActionMailer::Base
     end
     from = Myp.create_email(display_prefix: from_prefix, display_prefix_suffix: I18n.t("myplaceonline.emails.from_prefix_context"))
 
-    Rails.logger.info{"UserMailer.send_email calling mail"}
-    result = mail(from: from, to: to, subject: subject, cc: cc, bcc: bcc, reply_to: reply_to)
-    Rails.logger.info{"UserMailer.send_email result: #{result}"}
-    return result
+    mail(from: from, to: to, subject: subject, cc: cc, bcc: bcc, reply_to: reply_to)
   end
 end
