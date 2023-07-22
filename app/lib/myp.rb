@@ -2053,7 +2053,7 @@ module Myp
       end
       Rails.logger.info{"send_email to: #{to}, cc: #{cc}, bcc: #{bcc}, reply_to: #{reply_to}"}
       mail = UserMailer.send_email(to, subject, body, cc, bcc, body_plain, reply_to, from_prefix)
-      Rails.logger.info{"created email: #{mail.class}"}
+      #Rails.logger.info{"created email: #{mail.class}"}
       mail.deliver_now
     rescue Exception => e
       Rails.logger.error{"Could not send email to #{to}: #{Myp.error_details(e)}"}
