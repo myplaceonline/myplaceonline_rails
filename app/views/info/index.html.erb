@@ -1,12 +1,14 @@
 <% content_for :heading do -%><%= t("myplaceonline.info.title") %><% end -%>
 
 <ul data-role="listview" data-inset="true">
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(info_about_path) do %>
       <%= image_tag("/api/header_icon.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.about") %> <%= Myp.website_domain.display %>
     <% end %>
   </li>
+  <% end %>
   <% if !MyplaceonlineExecutionContext.offline? %>
     <li>
       <%= link_to(info_contact_path) do %>
@@ -27,25 +29,31 @@
       <%= t("myplaceonline.info.terms") %>
     <% end %>
   </li>
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(info_mission_statement_path) do %>
       <%= image_tag("FatCow_Icons16x16/orbit.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.mission_statement.title") %>
     <% end %>
   </li>
+  <% end %>
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(info_faq_path) do %>
       <%= image_tag("FatCow_Icons16x16/question.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.faq") %>
     <% end %>
   </li>
+  <% end %>
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(help_path) do %>
       <%= image_tag("famfamfam/help.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.help") %>
     <% end %>
   </li>
-  <% if !MyplaceonlineExecutionContext.offline? %>
+  <% end %>
+  <% if !MyplaceonlineExecutionContext.offline? && !current_user.nil? && !current_user.guest? %>
     <li>
       <%= link_to(info_tips_path) do %>
         <%= image_tag("FatCow_Icons16x16/magic_wand_2.png", size: "16x16", class: "ui-li-icon") %>
@@ -53,12 +61,14 @@
       <% end %>
     </li>
   <% end %>
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(info_credits_path) do %>
       <%= image_tag("famfamfam/heart.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.credits") %>
     <% end %>
   </li>
+  <% end %>
   <% if !MyplaceonlineExecutionContext.offline? %>
     <!-- Recent versions of Android don't allow installation from online link
     <li>
@@ -83,10 +93,12 @@
       <% end %>
     </li>
   <% end %>
+  <% if !current_user.nil? && !current_user.guest? %>
   <li>
     <%= link_to(info_diagnostics_path) do %>
       <%= image_tag("famfamfam/bug.png", size: "16x16", class: "ui-li-icon") %>
       <%= t("myplaceonline.info.diagnostics") %>
     <% end %>
   </li>
+  <% end %>
 </ul>
