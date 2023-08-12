@@ -461,7 +461,7 @@ en:
       newpasswordwithmin: "New Password (min %{minchars} characters)"
       password2: "Repeat Password"
       newpassword2: "New Password Confirmation"
-      requires_invite_code: "An invite code is required to sign up because we're not quite ready to go public yet. You may <a href='/info/contact?subject=Please send invite code'>contact us</a> to request an invite code."
+      requires_invite_code: "An invite code is required to sign up because we're not a public service. You may <a href='/info/contact?subject=Please send invite code'>contact us</a> to request an invite code."
       requires_invite_code_short: "Invite code required"
       currentpassword: "Current Password"
       remember: "Remember Me"
