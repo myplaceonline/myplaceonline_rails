@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_14_172151) do
+ActiveRecord::Schema.define(version: 2023_08_13_230638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3189,6 +3189,14 @@ ActiveRecord::Schema.define(version: 2023_07_14_172151) do
     t.boolean "unvaccinated"
     t.boolean "accessories"
     t.boolean "homegoods"
+    t.boolean "nomaleculling"
+    t.boolean "carbonneutralcertified"
+    t.boolean "livewebcam"
+    t.boolean "nobeaktrimming"
+    t.boolean "consistentdaylight"
+    t.boolean "solarpanels"
+    t.boolean "upcycledfeed"
+    t.boolean "recyclablepackaging"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
