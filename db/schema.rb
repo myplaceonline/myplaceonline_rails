@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_19_233040) do
+ActiveRecord::Schema.define(version: 2023_08_24_155781) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3055,6 +3055,7 @@ ActiveRecord::Schema.define(version: 2023_08_19_233040) do
     t.decimal "score", precision: 10, scale: 2
     t.string "website_underlying"
     t.boolean "linknoutm"
+    t.boolean "website_ordering"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3198,6 +3199,9 @@ ActiveRecord::Schema.define(version: 2023_08_19_233040) do
     t.boolean "upcycledfeed"
     t.boolean "recyclablepackaging"
     t.boolean "usda_certified_grassfed"
+    t.boolean "dairysheep"
+    t.boolean "cheesesheep"
+    t.boolean "weaned_naturally"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
