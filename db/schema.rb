@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_24_155781) do
+ActiveRecord::Schema.define(version: 2023_08_27_015180) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3056,6 +3056,7 @@ ActiveRecord::Schema.define(version: 2023_08_24_155781) do
     t.string "website_underlying"
     t.boolean "linknoutm"
     t.boolean "website_ordering"
+    t.boolean "private_events"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3202,6 +3203,9 @@ ActiveRecord::Schema.define(version: 2023_08_24_155781) do
     t.boolean "dairysheep"
     t.boolean "cheesesheep"
     t.boolean "weaned_naturally"
+    t.boolean "farmstay"
+    t.string "product_website"
+    t.string "farmstay_website"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
