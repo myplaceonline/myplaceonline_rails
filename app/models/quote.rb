@@ -5,7 +5,7 @@ class Quote < ApplicationRecord
   validates :quote_text, presence: true
   
   def display
-    Myp.ellipses_if_needed(self.quote_text, 16)
+    Myp.ellipses_if_needed(self.quote_text, 64)
   end
 
   def self.params
