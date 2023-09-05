@@ -57,6 +57,8 @@ class IdentityFile < ApplicationRecord
       self.file_file_name
     elsif self.is_video?
       i = self.file_file_name.index(".")
+      
+      # Video thumbnail is always a PNG
       if !i.nil?
         self.file_file_name[0..i] + "png"
       else
@@ -466,6 +468,7 @@ class IdentityFile < ApplicationRecord
     if self.is_image?
       self.file_content_type
     elsif self.is_video?
+      # Thumbnail of a video is always a PNG
       "image/png"
     end
   end
@@ -561,6 +564,8 @@ class IdentityFile < ApplicationRecord
         result = "image/jpeg"
       when "png"
         result = "image/png"
+      when "heic"
+        result = "image/heic"
       when "gif"
         result = "image/gif"
       when "ods"
