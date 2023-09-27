@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_27_205850) do
+ActiveRecord::Schema.define(version: 2023_09_27_015242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3058,6 +3058,23 @@ ActiveRecord::Schema.define(version: 2023_08_27_205850) do
     t.boolean "website_ordering"
     t.boolean "private_events"
     t.string "video_link"
+    t.boolean "bar"
+    t.boolean "club"
+    t.boolean "winebar"
+    t.boolean "distillery"
+    t.boolean "cocktailbar"
+    t.boolean "speakeasy"
+    t.boolean "sportsbar"
+    t.boolean "divebar"
+    t.boolean "livemusic"
+    t.boolean "hotel"
+    t.boolean "hotelbar"
+    t.boolean "cigarbar"
+    t.boolean "lounge"
+    t.boolean "arcade"
+    t.boolean "comedyclub"
+    t.boolean "karaokebar"
+    t.boolean "tikibar"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
@@ -3210,6 +3227,7 @@ ActiveRecord::Schema.define(version: 2023_08_27_205850) do
     t.string "product_website_underlying"
     t.boolean "eggs_duck"
     t.boolean "eggs_turkey"
+    t.boolean "nocorn"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
