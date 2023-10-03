@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_27_015242) do
+ActiveRecord::Schema.define(version: 2023_10_03_204752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3075,6 +3075,15 @@ ActiveRecord::Schema.define(version: 2023_09_27_015242) do
     t.boolean "comedyclub"
     t.boolean "karaokebar"
     t.boolean "tikibar"
+    t.boolean "giftshop"
+    t.boolean "hairsalon"
+    t.boolean "boutique"
+    t.boolean "spa"
+    t.boolean "supplementstore"
+    t.boolean "gardencenter"
+    t.boolean "herbshop"
+    t.boolean "homegoodsstore"
+    t.boolean "clothingstore"
     t.index ["identity_id"], name: "index_find_humane_humane_locations_on_identity_id"
     t.index ["location_id"], name: "index_find_humane_humane_locations_on_location_id"
     t.index ["parent_location_id"], name: "index_find_humane_humane_locations_on_parent_location_id"
