@@ -235,6 +235,6 @@ class AdminController < ApplicationController
   def throw_server_exception
     Rails.logger.info{"AdminController.throw_server_exception started"}
     
-    raise ActionController::InvalidAuthenticityToken
+    raise "Thrown exception"
   end
 end
