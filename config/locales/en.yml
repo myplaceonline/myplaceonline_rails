@@ -4386,7 +4386,7 @@ en:
       encrypt_output: "Encrypt"
       finished_subject: "Export Finished"
       progress_waiting_for_worker: "Waiting for worker. Refresh to check status."
-      export_started: "Exporting website. This may take hours or days. Refresh this page to check the status. You'll receive an email when it's finished."
+      export_started: "Exporting website. This may take hours or days. You'll receive an email when it's finished."
       export_complete: "Export complete. Compressing files..."
       compression_complete: "Compression complete. Encrypting files..."
       encryption_complete: "Encryption complete. Use the free [gpg](https://gnupg.org/download/index.html) program to decrypt: gpg --output %{file} --decrypt %{file}.gpg"

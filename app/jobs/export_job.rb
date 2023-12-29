@@ -20,6 +20,8 @@ class ExportJob < ApplicationJob
             
             begin
               
+              Myp.warn("New Export ID #{export.id} started")
+              
               case export.export_type
               when Export::EXPORT_TYPE_EVERYTHING
                 Rails.logger.info{"ExportJob everything"}
@@ -48,14 +50,22 @@ class ExportJob < ApplicationJob
                 nil,
                 export.export_progress,
               )
+              
+              Myp.send_support_email_safe(
+                "Export Finished",
+                "Export ID #{export.id} finished",
+              )
+
             rescue Exception => e
               Rails.logger.info{"ExportJob error: #{Myp.error_details(e)}"}
+
+              # Send an exception email
+              Myp.warn("ExportJob error", e)
+
               append_message(export, "Error: #{CGI::escapeHTML(e.to_s)}")
 
               export.export_status = Export::EXPORT_STATUS_ERROR
               export.save!
-              
-              Myp.warn("ExportJob error", e)
             end
           end
 
