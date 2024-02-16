@@ -7,6 +7,7 @@ require "time"
 require "posix/spawn"
 require "colorize"
 require "base64"
+require "objspace"
 
 module Myp
   
@@ -15,12 +16,30 @@ module Myp
     Rails.logger.warn{msg}
   end
   
+  Signal.trap "USR1" do
+    puts("SIGUSR1 caught")
+    puts("#{Time.now} SIGUSR1 handler starting GCs")
+    GC.start
+    sleep 5
+    GC.start
+    sleep 5
+    puts("#{Time.now} SIGUSR1 finished handling GCs")
+    time = Time.now
+    time_s = time.strftime("%Y%d%m_%H%M%S")
+    heapdump = File.join(Dir.pwd, "heapdump_#{time_s}.json")
+    puts("#{Time.now} SIGUSR1 starting write to heapdump #{heapdump}")
+    io = File.open(heapdump, "w")
+    ObjectSpace.dump_all(output: io)
+    io.close
+    puts("#{Time.now} SIGUSR1 finished writing to heapdump #{heapdump}")
+  end
+
   Signal.trap "USR2" do
     # Thread might be needed because of https://bugs.ruby-lang.org/issues/7917
     Thread.new do
       Myp.failsafe_debug("kill -USR2 received @ #{Time.now}")
       ObjectSpace.each_object(Thread) do |th|
-        Myp.failsafe_debug("ThreadInfo id: #{th}, name: #{th.name}, status: #{th.status}\n\t #{th.backtrace.nil? ? "" : th.backtrace.join("\n\t")}")
+        puts("ThreadInfo id: #{th}, name: #{th.name}, status: #{th.status}\n\t #{th.backtrace.nil? ? "" : th.backtrace.join("\n\t")}")
       end
     end
   end
