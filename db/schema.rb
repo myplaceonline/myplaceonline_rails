@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_03_204752) do
+ActiveRecord::Schema.define(version: 2024_02_21_023259) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3479,6 +3479,14 @@ ActiveRecord::Schema.define(version: 2023_10_03_204752) do
     t.index ["location_id"], name: "index_gift_stores_on_location_id"
   end
 
+  create_table "google_place_search_results", force: :cascade do |t|
+    t.string "search"
+    t.string "placeid"
+    t.text "jsonresult"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "group_contacts", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.integer "group_id"
@@ -4616,6 +4624,7 @@ ActiveRecord::Schema.define(version: 2023_10_03_204752) do
     t.text "bathroom_code"
     t.boolean "allhours"
     t.boolean "prefer_latlng"
+    t.string "googleplaceid"
     t.index ["identity_id"], name: "index_locations_on_identity_id"
     t.index ["website_id"], name: "index_locations_on_website_id"
   end

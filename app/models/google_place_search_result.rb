@@ -1,0 +1,2 @@
+class GooglePlaceSearchResult < ApplicationRecord
+end
