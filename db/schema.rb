@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_29_142585) do
+ActiveRecord::Schema.define(version: 2024_03_29_221037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3242,6 +3242,14 @@ ActiveRecord::Schema.define(version: 2024_03_29_142585) do
     t.boolean "group_indoors"
     t.boolean "group_pasture"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
+  end
+
+  create_table "find_humane_subscriptions", force: :cascade do |t|
+    t.text "email"
+    t.text "zip"
+    t.boolean "extra"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "flight_legs", id: :serial, force: :cascade do |t|
