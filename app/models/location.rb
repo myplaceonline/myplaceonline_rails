@@ -163,7 +163,7 @@ class Location < ApplicationRecord
   def sub_region1_short_name
     if !region.blank? && !sub_region1.blank?
       reg = Carmen::Country.coded(region)
-      if reg.subregions.length > 0
+      if !reg.nil? && !reg.subregions.nil? && reg.subregions.length > 0
         subregion = reg.subregions.coded(sub_region1)
         if !subregion.nil?
           subregion.code
