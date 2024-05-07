@@ -59,7 +59,7 @@ module RouteHelpers
 
   def self.routes_index(routes, items)
     items.each do |item|
-      routes.match "#{item}/index", via: [:get, :post]
+      routes.match "#{item}/index", via: [:get, :post, :options]
       routes.match "#{item}", via: [:get, :post], :to => "#{item}#index"
     end
   end
@@ -78,7 +78,7 @@ module RouteHelpers
 
   def self.routes_get_post(routes, items)
     items.each do |item|
-      routes.match "#{item}", via: [:get, :post]
+      routes.match "#{item}", via: [:get, :post, :options]
     end
   end
   
