@@ -208,11 +208,11 @@ class ApplicationController < ActionController::Base
         # Always set the SERVERID cookie so that if we explicitly target a server
         # with a query parameter, the new server sticks in spite of any previous
         # SERVERID cookies.
-        cookies["SERVERID"] = DynamicCookieOptions.create_cookie_options.merge(
-          {
-            value: ENV["NODENAME"].gsub(/\..*$/, "")
-          }
-        )
+        #cookies["SERVERID"] = DynamicCookieOptions.create_cookie_options.merge(
+        #  {
+        #    value: ENV["NODENAME"].gsub(/\..*$/, "")
+        #  }
+        #)
       end
       
       if !params[:emulate_host].blank?
