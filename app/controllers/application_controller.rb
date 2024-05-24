@@ -250,7 +250,7 @@ class ApplicationController < ActionController::Base
   protected
 
     # respond_type: [download, inline]
-    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false, thumbnail2: false)
+    def respond_identity_file(respond_type, identity_file, filename = nil, content_type = nil, thumbnail: false, thumbnail2: false, cacheType: "private", cacheAgeSeconds: 43200)
       if !identity_file.file_file_name.blank?
         
         send_from_memory = true
@@ -281,7 +281,9 @@ class ApplicationController < ActionController::Base
               identity_file.thumbnail_contents,
               identity_file.thumbnail_size_bytes,
               identity_file.thumbnail_name,
-              identity_file.thumbnail_content_type
+              identity_file.thumbnail_content_type,
+              cacheType: cacheType,
+              cacheAgeSeconds: cacheAgeSeconds,
             )
           elsif thumbnail2
             respond_data(
@@ -289,7 +291,9 @@ class ApplicationController < ActionController::Base
               identity_file.thumbnail2_contents,
               identity_file.thumbnail2_size_bytes,
               identity_file.thumbnail_name,
-              identity_file.thumbnail_content_type
+              identity_file.thumbnail_content_type,
+              cacheType: cacheType,
+              cacheAgeSeconds: cacheAgeSeconds,
             )
           else
             respond_data(
@@ -297,7 +301,9 @@ class ApplicationController < ActionController::Base
               identity_file.get_file_contents,
               identity_file.file_file_size,
               identity_file.file_file_name,
-              identity_file.file_content_type
+              identity_file.file_content_type,
+              cacheType: cacheType,
+              cacheAgeSeconds: cacheAgeSeconds,
             )
           end
         else
@@ -327,7 +333,15 @@ class ApplicationController < ActionController::Base
           end
           
           if File.exist?(path)
+            
             response.set_header('Content-Length', "#{File.size(path)}")
+
+            if cacheType == "public"
+              expires_in(cacheAgeSeconds, public: true)
+            else
+              expires_in(cacheAgeSeconds, public: false)
+            end
+
             send_file(
               path,
               type: content_type,
@@ -346,9 +360,14 @@ class ApplicationController < ActionController::Base
     end
     
     # respond_type: [download, inline]
-    def respond_data(respond_type, data, data_bytes, filename, content_type)
+    def respond_data(respond_type, data, data_bytes, filename, content_type, cacheType: "private", cacheAgeSeconds: 43200)
       Rails.logger.debug{"ApplicationController.respond_data respond_type: #{respond_type}, filename: #{filename}, content_type: #{content_type}"}
       response.headers["Content-Length"] = data_bytes.to_s
+      if cacheType == "public"
+        expires_in(cacheAgeSeconds, public: true)
+      else
+        expires_in(cacheAgeSeconds, public: false)
+      end
       send_data(
         data,
         type: content_type,
