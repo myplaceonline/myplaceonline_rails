@@ -1421,7 +1421,7 @@ class ApiController < ApplicationController
   
   def geolocate
     search = params[:q]
-    key = params[:q]
+    key = params[:key]
     
     if key == ENV["GEOLOCATE_KEY"] || !Rails.env.production?
             if !search.blank?
