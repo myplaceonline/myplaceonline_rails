@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     api/newitem
     api/postal_code_search
     api/distinct_values
+    api/geolocate
     admin/test
     admin/crontab
     admin/create_test_job

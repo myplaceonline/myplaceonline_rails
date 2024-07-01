@@ -1,3 +1,6 @@
+require 'googlemaps/services/client'
+require 'googlemaps/services/places'
+
 # No pre-authorization on these API calls. Use `authorize! :edit, obj` if needed.
 class ApiController < ApplicationController
   include Rails.application.routes.url_helpers
@@ -26,6 +29,7 @@ class ApiController < ApplicationController
     :sendgridevent,
     :postsupport,
     :update_video_thumbnail,
+    :geolocate,
   ]
   
   def index
@@ -1413,6 +1417,109 @@ class ApiController < ApplicationController
       json: result,
       status: result[:code],
     )
+  end
+  
+  def geolocate
+    search = params[:q]
+    key = params[:q]
+    
+    if key == ENV["GEOLOCATE_KEY"] || !Rails.env.production?
+            if !search.blank?
+        client = GoogleMaps::Services::GoogleClient.new(key: ENV["GOOGLE_MAPS_API_SERVER_KEY"], response_format: :json, read_timeout: 5)
+        
+        # https://www.rubydoc.info/gems/googlemaps-services/GoogleMaps/Services/Places
+        # https://developers.google.com/maps/documentation/places/web-service
+        places = GoogleMaps::Services::Places.new(client)
+        result = places.autocomplete(
+          input_text: search,
+        )
+
+        Rails.logger.debug{"Geolocate Result: #{Myp.debug_print(result)}"}
+        
+        if result.length > 0
+          
+          place = result[0]
+          resultDetails = places.place_details(
+            place_id: place["place_id"],
+          )
+          
+          Rails.logger.debug{"Geolocate Places Result: #{Myp.debug_print(resultDetails)}"}
+          
+          if !resultDetails["result"].nil? && !resultDetails["result"]["formatted_address"].blank?
+            address1Start = nil
+            address1End = nil
+            city = nil
+            state = nil
+            zip = nil
+            country = nil
+            resultDetails["result"]["address_components"].each do |component|
+              if !component["types"].find{|x| x == "street_number"}.nil?
+                address1Start = component["long_name"]
+              elsif !component["types"].find{|x| x == "route"}.nil?
+                address1End = component["long_name"]
+              elsif !component["types"].find{|x| x == "locality"}.nil?
+                city = component["long_name"]
+              elsif !component["types"].find{|x| x == "administrative_area_level_1"}.nil?
+                state = component["long_name"]
+              elsif !component["types"].find{|x| x == "postal_code"}.nil?
+                zip = component["long_name"]
+              elsif !component["types"].find{|x| x == "country"}.nil?
+                country = component["short_name"]
+              end
+            end
+            render(
+              json: {
+                success: true,
+                location: {
+                  formatted_address: resultDetails["result"]["formatted_address"],
+                  address1: "#{address1Start} #{address1End}",
+                  city: city,
+                  state: state,
+                  zip: zip,
+                  country: country,
+                  latitude: resultDetails["result"]["geometry"]["location"]["lat"].to_f,
+                  longitude: resultDetails["result"]["geometry"]["location"]["lng"].to_f,
+                  search: search,
+                }
+              },
+              status: 200,
+            )
+          else
+            render(
+              json: {
+                success: false,
+                error: "Could not get place details for place #{place["place_id"]} for search #{search}",
+              },
+              status: 500,
+            )
+          end
+        else
+          render(
+            json: {
+              success: false,
+              error: "No results for #{search}",
+            },
+            status: 404,
+          )
+        end
+      else
+        render(
+          json: {
+            success: false,
+            error: "Search not specified with the 'q' query parameter",
+          },
+          status: 500,
+        )
+      end
+    else
+      render(
+        json: {
+          success: false,
+          error: "Key not specified",
+        },
+        status: 500,
+      )
+    end
   end
   
   protected
