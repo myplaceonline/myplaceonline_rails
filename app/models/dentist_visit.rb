@@ -8,9 +8,32 @@ class DentistVisit < ApplicationRecord
   validates :visit_date, presence: true
   
   def display
-    Myp.display_date_short_year(visit_date, User.current_user)
+    result = Myp.display_date_short_year(visit_date, User.current_user)
+    if !self.paid.blank? && self.paid != 0
+      result = Myp.appendstrwrap(result, Myp.display_currency(self.paid))
+    end
+    cavs = self.cavities.blank? ? 0 : self.cavities
+    result = Myp.appendstrwrap(result, "#{cavs} " + "cavity".pluralize(cavs))
+    if self.cleaning?
+      result = Myp.appendstrwrap(result, "Cleaning")
+    end
+    if self.xrays_taken?
+      result = Myp.appendstrwrap(result, "X-Rays Taken")
+    end
+    if !self.dentist.nil?
+      result = Myp.appendstrwrap(result, self.dentist.display.gsub(" (Dentist)", ""))
+    end
+    return result
   end
   
+  def use_bubble?
+    true
+  end
+
+  def bubble_text(obj)
+    return ""
+  end
+
   child_property(name: :dental_insurance)
   
   child_property(name: :dentist, model: Doctor)

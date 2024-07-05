@@ -8,9 +8,19 @@ class DoctorVisit < ApplicationRecord
   validates :visit_date, presence: true
   
   def display
-    Myp.display_datetime_short_year(visit_date, User.current_user)
+    result = Myp.display_date_short_year(visit_date, User.current_user)
+    if !self.paid.blank? && self.paid != 0
+      result = Myp.appendstrwrap(result, Myp.display_currency(self.paid))
+    end
+    if self.physical?
+      result = Myp.appendstrwrap(result, "Physical")
+    end
+    if !self.doctor.nil?
+      result = Myp.appendstrwrap(result, self.doctor.display)
+    end
+    return result
   end
-  
+
   child_property(name: :health_insurance)
   
   child_property(name: :doctor)
