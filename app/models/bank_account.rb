@@ -13,6 +13,8 @@ class BankAccount < ApplicationRecord
   end
   
   validates :name, presence: true
+  
+  child_files
 
   belongs_to :account_number_encrypted, class_name: "EncryptedValue", dependent: :destroy, :autosave => true
   belongs_to_encrypted :account_number

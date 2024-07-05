@@ -10,8 +10,13 @@ class BankAccountsController < MyplaceonlineController
       :encrypt,
       password_attributes: PasswordsController.param_names,
       company_attributes: Company.param_names,
-      home_address_attributes: LocationsController.param_names
+      home_address_attributes: LocationsController.param_names,
+      bank_account_files_attributes: FilesController.multi_param_names,
     ]
+  end
+
+  def may_upload
+    true
   end
 
   protected

@@ -6,3 +6,4 @@
 <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
 <%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dentist"), "doctor_path", obj.dentist) %>
 <%= attribute_table_row_reference(t("myplaceonline.dentist_visits.dental_insurance"), "dental_insurance_path", obj.dental_insurance) %>
+<%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.dentist_visit_files) %>

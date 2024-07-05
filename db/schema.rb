@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_29_221037) do
+ActiveRecord::Schema.define(version: 2024_07_05_015716) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -360,6 +360,19 @@ ActiveRecord::Schema.define(version: 2024_03_29_221037) do
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_awesome_lists_on_identity_id"
     t.index ["location_id"], name: "index_awesome_lists_on_location_id"
+  end
+
+  create_table "bank_account_files", force: :cascade do |t|
+    t.bigint "bank_account_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bank_account_id"], name: "index_bank_account_files_on_bank_account_id"
+    t.index ["identity_file_id"], name: "index_bank_account_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_bank_account_files_on_identity_id"
   end
 
   create_table "bank_accounts", id: :serial, force: :cascade do |t|
@@ -1749,6 +1762,19 @@ ActiveRecord::Schema.define(version: 2024_03_29_221037) do
     t.index ["insurance_company_id"], name: "index_dental_insurances_on_insurance_company_id"
     t.index ["password_id"], name: "index_dental_insurances_on_password_id"
     t.index ["periodic_payment_id"], name: "index_dental_insurances_on_periodic_payment_id"
+  end
+
+  create_table "dentist_visit_files", force: :cascade do |t|
+    t.bigint "dentist_visit_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dentist_visit_id"], name: "index_dentist_visit_files_on_dentist_visit_id"
+    t.index ["identity_file_id"], name: "index_dentist_visit_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_dentist_visit_files_on_identity_id"
   end
 
   create_table "dentist_visits", id: :serial, force: :cascade do |t|
@@ -8682,6 +8708,9 @@ ActiveRecord::Schema.define(version: 2024_03_29_221037) do
   add_foreign_key "awesome_list_items", "identities"
   add_foreign_key "awesome_lists", "identities"
   add_foreign_key "awesome_lists", "locations"
+  add_foreign_key "bank_account_files", "bank_accounts"
+  add_foreign_key "bank_account_files", "identities"
+  add_foreign_key "bank_account_files", "identity_files"
   add_foreign_key "bank_accounts", "companies", name: "bank_accounts_company_id_fk"
   add_foreign_key "bank_accounts", "encrypted_values", column: "account_number_encrypted_id", name: "bank_accounts_account_number_encrypted_id_fk"
   add_foreign_key "bank_accounts", "encrypted_values", column: "pin_encrypted_id", name: "bank_accounts_pin_encrypted_id_fk"
@@ -8891,6 +8920,9 @@ ActiveRecord::Schema.define(version: 2024_03_29_221037) do
   add_foreign_key "dental_insurances", "identities", name: "dental_insurances_identity_id_fk"
   add_foreign_key "dental_insurances", "passwords", name: "dental_insurances_password_id_fk"
   add_foreign_key "dental_insurances", "periodic_payments", name: "dental_insurances_periodic_payment_id_fk"
+  add_foreign_key "dentist_visit_files", "dentist_visits"
+  add_foreign_key "dentist_visit_files", "identities"
+  add_foreign_key "dentist_visit_files", "identity_files"
   add_foreign_key "dentist_visits", "dental_insurances", name: "dentist_visits_dental_insurance_id_fk"
   add_foreign_key "dentist_visits", "doctors", column: "dentist_id", name: "dentist_visits_dentist_id_fk"
   add_foreign_key "dentist_visits", "identities", name: "dentist_visits_identity_id_fk"

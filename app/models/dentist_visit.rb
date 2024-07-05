@@ -7,6 +7,8 @@ class DentistVisit < ApplicationRecord
   
   validates :visit_date, presence: true
   
+  child_files
+  
   def display
     result = Myp.display_date_short_year(visit_date, User.current_user)
     if !self.paid.blank? && self.paid != 0
