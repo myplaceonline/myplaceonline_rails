@@ -1,11 +1,11 @@
-<% content_for :heading do -%><%= t("myplaceonline.blood_tests.graph") %><% end -%>
-<h1><%= t("myplaceonline.blood_tests.graph") %></h1>
+<% content_for :heading do -%><%= t("myplaceonline.blood_pressures.graph") %><% end -%>
+<h1><%= t("myplaceonline.blood_pressures.graph") %></h1>
 
 <%= flashes! %>
 
-<%= form_tag blood_tests_graph_path, method: :get do %>
+<%= form_tag blood_pressures_graph_path, method: :get do %>
 
-  <%= myp_select_tag(:concentration, "myplaceonline.blood_tests.concentration_name", @concentrations, @concentration) %>
+  <%= myp_select_tag(:selectedgraph, "myplaceonline.blood_pressures.graphtype", [I18n.t("myplaceonline.blood_pressures.systolic_blood_pressure"), I18n.t("myplaceonline.blood_pressures.diastolic_blood_pressure")], @selectedgraph) %>
   
   <% if !@graphdata.blank? %>
     <div id="graphdiv" style="width: 95%"></div>
@@ -22,20 +22,16 @@
               document.getElementById("graphdiv"),
 
               // CSV or path to a CSV file.
-              <%= @graphdata.to_json.html_safe %>
+              <%= @graphdata.to_json.html_safe %>,
+
+              {
+                colors: ["#000000"]
+              }
             );
           }
         );
       });
     </script>
-    
-    <% if @concentration_results.size > 0 %>
-      <ul>
-        <% @concentration_results.reverse.each do |result| %>
-          <li><%= Myp.decimal_to_s(value: result[:concentration], truncate_zeros: false) %> - <%= link_to(result[:blood_test].display, blood_test_path(result[:blood_test])) %></li>
-        <% end %>
-      </ul>
-    <% end %>
   <% end %>
   
   <%=

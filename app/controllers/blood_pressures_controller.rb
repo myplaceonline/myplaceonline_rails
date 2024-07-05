@@ -1,6 +1,37 @@
 class BloodPressuresController < MyplaceonlineController
+  skip_authorization_check :only => MyplaceonlineController::DEFAULT_SKIP_AUTHORIZATION_CHECK + [:graph]
+
   def top_content
     I18n.t("myplaceonline.blood_pressures.top_content").html_safe
+  end
+  
+  def graph
+    @selectedgraph = params[:selectedgraph]
+    if !@selectedgraph.blank?
+      @graphdata = "Time," + @selectedgraph
+
+      if @selectedgraph == I18n.t('myplaceonline.blood_pressures.systolic_blood_pressure')
+        self.all.each do |blood_pressure|
+          @graphdata += "\n" + Myp.display_time(blood_pressure.measurement_date, User.current_user, :dygraph)
+          @graphdata += "," + blood_pressure.systolic_pressure.to_s
+        end
+      else
+        self.all.each do |blood_pressure|
+          @graphdata += "\n" + Myp.display_time(blood_pressure.measurement_date, User.current_user, :dygraph)
+          @graphdata += "," + blood_pressure.diastolic_pressure.to_s
+        end
+      end
+    end
+  end
+  
+  def footer_items_index
+    super + [
+      {
+        title: I18n.t('myplaceonline.blood_pressures.graph'),
+        link: blood_pressures_graph_path,
+        icon: "grid"
+      }
+    ]
   end
   
   protected

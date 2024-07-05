@@ -1485,7 +1485,11 @@ en:
       diastolic_pressure: "Diastolic Pressure"
       measurement_date: "Measurement Date"
       measurement_source: "Measurement Source"
-      top_content: "<p>Systolic blood pressure (the first number) <a href=\"http://www.nejm.org/doi/full/10.1056/NEJMoa1511939\" target=\"_blank\">should be less than 120</a>.</p>"
+      top_content: "<p>Systolic blood pressure is the first number.</p>"
+      graphtype: "Graph type"
+      graph: "Graph"
+      systolic_blood_pressure: "Systolic blood pressure"
+      diastolic_blood_pressure: "Diastolic blood pressure"
     heart_rates:
       beats: "Beats Per Minute"
       measurement_date: "Measurement Date"

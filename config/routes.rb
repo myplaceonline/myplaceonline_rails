@@ -185,6 +185,9 @@ Rails.application.routes.draw do
         ]
       },
     ],
+    blood_pressures: [
+      { instance: false, link: "graph" }
+    ],
     blood_tests: [
       { instance: false, link: "graph" }
     ],
