@@ -8,7 +8,11 @@ class VehicleService < ApplicationRecord
   validates :short_description, presence: true
   
   def display
-    short_description
+    result = short_description
+    if !self.miles.blank? && self.miles != 0
+      result = Myp.appendstrwrap(result, "#{self.miles} miles")
+    end
+    return result
   end
 
   def self.calendar_item_display(calendar_item)

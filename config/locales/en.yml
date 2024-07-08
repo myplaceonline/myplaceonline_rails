@@ -1325,7 +1325,7 @@ en:
       owned_start: "Owned Start"
       owned_end: "Owned End"
       vin: "VIN"
-      manufacturer: "Manufacturer"
+      manufacturer: "Manufacturer (Make)"
       model: "Model"
       year: "Year"
       color: "Color"
