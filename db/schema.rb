@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_05_015716) do
+ActiveRecord::Schema.define(version: 2024_07_16_013371) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3268,6 +3268,16 @@ ActiveRecord::Schema.define(version: 2024_07_05_015716) do
     t.boolean "group_indoors"
     t.boolean "group_pasture"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
+  end
+
+  create_table "find_humane_producers", force: :cascade do |t|
+    t.bigint "find_humane_humane_location_id", null: false
+    t.bigint "identity_id", null: false
+    t.string "producer_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["find_humane_humane_location_id"], name: "index_find_humane_producers_on_find_humane_humane_location_id"
+    t.index ["identity_id"], name: "index_find_humane_producers_on_identity_id"
   end
 
   create_table "find_humane_subscriptions", force: :cascade do |t|
@@ -9094,6 +9104,8 @@ ActiveRecord::Schema.define(version: 2024_07_05_015716) do
   add_foreign_key "find_humane_humane_product_files", "identities"
   add_foreign_key "find_humane_humane_product_files", "identity_files"
   add_foreign_key "find_humane_humane_products", "identities"
+  add_foreign_key "find_humane_producers", "find_humane_humane_locations"
+  add_foreign_key "find_humane_producers", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
   add_foreign_key "flight_legs", "identities"
