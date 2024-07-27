@@ -51,11 +51,16 @@ class Location < ApplicationRecord
   end
   
   def region_short_name
+    result = nil
     if !region.blank?
-      Carmen::Country.coded(region).code
-    else
-      nil
+      codedResult = Carmen::Country.coded(region)
+      if !codedResult.nil?
+        result = codedResult.code
+      else
+        result = region
+      end
     end
+    return result
   end
   
   child_pictures
