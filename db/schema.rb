@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_07_17_216082) do
+ActiveRecord::Schema.define(version: 2024_08_30_143243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3281,6 +3281,7 @@ ActiveRecord::Schema.define(version: 2024_07_17_216082) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.string "aspca_scorecard"
     t.index ["find_humane_humane_location_id"], name: "index_find_humane_producers_on_find_humane_humane_location_id"
     t.index ["identity_id"], name: "index_find_humane_producers_on_identity_id"
   end
