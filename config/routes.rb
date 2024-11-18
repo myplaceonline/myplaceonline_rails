@@ -120,6 +120,10 @@ Rails.application.routes.draw do
     admin/reset_user_index
     admin/throw_server_exception
   ))
+  
+  # https://github.com/galetahub/ckeditor/issues/919
+  get 'icons.png', to: redirect('/assets/ckeditor/skins/moono-lisa/icons.png')
+  get 'icons_hidpi.png', to: redirect('/assets/ckeditor/skins/moono-lisa/icons_hidpi.png')
 
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"
 

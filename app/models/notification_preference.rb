@@ -73,4 +73,8 @@ class NotificationPreference < ApplicationRecord
       end
     end
   end
+  
+  def self.searchable?
+    return false
+  end
 end

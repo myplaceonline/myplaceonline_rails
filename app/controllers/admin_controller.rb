@@ -224,7 +224,7 @@ class AdminController < ApplicationController
   def reset_user_index
     Rails.logger.info{"AdminController.reset_user_index started"}
     
-    UserIndex.reset!
+    ElasticWrapper.reset()
 
     Rails.logger.info{"AdminController.reset_user_index finished"}
 

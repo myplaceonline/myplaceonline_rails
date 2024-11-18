@@ -13,7 +13,7 @@ module MyplaceonlineActiveRecordIdentityConcern
 
     attr_accessor :is_archived
     boolean_time_transfer :is_archived, :archived
-
+    
     def identity_record_set
       
       Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.identity_record_set saving #{self.inspect}"}
@@ -91,6 +91,38 @@ module MyplaceonlineActiveRecordIdentityConcern
     
     def owning_user
       identity.user
+    end
+
+    after_commit :update_chewy_indices, on: %i[create update]
+    after_commit :chewy_destroy, on: :destroy
+    
+    def chewy_destroy
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy class: #{self.class.name}"}
+      elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy elastic class: #{elasticClass}"}
+      if !elasticClass.nil?
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy deleting from Elastic..."}
+        begin
+          # https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html
+          Chewy.client.delete(index: elasticClass.index_name, id: self.id)
+        rescue Exception => e
+          Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+        end
+      end
+    end
+
+    def update_chewy_indices
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices class: #{self.class.name}"}
+      elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
+      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices elastic class: #{elasticClass}"}
+      if !elasticClass.nil?
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices updating Elastic..."}
+        begin
+          elasticClass.import self
+        rescue Exception => e
+          Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+        end
+      end
     end
   end
   

@@ -635,16 +635,8 @@ module Myp
   
   self.reinitialize
   
-  @@fts_target = nil
-  if ENV["FTS_TARGET"].blank?
-    # See if there's a localhost ES
-    begin
-      client = Elasticsearch::Client.new(request_timeout: 2)
-      client.transport.reload_connections!
-      @@fts_target = "localhost:9200"
-    rescue Exception => e
-    end
-  else
+  @@fts_target = "localhost:9200"
+  if !ENV["FTS_TARGET"].nil?
     @@fts_target = ENV["FTS_TARGET"]
   end
 
@@ -2467,7 +2459,7 @@ module Myp
       
       search = search.strip.downcase
       
-      Rails.logger.debug{"full_text_search: '#{search}'"}
+      Rails.logger.debug{"Myp.full_text_search: '#{search}'"}
       
       if !search.blank?
         
@@ -2497,43 +2489,46 @@ module Myp
           }
         end
         
-        Rails.logger.debug{"full_text_search: filters: #{filters}"}
-
-        # http://stackoverflow.com/questions/37082797/elastic-search-edge-ngram-match-query-on-all-being-ignored
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html
+        # https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html
         
-        if category.blank?
-          query = {
-            bool: {
-              must: {
-                match: {
-                  _all: search
-                }
-              },
-              filter: filters
-            }
-          }
-        else
-          query = {
+        index = category.blank? ? "_all" : category.singularize
+        
+        body = {
+          size: 10,
+          query: {
             bool: {
               must: [
                 {
-                  match: {
-                    _all: search
+                  simple_query_string: {
+                    query: search,
+                    default_operator: "and",
                   }
                 },
-                {
-                  match: {
-                    _type: category.singularize
-                  }
-                }
               ],
               filter: filters
             }
+          },
+          sort: {
+            visit_count: {
+              order: "desc",
+              missing: "_last",
+            }
           }
-        end
+        }
+        
+        Rails.logger.debug{"Myp.full_text_search: index = #{index}, body = #{JSON.pretty_generate(body)}"}
+        
+        search_results = Myp.elasticSearchToModels(
+          index: index,
+          body: body,
+        )
+        
+        Rails.logger.debug{"Myp.full_text_search: results: #{search_results.length}"}
         
         # https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
-        search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
+        #search_results = UserIndex.query(query).order(visit_count: {order: :desc, missing: :_last}).limit(10).load.objects
         
         results = Myp.process_search_results(
           search_results,
@@ -2688,42 +2683,82 @@ module Myp
     results
   end
   
+  def self.elasticSearchToModels(index: "_all", body:)
+    
+    Rails.logger.debug{"Myp.elasticSearchToModels entry"}
+
+    elasticResults = Chewy.client.search(
+      index: index,
+      body: body,
+    )
+
+    search_results = []
+
+    actualResults = elasticResults.body.dig("hits", "hits")
+    if !actualResults.nil?
+      search_results = actualResults.map do |elasticResult|
+        model = Object.const_get(elasticResult["_index"].camelize)
+        model.find(elasticResult["_id"])
+      end
+      
+      search_results = search_results.compact
+    end
+    
+    Rails.logger.debug{"Myp.elasticSearchToModels exit results: #{search_results.size}"}
+    
+    return search_results
+  end
+  
   def self.highly_visited(user, limit: 10, min_visit_count: 5, min_shared_visit_count: 20)
     Myp.log_response_time(
       name: "Myp.highly_visited"
     ) do
-      Rails.logger.debug{"highly_visited"}
+      Rails.logger.debug{"Myp.highly_visited #{user.id}"}
       
-      search_results = UserIndex.query({
-        terms: {
-          identity_id: [user.current_identity_id]
+      search_results = Myp.elasticSearchToModels(
+        body: {
+          size: limit,
+          query: {
+            term: {
+              identity_id: {
+                value: user.current_identity_id,
+                boost: 1.0
+              }
+            }
+          },
+          sort: {
+            visit_count: {
+              order: "desc",
+              missing: "_last"
+            }
+          }
         }
-      }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
+      )
       
       # Add in items that this user has permission to, but only
-      # if this isn't a brand new identity with few items in the UserIndex
-      if search_results.size > 10
-        permissions = Permission.where(user_id: user.id)
-        if permissions.length > 0
-          permissions_results = UserIndex.query({
-            terms: {
-              "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
-            }
-          }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
-
-          permissions_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_shared_visit_count)) }
-          
-          search_results = search_results + permissions_results
-          
-          search_results.sort! do |sr1, sr2|
-            x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
-            x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
-            x2 <=> x1
-          end
-          
-          Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
-        end
-      end
+      # if this isn't a brand new identity with few items in the indices
+      #if search_results.size > 10
+      #  permissions = Permission.where(user_id: user.id)
+      #  if permissions.length > 0
+      #    permissions_results = UserIndex.query({
+      #      terms: {
+      #        "_uid" => permissions.map{|p| p.subject_class.singularize + "#" + p.subject_id.to_s }.to_a
+      #      }
+      #    }).order(visit_count: {order: :desc, missing: :_last}).limit(limit).load.objects
+      #
+      #    permissions_results.delete_if{|x| !x.respond_to?("visit_count") || (x.respond_to?("visit_count") && (x.visit_count.nil? || x.visit_count <= min_shared_visit_count)) }
+      #    
+      #    search_results = search_results + permissions_results
+      #    
+      #    search_results.sort! do |sr1, sr2|
+      #      x1 = sr1.respond_to?("visit_count") && !sr1.visit_count.nil? ? sr1.visit_count : 0
+      #      x2 = sr2.respond_to?("visit_count") && !sr2.visit_count.nil? ? sr2.visit_count : 0
+      #      x2 <=> x1
+      #    end
+      #    
+      #    Rails.logger.debug{"highly_visited permissions_results: #{permissions_results.inspect}"}
+      #  end
+      #end
       
       search_results.delete_if{|x| x.respond_to?("show_highly_visited?") && !x.show_highly_visited? }
 

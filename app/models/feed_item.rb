@@ -41,4 +41,8 @@ class FeedItem < ApplicationRecord
   def self.skip_check_attributes
     ["is_read"]
   end
+  
+  def self.searchable?
+    return false
+  end
 end
