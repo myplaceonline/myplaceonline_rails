@@ -334,7 +334,7 @@ GEM
       rake
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
-    minitest (5.25.1)
+    minitest (5.25.2)
     msgpack (1.7.5)
     multi_json (1.15.0)
     multi_xml (0.7.1)
@@ -580,6 +580,9 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    write_xlsx (1.12.1)
+      nkf
+      rubyzip (>= 1.0.0)
     zeitwerk (2.7.1)
 
 PLATFORMS
@@ -690,6 +693,7 @@ DEPENDENCIES
   twilio-ruby
   uglifier
   usda-nutrient-database
+  write_xlsx
 
 BUNDLED WITH
    2.2.33
