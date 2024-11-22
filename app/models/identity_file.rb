@@ -584,6 +584,8 @@ class IdentityFile < ApplicationRecord
         result = "application/gzip"
       when "webp"
         result = "image/webp"
+      when "xlsx"
+        result = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       else
         raise "Unimplemented extension #{ext}"
       end
