@@ -111,3 +111,4 @@ gem "selenium-webdriver"
 gem "selenium-devtools"
 gem "spreadsheet"
 gem 'write_xlsx'
+gem 'json5'
