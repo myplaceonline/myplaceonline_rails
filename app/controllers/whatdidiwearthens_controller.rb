@@ -3,13 +3,23 @@ class WhatdidiwearthensController < MyplaceonlineController
     true
   end
 
-  #def use_bubble?
-  #  true
-  #end
+  def use_bubble?
+    true
+  end
   
-  #def bubble_text(obj)
-  #  Myp.display_date_month_year_simple(obj.weartime, User.current_user)
-  #end
+  def bubble_text(obj)
+    str = ""
+    
+    obj.whatdidiwearthen_contacts.each do |contact_wrapper|
+      str = Myp.appendstr(str, contact_wrapper.contact.display, "; ")
+    end
+    
+    obj.whatdidiwearthen_locations.each do |location_wrapper|
+      str = Myp.appendstr(str, location_wrapper.location.display_super_simple, "; ")
+    end
+    
+    return str
+  end
 
   protected
     def insecure
@@ -36,6 +46,16 @@ class WhatdidiwearthensController < MyplaceonlineController
         :notes,
         :rating,
         whatdidiwearthen_files_attributes: FilesController.multi_param_names,
+        whatdidiwearthen_contacts_attributes: [
+          :id,
+          :_destroy,
+          contact_attributes: ContactsController.param_names
+        ],
+        whatdidiwearthen_locations_attributes: [
+          :id,
+          :_destroy,
+          location_attributes: LocationsController.param_names
+        ],
       )
     end
 end

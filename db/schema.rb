@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_21_202720) do
+ActiveRecord::Schema.define(version: 2025_02_21_210419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8640,6 +8640,20 @@ ActiveRecord::Schema.define(version: 2025_02_21_202720) do
     t.index ["identity_id"], name: "index_weights_on_identity_id"
   end
 
+  create_table "whatdidiwearthen_contacts", force: :cascade do |t|
+    t.bigint "whatdidiwearthen_id"
+    t.bigint "contact_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["contact_id"], name: "index_whatdidiwearthen_contacts_on_contact_id"
+    t.index ["identity_id"], name: "index_whatdidiwearthen_contacts_on_identity_id"
+    t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_contacts_on_whatdidiwearthen_id"
+  end
+
   create_table "whatdidiwearthen_files", force: :cascade do |t|
     t.bigint "whatdidiwearthen_id"
     t.bigint "identity_file_id"
@@ -8651,6 +8665,20 @@ ActiveRecord::Schema.define(version: 2025_02_21_202720) do
     t.index ["identity_file_id"], name: "index_whatdidiwearthen_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_whatdidiwearthen_files_on_identity_id"
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_files_on_whatdidiwearthen_id"
+  end
+
+  create_table "whatdidiwearthen_locations", force: :cascade do |t|
+    t.bigint "whatdidiwearthen_id"
+    t.bigint "location_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_whatdidiwearthen_locations_on_identity_id"
+    t.index ["location_id"], name: "index_whatdidiwearthen_locations_on_location_id"
+    t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_locations_on_whatdidiwearthen_id"
   end
 
   create_table "whatdidiwearthens", force: :cascade do |t|
@@ -9865,9 +9893,15 @@ ActiveRecord::Schema.define(version: 2025_02_21_202720) do
   add_foreign_key "websites", "contacts", column: "recommender_id"
   add_foreign_key "websites", "identities", name: "websites_identity_id_fk"
   add_foreign_key "weights", "identities", name: "weights_identity_id_fk"
+  add_foreign_key "whatdidiwearthen_contacts", "contacts"
+  add_foreign_key "whatdidiwearthen_contacts", "identities"
+  add_foreign_key "whatdidiwearthen_contacts", "whatdidiwearthens"
   add_foreign_key "whatdidiwearthen_files", "identities"
   add_foreign_key "whatdidiwearthen_files", "identity_files"
   add_foreign_key "whatdidiwearthen_files", "whatdidiwearthens"
+  add_foreign_key "whatdidiwearthen_locations", "identities"
+  add_foreign_key "whatdidiwearthen_locations", "locations"
+  add_foreign_key "whatdidiwearthen_locations", "whatdidiwearthens"
   add_foreign_key "whatdidiwearthens", "identities"
   add_foreign_key "wireless_networks", "identities"
   add_foreign_key "wireless_networks", "locations"

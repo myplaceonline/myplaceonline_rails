@@ -109,6 +109,30 @@ class Location < ApplicationRecord
     result
   end
   
+  # Prefer name, then address, then others
+  def display_super_simple
+    result = Myp.appendstr(nil, name, ", ")
+    if result.blank?
+      result = Myp.appendstr(result, address1, ", ")
+    end
+    if result.blank?
+      result = Myp.appendstr(result, address2, ", ")
+    end
+    if result.blank?
+      result = Myp.appendstr(result, address3, ", ")
+    end
+    if result.blank?
+      result = Myp.appendstr(result, sub_region2, ", ")
+    end
+    if result.blank?
+      result = Myp.appendstr(result, sub_region1, ", ")
+    end
+    if result.blank? || region != "US"
+      result = Myp.appendstr(result, region, ", ")
+    end
+    result
+  end
+  
   def display_really_simple
     result = Myp.appendstr(nil, name, ", ")
     result = Myp.appendstr(result, address1, ", ")

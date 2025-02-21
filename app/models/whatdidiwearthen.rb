@@ -17,4 +17,6 @@ class Whatdidiwearthen < ApplicationRecord
   end
 
   child_files
+  child_properties(name: :whatdidiwearthen_contacts)
+  child_properties(name: :whatdidiwearthen_locations)
 end

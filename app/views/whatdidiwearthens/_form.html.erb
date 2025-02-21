@@ -20,16 +20,6 @@
   )
 %>
 <%=
-  input_field(
-    form: f,
-    type: Myp::FIELD_SELECT,
-    name: :rating,
-    value: obj.rating,
-    placeholder: "myplaceonline.general.rating",
-    select_options: Myp::RATINGS,
-  )
-%>
-<%=
   render partial: "myplaceonline/pictures_form", locals: {
     f: f,
     obj: obj,
@@ -42,4 +32,94 @@
     deletebutton: "myplaceonline.identity_files.delete_file",
     expanded: true,
   }
+%>
+<%=
+  render layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.whatdidiwearthens.contacts"),
+    childpropertiesname: :whatdidiwearthen_contacts,
+    childproperties: obj.whatdidiwearthen_contacts,
+    deletebutton: t("myplaceonline.whatdidiwearthens.delete_contact"),
+    addbutton: t("myplaceonline.whatdidiwearthens.add_contact"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :contact_attributes,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.whatdidiwearthens.contact"),
+        objform: "contacts/form",
+        existingobjurl: "contact_path",
+        searchurl: "/contacts.json?perpage=0",
+        edit: false,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: child_fields,
+      name: :contact_attributes,
+      existingobj: childproperty.contact,
+      heading: t("myplaceonline.whatdidiwearthens.contact"),
+      objform: "contacts/form",
+      existingobjurl: "contact_path",
+      searchurl: "/contacts.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
+<%=
+  render layout: "myplaceonline/childproperties", locals: {
+    f: f,
+    heading: t("myplaceonline.whatdidiwearthens.locations"),
+    childpropertiesname: :whatdidiwearthen_locations,
+    childproperties: obj.whatdidiwearthen_locations,
+    deletebutton: t("myplaceonline.whatdidiwearthens.delete_location"),
+    addbutton: t("myplaceonline.whatdidiwearthens.add_location"),
+    expanded: true,
+    formjson: [
+      {
+        type: :renderpartial,
+        name: :location_attributes,
+        partial: "myplaceonline/select_or_create",
+        heading: t("myplaceonline.whatdidiwearthens.location"),
+        objform: "locations/form",
+        existingobjurl: "location_path",
+        searchurl: "/locations.json?perpage=0",
+        edit: false,
+        autofocus: true,
+        force_existing: true,
+        simpleform: true
+      }
+    ]
+  } do |child_fields, childproperty|
+%>
+  <%=
+    render partial: "myplaceonline/select_or_create", locals: {
+      f: child_fields,
+      name: :location_attributes,
+      existingobj: childproperty.location,
+      heading: t("myplaceonline.whatdidiwearthens.location"),
+      objform: "locations/form",
+      existingobjurl: "location_path",
+      searchurl: "/locations.json?perpage=0",
+      edit: edit,
+      autofocus: false
+    }
+  %>
+<% end %>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_SELECT,
+    name: :rating,
+    value: obj.rating,
+    placeholder: "myplaceonline.general.rating",
+    select_options: Myp::RATINGS,
+  )
 %>
