@@ -1,0 +1,2 @@
+module WearablesHelper
+end

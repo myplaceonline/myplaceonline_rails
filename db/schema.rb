@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_21_210419) do
+ActiveRecord::Schema.define(version: 2025_02_21_213634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8385,6 +8385,32 @@ ActiveRecord::Schema.define(version: 2025_02_21_210419) do
     t.index ["warranty_id"], name: "index_warranty_files_on_warranty_id"
   end
 
+  create_table "wearable_files", force: :cascade do |t|
+    t.bigint "wearable_id"
+    t.bigint "identity_file_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_wearable_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_wearable_files_on_identity_id"
+    t.index ["wearable_id"], name: "index_wearable_files_on_wearable_id"
+  end
+
+  create_table "wearables", force: :cascade do |t|
+    t.string "name"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_wearables_on_identity_id"
+  end
+
   create_table "web_comics", id: :serial, force: :cascade do |t|
     t.string "web_comic_name"
     t.integer "website_id"
@@ -9856,6 +9882,10 @@ ActiveRecord::Schema.define(version: 2025_02_21_210419) do
   add_foreign_key "warranty_files", "identities"
   add_foreign_key "warranty_files", "identity_files"
   add_foreign_key "warranty_files", "warranties"
+  add_foreign_key "wearable_files", "identities"
+  add_foreign_key "wearable_files", "identity_files"
+  add_foreign_key "wearable_files", "wearables"
+  add_foreign_key "wearables", "identities"
   add_foreign_key "web_comics", "feeds"
   add_foreign_key "web_comics", "identities"
   add_foreign_key "web_comics", "websites"

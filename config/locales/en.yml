@@ -322,6 +322,7 @@ en:
       wallet_transactions: "Transactions"
       wallets: "Wallets"
       warranties: "Warranties"
+      wearables: "Wearables"
       web_comics: "Web Comics"
       website_domain_myplets: "Myplets"
       website_domain_properties: "Website Domain Properties"
@@ -4365,6 +4366,8 @@ en:
     food_list_foods:
       food: "Food"
       food_list: "Food List"
+    wearables:
+      name: "Name"
     whatdidiwearthens:
       weartime: "Date/Time"
       contact: "Contact"
