@@ -331,6 +331,7 @@ en:
       website_scrapers: "Website Scrapers"
       websites: "Websites"
       weights: "Weight Measurements"
+      whatdidiwearthens: "What Did I Wear Then"
       wireless_networks: "Wireless Networks"
       wisdoms: "Wisdom"
     default_domain:
@@ -4364,6 +4365,8 @@ en:
     food_list_foods:
       food: "Food"
       food_list: "Food List"
+    whatdidiwearthens:
+      weartime: "Date/Time"
     security_tokens:
       security_token_value: "Token Value"
     exports:

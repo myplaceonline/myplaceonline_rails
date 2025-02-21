@@ -360,6 +360,7 @@ class Identity < ApplicationRecord
   has_many :email_tokens, :dependent => :destroy
   has_many :life_changes, :dependent => :destroy
   has_many :merchant_accounts, :dependent => :destroy
+  has_many :whatdidiwearthens, :dependent => :destroy
 
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -651,6 +652,7 @@ class Identity < ApplicationRecord
       :restaurant_dishes => restaurant_dishes.to_a.map{|x| x.as_json},
       :life_changes => life_changes.to_a.map{|x| x.as_json},
       :merchant_accounts => merchant_accounts.to_a.map{|x| x.as_json},
+      :whatdidiwearthens => whatdidiwearthens.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end
