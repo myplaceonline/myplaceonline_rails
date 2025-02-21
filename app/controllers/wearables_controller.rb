@@ -3,6 +3,17 @@ class WearablesController < MyplaceonlineController
     true
   end
 
+  def self.param_names()
+    [
+      :id,
+      :_destroy,
+      :name,
+      :notes,
+      :rating,
+      wearable_files_attributes: FilesController.multi_param_names,
+    ]
+  end
+
   protected
     def insecure
       true
@@ -23,11 +34,6 @@ class WearablesController < MyplaceonlineController
     end
 
     def obj_params
-      params.require(:wearable).permit(
-        :name,
-        :notes,
-        :rating,
-        wearable_files_attributes: FilesController.multi_param_names,
-      )
+      params.require(:wearable).permit(WearablesController.param_names)
     end
 end

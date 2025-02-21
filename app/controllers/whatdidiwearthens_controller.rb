@@ -8,17 +8,7 @@ class WhatdidiwearthensController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    str = ""
-    
-    obj.whatdidiwearthen_contacts.each do |contact_wrapper|
-      str = Myp.appendstr(str, contact_wrapper.contact.display, "; ")
-    end
-    
-    obj.whatdidiwearthen_locations.each do |location_wrapper|
-      str = Myp.appendstr(str, location_wrapper.location.display_super_simple, "; ")
-    end
-    
-    return str
+    Myp.display_datetime(obj.weartime, User.current_user)
   end
 
   protected
@@ -46,6 +36,11 @@ class WhatdidiwearthensController < MyplaceonlineController
         :notes,
         :rating,
         whatdidiwearthen_files_attributes: FilesController.multi_param_names,
+        whatdidiwearthen_wearables_attributes: [
+          :id,
+          :_destroy,
+          wearable_attributes: WearablesController.param_names
+        ],
         whatdidiwearthen_contacts_attributes: [
           :id,
           :_destroy,

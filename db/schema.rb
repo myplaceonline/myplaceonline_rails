@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_21_213634) do
+ActiveRecord::Schema.define(version: 2025_02_21_214629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8707,6 +8707,20 @@ ActiveRecord::Schema.define(version: 2025_02_21_213634) do
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_locations_on_whatdidiwearthen_id"
   end
 
+  create_table "whatdidiwearthen_wearables", force: :cascade do |t|
+    t.bigint "whatdidiwearthen_id"
+    t.bigint "wearable_id"
+    t.bigint "identity_id"
+    t.integer "position"
+    t.boolean "is_public"
+    t.text "notes"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_whatdidiwearthen_wearables_on_identity_id"
+    t.index ["wearable_id"], name: "index_whatdidiwearthen_wearables_on_wearable_id"
+    t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_wearables_on_whatdidiwearthen_id"
+  end
+
   create_table "whatdidiwearthens", force: :cascade do |t|
     t.datetime "weartime"
     t.text "notes"
@@ -9932,6 +9946,9 @@ ActiveRecord::Schema.define(version: 2025_02_21_213634) do
   add_foreign_key "whatdidiwearthen_locations", "identities"
   add_foreign_key "whatdidiwearthen_locations", "locations"
   add_foreign_key "whatdidiwearthen_locations", "whatdidiwearthens"
+  add_foreign_key "whatdidiwearthen_wearables", "identities"
+  add_foreign_key "whatdidiwearthen_wearables", "wearables"
+  add_foreign_key "whatdidiwearthen_wearables", "whatdidiwearthens"
   add_foreign_key "whatdidiwearthens", "identities"
   add_foreign_key "wireless_networks", "identities"
   add_foreign_key "wireless_networks", "locations"

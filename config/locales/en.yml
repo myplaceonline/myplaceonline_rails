@@ -4370,6 +4370,10 @@ en:
       name: "Name"
     whatdidiwearthens:
       weartime: "Date/Time"
+      wearable: "Wearable"
+      wearables: "Wearables"
+      add_wearable: "Add Wearable"
+      delete_wearable: "Delete Wearable"
       contact: "Contact"
       contacts: "Contacts"
       add_contact: "Add Contact"
