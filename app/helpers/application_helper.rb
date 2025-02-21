@@ -1188,7 +1188,7 @@ module ApplicationHelper
     end
   end
 
-  def attribute_table_row_reference(name, pathfunc, ref, controllerName: nil)
+  def attribute_table_row_reference(name, pathfunc, ref, controllerName: nil, nested_expanded: false)
     if !ref.nil?
       url = send(pathfunc, ref)
       result = attribute_table_row(name, url_or_blank(url, ref.display), url)
@@ -1200,7 +1200,7 @@ module ApplicationHelper
               {
                 id: ref.id,
                 nested_show: true,
-                nested_expanded: false,
+                nested_expanded: nested_expanded,
                 nested_cell: true,
               }
             ).html_safe

@@ -1,6 +1,6 @@
 <%= data_row(heading: t("myplaceonline.whatdidiwearthens.weartime"), content: obj.weartime) %>
 <% obj.whatdidiwearthen_wearables.each do |wrapper| %>
-  <%= attribute_table_row_reference(t("myplaceonline.whatdidiwearthens.wearable"), "wearable_path", wrapper.wearable) %>
+  <%= attribute_table_row_reference(t("myplaceonline.whatdidiwearthens.wearable"), "wearable_path", wrapper.wearable, nested_expanded: true) %>
 <% end %>
 <%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <% obj.whatdidiwearthen_contacts.each do |wrapper| %>

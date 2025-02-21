@@ -8,7 +8,7 @@ class WhatdidiwearthensController < MyplaceonlineController
   end
   
   def bubble_text(obj)
-    Myp.display_datetime(obj.weartime, User.current_user)
+    Myp.display_date_short(obj.weartime, User.current_user)
   end
 
   protected

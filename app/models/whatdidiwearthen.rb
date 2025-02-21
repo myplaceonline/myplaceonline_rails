@@ -21,7 +21,7 @@ class Whatdidiwearthen < ApplicationRecord
     end
     
     if !tmp.blank?
-      str = Myp.appendstr(str, "Wore #{tmp}", ", ")
+      str = Myp.appendstr(str, "#{tmp}", ", ")
     end
     
     tmp = ""
