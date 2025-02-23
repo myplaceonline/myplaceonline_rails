@@ -2,12 +2,12 @@
 <% obj.whatdidiwearthen_wearables.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.whatdidiwearthens.wearable"), "wearable_path", wrapper.wearable, nested_expanded: true) %>
 <% end %>
-<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <% obj.whatdidiwearthen_contacts.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.whatdidiwearthens.contact"), "contact_path", wrapper.contact) %>
 <% end %>
 <% obj.whatdidiwearthen_locations.each do |wrapper| %>
   <%= attribute_table_row_reference(t("myplaceonline.whatdidiwearthens.location"), "location_path", wrapper.location) %>
 <% end %>
+<%= data_row(heading: t("myplaceonline.general.notes"), content: obj.notes, markdown: true) %>
 <%= data_row(heading: t("myplaceonline.general.rating"), content: obj.rating, enumeration: Myp::RATINGS) %>
 <%= data_row(heading: t("myplaceonline.identity_files.file"), content: obj.whatdidiwearthen_files) %>
