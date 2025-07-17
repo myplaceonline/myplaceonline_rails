@@ -2698,7 +2698,7 @@ module Myp
     if !actualResults.nil?
       search_results = actualResults.map do |elasticResult|
         model = Object.const_get(elasticResult["_index"].camelize)
-        model.find(elasticResult["_id"])
+        model.where(id: elasticResult["_id"]).take
       end
       
       search_results = search_results.compact
