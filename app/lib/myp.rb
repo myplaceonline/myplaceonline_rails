@@ -4,10 +4,10 @@ require "github/markup"
 require "twilio-ruby"
 require "rest-client"
 require "time"
-require "posix/spawn"
 require "colorize"
 require "base64"
 require "objspace"
+require "progeny"
 
 module Myp
   
@@ -3824,7 +3824,7 @@ module Myp
   
   def self.spawn(command_line:, process_error: true, current_directory: nil, input: nil)
     # https://github.com/rtomayko/posix-spawn
-    child = POSIX::Spawn::Child.new(command_line, chdir: current_directory, input: input)
+    child = Progeny::Command.new(command_line, chdir: current_directory, input: input)
     # child.out, child.err, child.status (Process::Status)
     if process_error && child.status.exitstatus != 0
       raise "Error #{child.status.exitstatus} spawning #{command_line}, stdout: #{child.out}, stderr: #{child.err}"
