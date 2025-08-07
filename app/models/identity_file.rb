@@ -243,10 +243,15 @@ class IdentityFile < ApplicationRecord
   
   def has_file?
     
+    result = false
     # In the case of the DB-backed file, we don't want to do too much of a check
     # inspecting the file because that will load the bytes into memory and may
     # not be needed
-    result = (!self.file.nil? && self.file.exists?) || !self.filesystem_path.blank?
+    if !self.filesystem_path.blank?
+      result = true
+    else
+      result = (!self.file.nil? && self.file.exists?)
+    end
     
     Rails.logger.debug{"IdentityFile.has_file?: #{result}"}
     
