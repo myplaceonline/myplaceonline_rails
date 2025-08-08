@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_04_124465) do
+ActiveRecord::Schema.define(version: 2025_08_08_164961) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3277,6 +3277,46 @@ ActiveRecord::Schema.define(version: 2025_08_04_124465) do
     t.boolean "certified_humane_approved_hatcheries"
     t.boolean "humanely_hatched"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
+  end
+
+  create_table "find_humane_maintenance_iterations", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.integer "iteration_type"
+    t.integer "maintenance_type"
+    t.datetime "started"
+    t.datetime "finished"
+    t.text "notes"
+    t.bigint "identity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.index ["identity_id"], name: "index_find_humane_maintenance_iterations_on_identity_id"
+  end
+
+  create_table "find_humane_maintenances", force: :cascade do |t|
+    t.string "name"
+    t.integer "maintenance_type"
+    t.string "name_model"
+    t.datetime "first_started"
+    t.datetime "finally_finished"
+    t.datetime "last_accumulation_start"
+    t.integer "total_accumulated_seconds"
+    t.integer "status"
+    t.text "notes"
+    t.bigint "find_humane_maintenance_iteration_id"
+    t.bigint "identity_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.index ["find_humane_maintenance_iteration_id"], name: "fhmid_on_fhm"
+    t.index ["identity_id"], name: "index_find_humane_maintenances_on_identity_id"
   end
 
   create_table "find_humane_producers", force: :cascade do |t|
@@ -9213,6 +9253,9 @@ ActiveRecord::Schema.define(version: 2025_08_04_124465) do
   add_foreign_key "find_humane_humane_product_files", "identities"
   add_foreign_key "find_humane_humane_product_files", "identity_files"
   add_foreign_key "find_humane_humane_products", "identities"
+  add_foreign_key "find_humane_maintenance_iterations", "identities"
+  add_foreign_key "find_humane_maintenances", "find_humane_maintenance_iterations"
+  add_foreign_key "find_humane_maintenances", "identities"
   add_foreign_key "find_humane_producers", "find_humane_humane_locations"
   add_foreign_key "find_humane_producers", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
