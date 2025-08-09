@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_09_130342) do
+ActiveRecord::Schema.define(version: 2025_08_09_133234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3277,6 +3277,19 @@ ActiveRecord::Schema.define(version: 2025_08_09_130342) do
     t.boolean "certified_humane_approved_hatcheries"
     t.boolean "humanely_hatched"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
+  end
+
+  create_table "find_humane_maintenance_files", force: :cascade do |t|
+    t.bigint "find_humane_maintenance_id", null: false
+    t.bigint "identity_file_id", null: false
+    t.bigint "identity_id", null: false
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["find_humane_maintenance_id"], name: "fhmf_m"
+    t.index ["identity_file_id"], name: "fhmf_if"
+    t.index ["identity_id"], name: "fhmf_i"
   end
 
   create_table "find_humane_maintenance_iterations", force: :cascade do |t|
@@ -9254,6 +9267,9 @@ ActiveRecord::Schema.define(version: 2025_08_09_130342) do
   add_foreign_key "find_humane_humane_product_files", "identities"
   add_foreign_key "find_humane_humane_product_files", "identity_files"
   add_foreign_key "find_humane_humane_products", "identities"
+  add_foreign_key "find_humane_maintenance_files", "find_humane_maintenances"
+  add_foreign_key "find_humane_maintenance_files", "identities"
+  add_foreign_key "find_humane_maintenance_files", "identity_files"
   add_foreign_key "find_humane_maintenance_iterations", "identities"
   add_foreign_key "find_humane_maintenances", "find_humane_maintenance_iterations"
   add_foreign_key "find_humane_maintenances", "identities"
