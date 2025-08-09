@@ -1,5 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   skip_authorization_check
+  #skip_before_action :verify_authenticity_token, only: [:create]
   # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -47,8 +48,14 @@ class Users::SessionsController < Devise::SessionsController
   end
   
   def reenter
+    Rails.logger.debug{"Users::SessionsController.reenter redirect: #{params[:redirect]}"}
     if !user_signed_in?
-      return redirect_to "/users/sign_in"
+      redirect_path = "/users/sign_in"
+      if params.has_key?(:redirect)
+        redirect_path += "?redirect=#{CGI.escape(params[:redirect])}"
+      end
+      Rails.logger.debug{"Users::SessionsController.reenter redirecting to: #{redirect_path}"}
+      return redirect_to redirect_path
     end
     
     @redirect = nil
