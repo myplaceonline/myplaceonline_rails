@@ -591,6 +591,8 @@ class IdentityFile < ApplicationRecord
         result = "image/webp"
       when "xlsx"
         result = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      when "csv"
+        result = "text/csv"
       else
         raise "Unimplemented extension #{ext}"
       end
