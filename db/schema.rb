@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_08_09_133234) do
+ActiveRecord::Schema.define(version: 2025_08_18_234037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3329,6 +3329,8 @@ ActiveRecord::Schema.define(version: 2025_08_09_133234) do
     t.integer "rating"
     t.boolean "is_public"
     t.integer "total_accumulated_coding_seconds"
+    t.integer "total_accumulated_import_seconds"
+    t.integer "total_accumulated_normalize_seconds"
     t.index ["find_humane_maintenance_iteration_id"], name: "fhmid_on_fhm"
     t.index ["identity_id"], name: "index_find_humane_maintenances_on_identity_id"
   end

@@ -86,19 +86,26 @@
   } do |child_fields, childproperty|
 %>
   <%= child_fields.fields_for :identity_file, childproperty.identity_file do |file_fields| %>
-    <p><%= image_content(childproperty.identity_file) %></p>
-    <%= myp_file_field(file_fields, :file, item_placeholder, childproperty.identity_file.file) %>
-    <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", childproperty.identity_file.file_file_name) %>
-    <%=
-      input_field(
-        form: file_fields,
-        type: Myp::FIELD_TEXT_AREA,
-        name: :notes,
-        value: childproperty.identity_file.notes,
-        placeholder: "myplaceonline.general.notes",
-        collapsed: childproperty.identity_file.notes.blank?,
-      )
+    <%
+    begin
     %>
-    <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
+      <p><%= image_content(childproperty.identity_file) %></p>
+      <%= myp_file_field(file_fields, :file, item_placeholder, childproperty.identity_file.file) %>
+      <%= myp_text_field(file_fields, :file_file_name, "myplaceonline.files.file_file_name", childproperty.identity_file.file_file_name) %>
+      <%=
+        input_field(
+          form: file_fields,
+          type: Myp::FIELD_TEXT_AREA,
+          name: :notes,
+          value: childproperty.identity_file.notes,
+          placeholder: "myplaceonline.general.notes",
+          collapsed: childproperty.identity_file.notes.blank?,
+        )
+      %>
+      <%= myp_hidden_field(file_fields, :_updatetype, AllowExistingConcern::UPDATE_TYPE_COMBINE.to_s) %>
+    <%
+    rescue Exception => e
+    end
+    %>
   <% end %>
 <% end %>
