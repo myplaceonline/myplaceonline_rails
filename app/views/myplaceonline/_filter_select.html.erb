@@ -8,7 +8,11 @@ if (filters.count > 0 && @count_all > 0 && (@filtered_count == -1 || @filtered_c
   <div class="horizontal_center nonprintable" data-role="collapsible">
     <h4><%= t("myplaceonline.general.filter") %></h4>
     <% filters.each do |filter| %>
-      <%= myp_check_box_tag(filter[:name].to_sym, filter[:display], controller.instance_variable_get("@" + filter[:name].to_s), false, nil, "myplaceonline.refreshWithParam('" + filter[:name].to_s + "', this.checked)") %>
+      <% if filter[:select_options].nil? %>
+        <%= myp_check_box_tag(filter[:name].to_sym, filter[:display], controller.instance_variable_get("@" + filter[:name].to_s), false, nil, "myplaceonline.refreshWithParam('" + filter[:name].to_s + "', this.checked)") %>
+      <% else %>
+        <%= myp_select_tag(filter[:name].to_sym, filter[:display], filter[:select_options], controller.instance_variable_get("@" + filter[:name].to_s), false, nil, false, "myplaceonline.refreshWithParam('" + filter[:name].to_s + "', this.value)") %>
+      <% end %>
     <% end %>
   </div>
 <% end %>

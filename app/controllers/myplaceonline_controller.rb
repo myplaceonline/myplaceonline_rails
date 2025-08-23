@@ -98,6 +98,11 @@ class MyplaceonlineController < ApplicationController
       Rails.logger.debug{"MyplaceonlineController.process_filters setting #{simple_index_filter[:name].to_s} = #{param_bool(simple_index_filter[:name])}"}
       instance_variable_set("@#{simple_index_filter[:name].to_s}", param_bool(simple_index_filter[:name]))
     end
+    Rails.logger.debug{"MyplaceonlineController.process_filters: #{enum_index_filters}"}
+    enum_index_filters.each do |enum_index_filter|
+      Rails.logger.debug{"MyplaceonlineController.process_filters setting #{enum_index_filter[:name].to_s} = #{params[enum_index_filter[:name]]}"}
+      instance_variable_set("@#{enum_index_filter[:name].to_s}", params[enum_index_filter[:name]])
+    end
   end
   
   def prepare_filtered_count
@@ -1249,6 +1254,14 @@ class MyplaceonlineController < ApplicationController
       }
     end
     
+    enum_index_filters.each do |enum_index_filter|
+      result << {
+        :name => enum_index_filter[:name],
+        :display => enum_index_filter[:display],
+        :select_options => enum_index_filter[:select_options],
+      }
+    end
+    
     result
   end
   
@@ -1643,6 +1656,23 @@ class MyplaceonlineController < ApplicationController
           end
         end
       end
+      enum_index_filters.each do |enum_index_filter|
+        colname = enum_index_filter[:name].to_s
+        
+        Rails.logger.debug{"all_additional_sql enum_index_filter: #{colname}"}
+        
+        if !instance_variable_get("@#{enum_index_filter[:name].to_s}").blank?
+          sql = "#{model.table_name}.#{colname} = #{ActiveRecord::Base.connection.quote(instance_variable_get("@#{enum_index_filter[:name].to_s}"))}"
+          Rails.logger.debug{"all_additional_sql sql: #{sql}"}
+          result = Myp.appendstr(
+            result,
+            sql,
+            nil,
+            " and (",
+            ")"
+          )
+        end
+      end
       return result
     end
     
@@ -1925,6 +1955,10 @@ class MyplaceonlineController < ApplicationController
     end
 
     def simple_index_filters
+      []
+    end
+    
+    def enum_index_filters
       []
     end
     
