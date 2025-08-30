@@ -112,6 +112,7 @@ gem "selenium-devtools"
 gem "spreadsheet"
 gem 'write_xlsx'
 gem 'json5'
+gem 'rb_json5'
 gem "syslog"
 gem "ostruct"
 gem "benchmark"
