@@ -527,6 +527,14 @@ class MyplaceonlineController < ApplicationController
     end
   end
   
+  def myplet_path_prefix
+    if !model.model_name.to_s.include?("::")
+      self.paths_name
+    else
+      engine_link_prefix + model.model_name.to_s.split("::")[1].underscore.downcase.pluralize
+    end
+  end
+  
   def second_path_name
     raise NotImplementedError
   end
@@ -803,6 +811,10 @@ class MyplaceonlineController < ApplicationController
   
   def show_index_add
     allow_add
+  end
+  
+  def show_index_settings
+    true
   end
   
   def show_edit

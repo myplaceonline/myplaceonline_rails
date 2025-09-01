@@ -107,13 +107,13 @@ module ApplicationHelper
     end
   end
   
-  def attribute_table_row(name, value, clipboard_text = value, valueclass = nil)
+  def attribute_table_row(name, value, clipboard_text = value, valueclass = nil, force_no_clipboard: false)
     if is_blank(value)
       return nil
     end
     valueclass ||= ""
     
-    lastcolumn = attribute_table_row_clipboard(clipboard_text)
+    lastcolumn = attribute_table_row_clipboard(force_no_clipboard ? nil : clipboard_text)
     
     attribute_table_row_content(
       name,
@@ -289,6 +289,7 @@ module ApplicationHelper
               nested_show: true,
               nested_expanded: options[:expanded],
               nested_cell: !options[:show_reference_as_content],
+              myplet: options[:myplet],
             })
           )
         end
@@ -300,6 +301,7 @@ module ApplicationHelper
     if options[:reference_display_heading]
       result = get_content_display(content: content, options: options)
     else
+      Rails.logger.debug{"ApplicationHelper.display_reference: second_row blank? #{options[:second_row].blank?}"}
       if options[:show_reference_as_content] && !options[:second_row].blank?
         result = options[:second_row]
         options[:second_row] = nil
@@ -611,6 +613,9 @@ module ApplicationHelper
       percentage: false,
       target_app: nil,
       engine_override: false,
+      myplet: false,
+      force_main_blank: false,
+      force_boolean: false,
     }.merge(options)
     
     data_display_options = ExecutionContext[:data_display_options]
@@ -636,7 +641,7 @@ module ApplicationHelper
         options[:transform] = method(:display_time)
       elsif content.is_a?(Date)
         options[:transform] = method(:display_date)
-      elsif content.is_a?(TrueClass) || content.is_a?(FalseClass)
+      elsif (content.is_a?(TrueClass) || content.is_a?(FalseClass)) || options[:force_boolean]
         options[:transform] = method(:display_boolean)
       elsif content.is_a?(ActiveRecord::Base)
         options[:transform] = method(:display_reference)
@@ -728,13 +733,17 @@ module ApplicationHelper
       end
       
       if options[:wrap]
-        html = <<-HTML
-          <tr>
-            <td>#{content_tag(:span, heading, class: "tooltipable", title: options[:tooltip])}</td>
-            <td class="#{options[:content_classes]}">#{content.html_safe}</td>
-            <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
-          </tr>
-        HTML
+        if !options[:force_main_blank]
+          html = <<-HTML
+            <tr>
+              <td>#{content_tag(:span, heading, class: "tooltipable", title: options[:tooltip])}</td>
+              <td class="#{options[:content_classes]}">#{content.html_safe}</td>
+              <td style="padding: 0.2em; vertical-align: top;">#{options[:secondary_content]}</td>
+            </tr>
+          HTML
+        else
+          html = ""
+        end
       else
         if options[:prefix_heading]
           if options[:prefix_wrapper].nil?
@@ -1150,12 +1159,12 @@ module ApplicationHelper
     end
   end
   
-  def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false, external_target_blank = false)
+  def attribute_table_row_url(name, url, may_be_nonurl = false, url_text = nil, clipboard = nil, linkclasses = nil, external = false, external_target_blank = false, force_no_clipboard: false)
     if may_be_nonurl && !url.blank? && !url.start_with?("/") && !url.start_with?("http:")
       # Probably not a URL, just display raw text
-      attribute_table_row(name, url)
+      attribute_table_row(name, url, force_no_clipboard: force_no_clipboard)
     else
-      attribute_table_row(name, url_or_blank(url, url_text, clipboard, linkclasses, external, external_target_blank), url, nil)
+      attribute_table_row(name, url_or_blank(url, url_text, clipboard, linkclasses, external, external_target_blank), url, nil, force_no_clipboard: force_no_clipboard)
     end
   end
   

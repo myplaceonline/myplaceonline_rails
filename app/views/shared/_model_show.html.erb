@@ -70,5 +70,5 @@ locals = { obj: @obj }.merge(locals)
     <% end %>
   <% end %>
 <% else %>
-  <%= render partial: controller.paths_name + "/show", locals: locals %>
+  <%= render partial: controller.myplet_path_prefix + "/show", locals: locals %>
 <% end %>

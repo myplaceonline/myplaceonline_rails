@@ -1,23 +1,27 @@
-<%= attribute_table_row(t("myplaceonline.locations.full_address"), obj.address_one_line) %>
-<%= attribute_table_row(t("myplaceonline.locations.name"), obj.name) %>
-<%= attribute_table_row(t("myplaceonline.locations.address1"), obj.address1) %>
-<%= attribute_table_row(t("myplaceonline.locations.address2"), obj.address2) %>
-<%= attribute_table_row(t("myplaceonline.locations.address3"), obj.address3) %>
-<%= attribute_table_row(t("myplaceonline.general.sub_region2"), obj.sub_region2) %>
-<%= attribute_table_row(t("myplaceonline.general.sub_region1"), obj.sub_region1) %>
-<%= attribute_table_row(t("myplaceonline.locations.postal_code"), obj.postal_code) %>
-<%= attribute_table_row(t("myplaceonline.general.region"), obj.region_name) %>
-<%= attribute_table_row(t("myplaceonline.locations.latitude"), obj.latitude) %>
-<%= attribute_table_row(t("myplaceonline.locations.longitude"), obj.longitude) %>
-<% if !obj.latitude.nil? && !obj.longitude.nil? %>
-  <%= attribute_table_row(t("myplaceonline.locations.latitude_longitude"), obj.latitude.to_s + "," + obj.longitude.to_s) %>
+<% if !params[:simple] %>
+<%= attribute_table_row(t("myplaceonline.locations.full_address"), obj.address_one_line, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.name"), obj.name, force_no_clipboard: params[:force_no_clipboard]) %>
 <% end %>
-<%= attribute_table_row_url(t("myplaceonline.locations.map"), obj.map_url) %>
-<%= attribute_table_row_url(t("myplaceonline.locations.map_directions_from_home"), obj.map_directions_url(source_location: User.current_user.current_identity.primary_location)) %>
-<%= attribute_table_row(t("myplaceonline.locations.bathroom_code"), obj.bathroom_code) %>
-<%= data_row(heading: t("myplaceonline.locations.allhours"), content: obj.allhours) %>
-<%= data_row(heading: t("myplaceonline.locations.prefer_latlng"), content: obj.prefer_latlng) %>
-<%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<%= attribute_table_row(t("myplaceonline.locations.address1"), obj.address1, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.address2"), obj.address2, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.address3"), obj.address3, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.general.sub_region2"), obj.sub_region2, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.general.sub_region1"), obj.sub_region1, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.postal_code"), obj.postal_code, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.general.region"), obj.region_name, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.latitude"), obj.latitude, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row(t("myplaceonline.locations.longitude"), obj.longitude, force_no_clipboard: params[:force_no_clipboard]) %>
+<%= attribute_table_row_url(t("myplaceonline.locations.map"), obj.map_url, force_no_clipboard: params[:force_no_clipboard]) %>
+<% if !params[:simple] %>
+  <% if !obj.latitude.nil? && !obj.longitude.nil? %>
+    <%= attribute_table_row(t("myplaceonline.locations.latitude_longitude"), obj.latitude.to_s + "," + obj.longitude.to_s) %>
+  <% end %>
+  <%= attribute_table_row_url(t("myplaceonline.locations.map_directions_from_home"), obj.map_directions_url(source_location: User.current_user.current_identity.primary_location)) %>
+  <%= attribute_table_row(t("myplaceonline.locations.bathroom_code"), obj.bathroom_code) %>
+  <%= data_row(heading: t("myplaceonline.locations.allhours"), content: obj.allhours) %>
+  <%= data_row(heading: t("myplaceonline.locations.prefer_latlng"), content: obj.prefer_latlng) %>
+  <%= attribute_table_row_markdown(t("myplaceonline.general.notes"), obj.notes) %>
+<% end %>
 <% obj.location_phones.each do |phone| %>
   <%= attribute_table_row(t("myplaceonline.locations.phone"), phone.number) %>
 <% end %>
