@@ -70,7 +70,7 @@ class Export < ApplicationRecord
       canStart = true
     end
 
-    if canStart
+    if canStart && !MyplaceonlineExecutionContext.offline?
       token = SecurityToken.build
       token.password = Myp.get_current_user_password!
       token.save!
