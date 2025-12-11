@@ -30,6 +30,7 @@ class ApiController < ApplicationController
     :postsupport,
     :update_video_thumbnail,
     :geolocate,
+    :apple_touch_icon_precomposed,
   ]
   
   def index
@@ -778,6 +779,15 @@ class ApiController < ApplicationController
       child_property_name: :favicon_png_identity_file,
       default_file_name: "default_favicon.png",
       target_file_name: "favicon.png",
+      content_type: "image/png",
+    )
+  end
+
+  def apple_touch_icon_precomposed
+    handle_domain_image(
+      child_property_name: :favicon_png_identity_file,
+      default_file_name: "default_favicon.png",
+      target_file_name: "apple_touch_icon_precomposed.png",
       content_type: "image/png",
     )
   end

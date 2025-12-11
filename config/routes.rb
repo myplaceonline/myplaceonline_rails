@@ -125,6 +125,8 @@ Rails.application.routes.draw do
   get 'icons.png', to: redirect('/assets/ckeditor/skins/moono-lisa/icons.png')
   get 'icons_hidpi.png', to: redirect('/assets/ckeditor/skins/moono-lisa/icons_hidpi.png')
 
+  get 'api/apple-touch-icon-precomposed.png', to: 'api#apple_touch_icon_precomposed'
+
   match 'c/:id', :to => 'calendar_item_reminder_pendings#short', via: [:get], as: "calendar_item_reminder_short"
 
   match 'm/:id/:token', :to => 'text_messages#short', via: [:get], as: "text_message_short"

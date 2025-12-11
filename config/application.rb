@@ -51,11 +51,13 @@ module Myplaceonline
         if !user_agent.blank?
           user_agent = user_agent.downcase
           if user_agent.include?("myplaceonline bot (read-only)")
+            Rails.logger.debug{"application.rb setting offline true because of User-Agent"}
             MyplaceonlineExecutionContext.offline = true
           end
         end
         
         if parsed_query_string["display_offline"].is_true?
+            Rails.logger.debug{"application.rb setting offline true because of display_offline"}
           MyplaceonlineExecutionContext.offline = true
         end
         
