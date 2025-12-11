@@ -5,22 +5,23 @@ class ExportsController < MyplaceonlineController
 
   def footer_items_show
     result = []
-    # The security token is deleted upon completion, so we can't re-run
+
     if @obj.export_status != Export::EXPORT_STATUS_EXPORTED
-      if @obj.export_status == Export::EXPORT_STATUS_READY
+      if @obj.export_status == Export::EXPORT_STATUS_READY || User.current_user.admin?
         result << {
-          title: I18n.t("myplaceonline.exports.export"),
-          link: export_export_path(@obj),
-          icon: "gear"
-        }
-      else
-        result << {
-          title: I18n.t("myplaceonline.exports.export_status"),
-          link: export_export_path(@obj),
-          icon: "gear"
+          title: I18n.t("myplaceonline.exports.start_export"),
+          link: export_export_path(@obj, exec: "start"),
+          icon: "gear",
         }
       end
+
+      result << {
+        title: I18n.t("myplaceonline.exports.export_status"),
+        link: export_export_path(@obj),
+        icon: "gear",
+      }
     end
+
     result + super
   end
   

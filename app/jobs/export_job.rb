@@ -325,7 +325,10 @@ class ExportJob < ApplicationJob
     
     if needs_download
       
-      execute_command(command_line: "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' --referer '#{clean_command_line(referer)}' '#{clean_command_line(path)}'", current_directory: dir)
+      curl_command = "curl --silent --output '#{outfile}' --user-agent 'Myplaceonline Bot (Read-Only)' --referer '#{clean_command_line(referer)}' '#{clean_command_line(path)}'"
+      Rails.logger.debug{"ExportJob scrape final curl: #{curl_command}"}
+      execute_command(command_line: curl_command, current_directory: dir)
+      Rails.logger.debug{"ExportJob scrape curl returned"}
       
       mime_type = FileMagic.new(FileMagic::MAGIC_MIME).file(outfile, true)
       

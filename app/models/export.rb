@@ -59,7 +59,25 @@ class Export < ApplicationRecord
   end
   
   def start
-    if self.export_status != Export::EXPORT_STATUS_WAITING_FOR_WORKER && self.export_status != Export::EXPORT_STATUS_EXPORTING
+    canStart = false
+
+    if self.export_status != Export::EXPORT_STATUS_WAITING_FOR_WORKER &&
+       self.export_status != Export::EXPORT_STATUS_EXPORTING
+      canStart = true
+    end
+
+    if User.current_user.admin?
+      canStart = true
+    end
+
+    if canStart
+      token = SecurityToken.build
+      token.password = Myp.get_current_user_password!
+      token.save!
+
+      self.security_token_id = token.id
+      self.save!
+      
       self.export_status = Export::EXPORT_STATUS_WAITING_FOR_WORKER
       self.export_progress = "* _#{User.current_user.time_now}_: #{I18n.t("myplaceonline.exports.progress_waiting_for_worker")}"
       self.save!
@@ -71,18 +89,6 @@ class Export < ApplicationRecord
     end
   end
 
-  before_create :do_before_create
-  
-  def do_before_create
-    token = SecurityToken.build
-    token.password = Myp.get_current_user_password!
-    token.save!
-
-    self.security_token_id = token.id
-    
-    true
-  end
-  
   def self.build(params = nil)
     result = self.dobuild(params)
     result.export_name = DateTime.now.strftime("%B %-d %Y")
