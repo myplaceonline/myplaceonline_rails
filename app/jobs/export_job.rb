@@ -221,7 +221,8 @@ class ExportJob < ApplicationJob
   
   def clean_filename(name)
     # Only allow certain characters and filter all others
-    name.gsub(/[^a-zA-Z0-9,_\- ]/, "")
+    name = name.gsub(/[^a-zA-Z0-9,_\- ö]/, "")
+    return name
   end
   
   def clean_command_line(str)
