@@ -44,12 +44,12 @@
       <%= t("myplaceonline.users.security_settings") %>
     <% end %>
   </li>
-  <%# <li> %>
-    <%# link_to users_export_path do %>
-      <%# image_tag("FatCow_Icons16x16/external.png", size: "16x16", class: "ui-li-icon") %>
-      <%# t("myplaceonline.users.export") %>
-    <%# end %>
-  <%# </li> %>
+  <li>
+    <%= link_to new_export_path do %>
+      <%= image_tag("FatCow_Icons16x16/external.png", size: "16x16", class: "ui-li-icon") %>
+      <%= t("myplaceonline.users.export") %>
+    <% end %>
+  </li>
   <%# <li> %>
     <%# link_to users_offline_path do %>
       <%# image_tag("FatCow_Icons16x16/disconnect.png", size: "16x16", class: "ui-li-icon") %>
