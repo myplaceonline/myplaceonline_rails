@@ -203,12 +203,17 @@ module Myplaceonline
           else
             request = ActionDispatch::Request.new(env)
             
+            # "The response tuple is an Array of three elements, which are:
+            #  the HTTP status, the headers, and the response body."
+            # 
+            # "The Body is typically an Array of String values"
+            # https://rack.github.io/rack/main/SPEC_rdoc.html#label-The+Response
             [
               302,
               {
                 "Location": "#{request.protocol}#{request.host_with_port}/identities/new"
               },
-              self,
+              [],
             ]
           end
         end

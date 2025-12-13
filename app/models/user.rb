@@ -63,6 +63,11 @@ class User < ApplicationRecord
     identities.order(:name).to_a.dup.keep_if { |x| x.website_domain_id == domain.id }
   end
   
+  def domain_identities_active
+    domain = Myp.website_domain
+    identities.where(archived: nil).order(:name).to_a.dup.keep_if { |x| x.website_domain_id == domain.id }
+  end
+  
   def self.current_user
     MyplaceonlineExecutionContext.user
   end

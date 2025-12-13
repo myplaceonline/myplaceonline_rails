@@ -192,7 +192,7 @@
             <p style="text-align: center;">
               <% if !MyplaceonlineExecutionContext.offline? %>
                 <%
-                  identities = current_user.domain_identities.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
+                  identities = current_user.domain_identities_active.map{|x| [x.name, x.id] } + [[t("myplaceonline.identities.add"), -1]]
                 %>
                 <%= select_tag("current_identity_id", options_for_select(identities, current_user.current_identity_id), onchange: "myplaceonline.refreshWithParam('current_identity_id', $(this).val());") %>
               <% else %>
