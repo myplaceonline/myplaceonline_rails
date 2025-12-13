@@ -215,7 +215,7 @@ module Myplaceonline
                 # https://rack.github.io/rack/main/SPEC_rdoc.html#label-The+Response
                 "location": "#{request.protocol}#{request.host_with_port}/identities/new"
               },
-              [],
+              [""],
             ]
           end
         end
