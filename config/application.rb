@@ -211,7 +211,9 @@ module Myplaceonline
             [
               302,
               {
-                "Location": "#{request.protocol}#{request.host_with_port}/identities/new"
+                # "Header keys must not contain uppercase ASCII characters (A-Z)."
+                # https://rack.github.io/rack/main/SPEC_rdoc.html#label-The+Response
+                "location": "#{request.protocol}#{request.host_with_port}/identities/new"
               },
               [],
             ]
