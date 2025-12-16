@@ -3,6 +3,12 @@
 if !defined?(simple)
   simple = Myp.param_bool(params, :simple)
 end
+if !defined?(supersimple)
+  supersimple = Myp.param_bool(params, :supersimple)
+end
+if !defined?(skipname)
+  skipname = Myp.param_bool(params, :skipname)
+end
 %>
 
 <%
@@ -15,7 +21,9 @@ end
   sub_region2_field = myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2)
   sub_region1_field = myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1)
 %>
-<%= name_field %>
+<% if !skipname %>
+  <%= name_field %>
+<% end %>
 <%= address1_field %>
 <%= address2_field %>
 <%= address3_field %>
@@ -120,7 +128,9 @@ $("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input
 });
 </script>
 
+<% if !supersimple %>
 <a href="#" onclick="return myplaceonline.requestGPS2(location_gps_success<%= random_name %>);" class="ui-btn"><%= t("myplaceonline.locations.request_gps") %></a>
+
 <%=
   input_field(
     form: f,
@@ -159,6 +169,8 @@ $("#<%= extract_id(name_field) %>,#<%= extract_id(address1_field) %>").on("input
     placeholder_prefix: Myp.instance_to_category_human_readable(obj).singularize,
   )
 %>
+<% end %>
+
 <% if !simple %>
   <%=
     render layout: "myplaceonline/childproperties", locals: {
