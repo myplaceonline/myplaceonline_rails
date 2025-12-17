@@ -6,13 +6,13 @@ end
 if !defined?(supersimple)
   supersimple = Myp.param_bool(params, :supersimple)
 end
-if !defined?(skipname)
-  skipname = Myp.param_bool(params, :skipname)
+if !defined?(nametitle)
+  nametitle = "myplaceonline.locations.name"
 end
 %>
 
 <%
-  name_field = myp_text_field(f, :name, "myplaceonline.locations.name", obj.name)
+  name_field = myp_text_field(f, :name, nametitle, obj.name)
   address1_field = myp_text_field(f, :address1, "myplaceonline.locations.address1", obj.address1, autofocus)
   address2_field = myp_text_field(f, :address2, "myplaceonline.locations.address2", obj.address2)
   address3_field = myp_text_field(f, :address3, "myplaceonline.locations.address3", obj.address3)
@@ -21,9 +21,7 @@ end
   sub_region2_field = myp_text_field(f, :sub_region2, "myplaceonline.general.sub_region2", obj.sub_region2)
   sub_region1_field = myp_subregion_field(f, :sub_region1, "myplaceonline.general.sub_region1", obj.region, obj.sub_region1)
 %>
-<% if !skipname %>
-  <%= name_field %>
-<% end %>
+<%= name_field %>
 <%= address1_field %>
 <%= address2_field %>
 <%= address3_field %>
