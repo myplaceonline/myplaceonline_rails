@@ -232,6 +232,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_BOOLEAN,
+      name: :skipterms,
+      value: obj.skipterms,
+      placeholder: "myplaceonline.website_domains.skipterms"
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_TEXT,
       name: :feed_url,
       value: obj.feed_url,

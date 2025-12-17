@@ -2225,6 +2225,10 @@ module Myp
     Rails.env.production? && !Myp.website_domain.allow_public?
   end
   
+  def self.requires_terms
+    !Myp.website_domain.skipterms?
+  end
+  
   def self.sanitize_with_null_for_conditions(val)
     if val.nil?
       " IS NULL"

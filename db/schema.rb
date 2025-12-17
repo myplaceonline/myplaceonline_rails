@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_17_020166) do
+ActiveRecord::Schema.define(version: 2025_12_17_133340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -8625,6 +8625,7 @@ ActiveRecord::Schema.define(version: 2025_12_17_020166) do
     t.string "email_host_override"
     t.string "secondary_email_name"
     t.string "email_display_override"
+    t.boolean "skipterms"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"

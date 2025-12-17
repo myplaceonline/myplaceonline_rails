@@ -46,6 +46,8 @@
     <%= f.password_field :password_confirmation, autocomplete: "mpassword2", placeholder: t("myplaceonline.general.password2") %>
   </div>
 
+  <% if Myp.requires_terms %>
+
   <div class="ui-grid-a">
     <div class="ui-block-a">
       <div class="ui-bar">
@@ -61,6 +63,8 @@
       </div>
     </div>
   </div>
+  
+  <% end %>
   
   <%= myp_hidden_field_tag(:tz, @tz) %>
 

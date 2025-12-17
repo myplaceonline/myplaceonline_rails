@@ -905,6 +905,7 @@ en:
       not_confirmed: "Not Confirmed"
       type_normal: "Normal"
       type_admin: "Administrator"
+      type_secondary_admin: "Secondary Administrator"
       type_demo: "Demo"
       agree_terms: "Do you agree to the terms?"
       must_agree_terms: "You must agree to the %{terms} to sign up."
@@ -3219,6 +3220,7 @@ en:
       email_host_override: "Email host override"
       email_display_override: "Email display override"
       secondary_email_name: "Secondary email name"
+      skipterms: "Skip terms on sign-up"
     website_domain_myplets:
       title: "Title"
       border_type: "Border Type"

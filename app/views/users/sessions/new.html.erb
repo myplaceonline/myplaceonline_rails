@@ -34,5 +34,7 @@
 
   <%= render "users/shared/links" %>
 <% else %>
+  <% if false %>
   <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
+  <% end %>
 <% end %>

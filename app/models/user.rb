@@ -4,11 +4,13 @@ class User < ApplicationRecord
   USER_TYPE_NORMAL = 0
   USER_TYPE_ADMIN = 1
   USER_TYPE_DEMO = 2
+  USER_TYPE_SECONDARY_ADMIN = 4
   
   USER_TYPES = [
     ["myplaceonline.users.type_normal", USER_TYPE_NORMAL],
     ["myplaceonline.users.type_admin", USER_TYPE_ADMIN],
     ["myplaceonline.users.type_demo", USER_TYPE_DEMO],
+    ["myplaceonline.users.type_secondary_admin", USER_TYPE_SECONDARY_ADMIN],
   ]
   
   # The guest user will not exist in the database
@@ -189,7 +191,15 @@ class User < ApplicationRecord
   end
   
   def admin?
-    if !user_type.nil? && (user_type & 1) != 0
+    if !user_type.nil? && (user_type & USER_TYPE_ADMIN) != 0
+      true
+    else
+      false
+    end
+  end
+  
+  def secondary_admin?
+    if !user_type.nil? && (user_type & USER_TYPE_SECONDARY_ADMIN) != 0
       true
     else
       false
@@ -387,7 +397,11 @@ class User < ApplicationRecord
   end
   
   def demo_user?
-    return self.user_type == USER_TYPE_DEMO
+    if !user_type.nil? && (user_type & USER_TYPE_DEMO) != 0
+      true
+    else
+      false
+    end
   end
   
   protected
