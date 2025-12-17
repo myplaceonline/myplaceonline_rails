@@ -1,4 +1,13 @@
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :context,
+    value: obj.context,
+    placeholder: "myplaceonline.date_locations.context",
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :location,
@@ -8,7 +17,6 @@
     existingobjurl: "location_path",
     searchurl: "/locations.json?perpage=0",
     edit: edit,
-    autofocus: true,
     expanded_if_nil: true
   }
 %>

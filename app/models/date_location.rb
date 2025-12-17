@@ -5,7 +5,11 @@ class DateLocation < ApplicationRecord
   child_property(name: :location, required: true)
   
   def display
-    location.display
+    result = location.display
+    if !self.context.blank?
+      result = self.context + " @ " + result
+    end
+    return result
   end
 
   def self.category_split_button_link

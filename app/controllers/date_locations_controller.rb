@@ -28,6 +28,7 @@ class DateLocationsController < MyplaceonlineController
 
     def obj_params
       params.require(:date_location).permit(
+        :context,
         :rating,
         :notes,
         location_attributes: LocationsController.param_names
