@@ -3642,7 +3642,10 @@ module Myp
 #   end
   
   def self.is_number?(str)
-    !!(str =~ /\A[-+]?[0-9]+\z/)
+    if str.is_a?(Numeric)
+      return true
+    end
+    return !!(str =~ /\A[-+]?[0-9]+\z/)
   end
   
   # http://stackoverflow.com/a/7085969

@@ -48,9 +48,6 @@ class WebsiteDomain < ApplicationRecord
     result = nil
     if !self.homepage_path.blank?
       pieces = self.homepage_path.split("/")
-      if pieces.length < 2
-        raise "Unexpected path"
-      end
       last_piece = pieces[pieces.length - 1]
       if Myp.is_number?(last_piece)
         action = :show
@@ -61,7 +58,11 @@ class WebsiteDomain < ApplicationRecord
         id = pieces[pieces.length - 2].to_i
         controller_name = pieces[pieces.length - 3]
       end
-      result = [Object.const_get(controller_name.camelize.singularize).send("find", id), action]
+      if Myp.is_number?(id) && id > 0
+        result = [Object.const_get(controller_name.camelize.singularize).send("find", id), action]
+      else
+        result = [nil, nil]
+      end
     end
     result
   end
@@ -71,7 +72,7 @@ class WebsiteDomain < ApplicationRecord
     if !obj_action[0].nil?
       Ability.authorize(identity: User.current_user.current_identity, subject: obj_action[0], action: obj_action[1])
     else
-      false
+      true
     end
   end
   

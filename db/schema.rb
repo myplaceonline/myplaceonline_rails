@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_17_133340) do
+ActiveRecord::Schema.define(version: 2025_12_18_184245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3373,6 +3373,14 @@ ActiveRecord::Schema.define(version: 2025_12_17_133340) do
     t.boolean "extra"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "bademail"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.bigint "identity_id"
+    t.index ["identity_id"], name: "index_find_humane_subscriptions_on_identity_id"
   end
 
   create_table "flight_legs", id: :serial, force: :cascade do |t|
@@ -9294,6 +9302,7 @@ ActiveRecord::Schema.define(version: 2025_12_17_133340) do
   add_foreign_key "find_humane_maintenances", "identities"
   add_foreign_key "find_humane_producers", "find_humane_humane_locations"
   add_foreign_key "find_humane_producers", "identities"
+  add_foreign_key "find_humane_subscriptions", "identities"
   add_foreign_key "flight_legs", "companies", column: "flight_company_id"
   add_foreign_key "flight_legs", "flights"
   add_foreign_key "flight_legs", "identities"
