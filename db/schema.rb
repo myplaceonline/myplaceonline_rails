@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_18_184245) do
+ActiveRecord::Schema.define(version: 2025_12_18_190308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1809,6 +1809,7 @@ ActiveRecord::Schema.define(version: 2025_12_18_184245) do
     t.datetime "archived"
     t.integer "rating"
     t.boolean "is_public"
+    t.text "notes"
     t.index ["identity_id"], name: "index_desired_locations_on_identity_id"
     t.index ["location_id"], name: "index_desired_locations_on_location_id"
     t.index ["website_id"], name: "index_desired_locations_on_website_id"

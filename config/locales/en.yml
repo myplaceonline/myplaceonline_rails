@@ -2979,6 +2979,7 @@ en:
       not_visited: "Not Visited"
     desired_locations:
       location: "Location"
+      notes: "Desired why?"
     money_balance_item_templates:
       amount: "Amount"
       original_amount: "Original Amount"

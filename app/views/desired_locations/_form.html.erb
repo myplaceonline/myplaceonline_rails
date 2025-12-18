@@ -13,6 +13,16 @@
   }
 %>
 <%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.desired_locations.notes",
+    collapsed: false,
+  )
+%>
+<%=
   render partial: "myplaceonline/select_or_create", locals: {
     f: f,
     name: :website,

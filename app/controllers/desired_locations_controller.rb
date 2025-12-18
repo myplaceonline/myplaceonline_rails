@@ -29,6 +29,7 @@ class DesiredLocationsController < MyplaceonlineController
     def obj_params
       params.require(:desired_location).permit(
         :rating,
+        :notes,
         location_attributes: LocationsController.param_names,
         website_attributes: WebsitesController.param_names
       )
