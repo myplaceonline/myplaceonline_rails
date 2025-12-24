@@ -76,7 +76,7 @@ GEM
     benchmark (0.5.0)
     bigdecimal (3.3.1)
     bindata (2.5.1)
-    bootsnap (1.20.0)
+    bootsnap (1.19.0)
       msgpack (~> 1.2)
     browser (6.2.0)
     builder (3.3.0)
@@ -626,7 +626,7 @@ DEPENDENCIES
   activerecord-import
   awesome_print
   benchmark
-  bootsnap
+  bootsnap (~> 1.19.0)
   browser
   calculus
   cancancan
