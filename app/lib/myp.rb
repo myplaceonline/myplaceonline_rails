@@ -733,7 +733,7 @@ module Myp
     # Downcase the host and remove any port from the domain we're checking
     host = host.downcase.gsub(/:\d+$/, "")
     
-    host == "localhost" || Myp.website_domains.keys.any?{|domain| host.end_with?(domain) }
+    host =~ /localhost/ || Myp.website_domains.keys.any?{|domain| host.end_with?(domain) }
   end
   
   def self.website_domain_homepages

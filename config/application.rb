@@ -147,7 +147,7 @@ module Myplaceonline
           if !host.index(':').nil?
             host = host.gsub(/:\d+$/, "")
           end
-          if host == "localhost" || host == "127.0.0.1"
+          if host =~ /localhost$/ || host == "127.0.0.1"
             host = ""
           end
           
@@ -171,6 +171,7 @@ module Myplaceonline
           MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
           
+          Rails.logger.debug{"application.rb setting cookie domain = #{DynamicCookieOptions.cookie_domain}"}
           env["rack.session.options"][:domain] = DynamicCookieOptions.cookie_domain
 
           if parsed_query_string["current_identity_id"] != "-1"
