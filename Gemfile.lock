@@ -106,7 +106,7 @@ GEM
     colorize (1.1.0)
     composite_primary_keys (13.0.9)
       activerecord (~> 6.1.0)
-    concurrent-ruby (1.3.6)
+    concurrent-ruby (1.3.4)
     connection_pool (2.5.5)
     crass (1.0.6)
     csv (3.3.5)
@@ -184,7 +184,7 @@ GEM
     faraday-em_synchrony (1.0.1)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.1.1)
+    faraday-multipart (1.2.0)
       multipart-post (~> 2.0)
     faraday-net_http (1.0.2)
     faraday-net_http_persistent (1.2.0)
@@ -243,7 +243,8 @@ GEM
       http (~> 3.0, >= 3.0.0)
       nokogiri (~> 1.7, >= 1.7.1)
     hashery (2.1.2)
-    hashie (5.0.0)
+    hashie (5.1.0)
+      logger
     haversine (0.3.2)
     hexdump (1.0.1)
     htmlentities (4.4.2)
@@ -340,10 +341,10 @@ GEM
       rake
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
-    minitest (6.0.0)
+    minitest (6.0.1)
       prism (~> 1.5)
     msgpack (1.8.0)
-    multi_json (1.18.0)
+    multi_json (1.19.1)
     multi_xml (0.8.0)
       bigdecimal (>= 3.1, < 5)
     multipart-post (2.4.1)
@@ -406,9 +407,10 @@ GEM
     prettyprint (0.2.0)
     prism (1.7.0)
     progeny (0.2.1)
-    pry (0.15.2)
+    pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
+      reline (>= 0.6.0)
     psych (5.3.1)
       date
       stringio
@@ -457,7 +459,7 @@ GEM
       ffi (~> 1.0)
     rb_json5 (0.3.1)
       parslet (~> 2.0)
-    rdoc (7.0.2)
+    rdoc (7.0.3)
       erb
       psych (>= 4.0.0)
       tsort
@@ -482,7 +484,7 @@ GEM
     reverse_markdown (3.0.1)
       nokogiri
     rexml (3.4.4)
-    rmagick (6.1.4)
+    rmagick (6.1.5)
       observer (~> 0.1)
       pkg-config (~> 1.4)
     roo (3.0.0)
@@ -637,6 +639,7 @@ DEPENDENCIES
   coffee-rails
   colorize
   composite_primary_keys (~> 13)
+  concurrent-ruby (= 1.3.4)
   curb
   daemons
   delayed_job

@@ -75,6 +75,7 @@ gem "activerecord-import"
 gem "reverse_markdown"
 gem "progeny"
 gem "colorize"
+gem 'concurrent-ruby', '1.3.4'
 #gem "paypal-sdk-rest"
 gem "json"
 gem "active_record_query_trace"
