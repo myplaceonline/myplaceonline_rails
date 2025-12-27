@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_27_135939) do
+ActiveRecord::Schema.define(version: 2025_12_27_143679) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6515,6 +6515,19 @@ ActiveRecord::Schema.define(version: 2025_12_27_135939) do
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
+  create_table "rabbl_community_files", force: :cascade do |t|
+    t.bigint "rabbl_community_id", null: false
+    t.bigint "identity_file_id", null: false
+    t.bigint "identity_id", null: false
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_rabbl_community_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_rabbl_community_files_on_identity_id"
+    t.index ["rabbl_community_id"], name: "index_rabbl_community_files_on_rabbl_community_id"
+  end
+
   create_table "receipt_files", id: :serial, force: :cascade do |t|
     t.integer "receipt_id"
     t.integer "identity_file_id"
@@ -9764,6 +9777,9 @@ ActiveRecord::Schema.define(version: 2025_12_27_135939) do
   add_foreign_key "quizzes", "identities"
   add_foreign_key "quotes", "identities"
   add_foreign_key "rabbl_communities", "identities"
+  add_foreign_key "rabbl_community_files", "identities"
+  add_foreign_key "rabbl_community_files", "identity_files"
+  add_foreign_key "rabbl_community_files", "rabbl_communities"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"
