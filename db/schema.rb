@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_27_143679) do
+ActiveRecord::Schema.define(version: 2025_12_27_186150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3294,6 +3294,17 @@ ActiveRecord::Schema.define(version: 2025_12_27_143679) do
     t.boolean "group_best_second"
     t.boolean "group_best_third"
     t.boolean "verified"
+    t.boolean "eggs_betterhatched"
+    t.boolean "butter_cow"
+    t.boolean "butter_goat"
+    t.boolean "butter_sheep"
+    t.boolean "yogurt_cow"
+    t.boolean "yogurt_goat"
+    t.boolean "yogurt_sheep"
+    t.boolean "condiment"
+    t.boolean "snack"
+    t.boolean "broth"
+    t.boolean "protein_powder"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
