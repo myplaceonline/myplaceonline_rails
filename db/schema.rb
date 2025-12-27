@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_27_041661) do
+ActiveRecord::Schema.define(version: 2025_12_27_135939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3293,6 +3293,7 @@ ActiveRecord::Schema.define(version: 2025_12_27_041661) do
     t.boolean "group_best_first"
     t.boolean "group_best_second"
     t.boolean "group_best_third"
+    t.boolean "verified"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
