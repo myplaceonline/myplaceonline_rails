@@ -426,7 +426,9 @@ class CalendarItemReminder < ApplicationRecord
       
       Rails.logger.debug("CalendarItemReminder.send_reminder_notifications final message #{message}")
       
-      user.send_sms(message)
+      if !user.domain_identity.nil?
+        user.send_sms(message)
+      end
       
     rescue Exception => e
       Myp.warn("Could not process send_reminder_notifications #{user.id}, #{pending_item.id}: #{Myp.error_details(e)}")

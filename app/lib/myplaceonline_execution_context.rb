@@ -224,7 +224,13 @@ class MyplaceonlineExecutionContext
     result
   end
 
-  def self.offline; self[:offline]; end
+  def self.offline
+    if ExecutionContext.count == 0
+      return true
+    end
+    return self[:offline]
+  end
+  
   def self.offline=(x); self[:offline] = x; end
   def self.offline?
     result = false
