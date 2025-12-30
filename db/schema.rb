@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_30_016037) do
+ActiveRecord::Schema.define(version: 2025_12_30_030672) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6554,8 +6554,10 @@ ActiveRecord::Schema.define(version: 2025_12_30_016037) do
     t.boolean "fullyactive"
     t.integer "payment_status"
     t.string "payment_token"
+    t.bigint "user_id", null: false
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
+    t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
   end
 
   create_table "receipt_files", id: :serial, force: :cascade do |t|
@@ -9812,6 +9814,7 @@ ActiveRecord::Schema.define(version: 2025_12_30_016037) do
   add_foreign_key "rabbl_community_files", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
+  add_foreign_key "rabbl_community_memberships", "users"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"
