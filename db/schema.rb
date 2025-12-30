@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_30_030672) do
+ActiveRecord::Schema.define(version: 2025_12_30_224062) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6555,6 +6555,13 @@ ActiveRecord::Schema.define(version: 2025_12_30_030672) do
     t.integer "payment_status"
     t.string "payment_token"
     t.bigint "user_id", null: false
+    t.boolean "has_email"
+    t.integer "age_month"
+    t.integer "age_year"
+    t.string "location_name"
+    t.decimal "location_latitude", precision: 24, scale: 20
+    t.decimal "location_longitude", precision: 24, scale: 20
+    t.text "description"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
