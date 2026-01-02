@@ -31,6 +31,7 @@ class ApiController < ApplicationController
     :update_video_thumbnail,
     :geolocate,
     :apple_touch_icon_precomposed,
+    :newfile,
   ]
   
   def index
@@ -304,6 +305,7 @@ class ApiController < ApplicationController
     result = {
       :result => false
     }
+    status = 500
     urlpath = params[:urlpath]
     
     Rails.logger.debug{"newfile urlpath: #{urlpath}"}
@@ -431,6 +433,7 @@ class ApiController < ApplicationController
               accumulatedSingularNamePrefix = accumulatedSingularNamePrefix + "[" + pair[0] + "]"
               
               result = create_newfile_result(newfile, params, singular: true, singularNamePrefix: accumulatedSingularNamePrefix)
+              status = 200;
               
               Rails.logger.debug{"breaking loop"}
             elsif !!(key =~ /\A[-+]?[0-9]+\z/) # Regex checking for only digits
@@ -481,6 +484,7 @@ class ApiController < ApplicationController
                 end
 
                 result = create_newfile_result(newfile, params, newfilewrapper: newfilewrapper)
+                status = 200
                 
                 keepgoing = false
 
@@ -518,13 +522,48 @@ class ApiController < ApplicationController
               end
               Rails.logger.debug{"newfile final: #{newfile.inspect}"}
               result = create_newfile_result(newfile, params, singular: true)
+              status = 200
             end
+          end
+        end
+      else
+        authorize! :edit, current_user
+        Rails.logger.debug{"ApiController.newfile user: #{current_user}"}
+        engine = params[:engine]
+        model = params[:model]
+        identity_id = params[:identity_id]
+        identity = Identity.where(user_id: current_user.id, id: identity_id.to_i).take
+        if !identity.nil?
+          Rails.logger.debug{"ApiController.newfile identity #{identity}"}
+          MyplaceonlineExecutionContext.do_full_context(current_user, identity) do
+            if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
+              newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
+            else
+              newfile = IdentityFile.create_for_path!(file_hash: params[:identity_file][:file])
+            end
+
+            Rails.logger.debug{"ApiController.newfile created file: #{newfile}"}
+
+            modelClass = Object.const_get("#{engine}::#{model}")
+            modelInstance = modelClass.create!(
+              identity: identity,
+              identity_file: newfile,
+            )
+
+            result = {
+              id: modelInstance.id,
+              result: true,
+            }
+            status = 200
           end
         end
       end
     end
     
-    render json: result
+    render(
+      json: result,
+      status: status,
+    )
   end
   
   # Testing:

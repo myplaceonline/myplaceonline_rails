@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_12_30_224062) do
+ActiveRecord::Schema.define(version: 2026_01_01_173244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6567,6 +6567,17 @@ ActiveRecord::Schema.define(version: 2025_12_30_224062) do
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
   end
 
+  create_table "rabbl_visual_files", force: :cascade do |t|
+    t.bigint "identity_file_id", null: false
+    t.bigint "identity_id", null: false
+    t.integer "position"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_file_id"], name: "index_rabbl_visual_files_on_identity_file_id"
+    t.index ["identity_id"], name: "index_rabbl_visual_files_on_identity_id"
+  end
+
   create_table "receipt_files", id: :serial, force: :cascade do |t|
     t.integer "receipt_id"
     t.integer "identity_file_id"
@@ -9822,6 +9833,8 @@ ActiveRecord::Schema.define(version: 2025_12_30_224062) do
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "users"
+  add_foreign_key "rabbl_visual_files", "identities"
+  add_foreign_key "rabbl_visual_files", "identity_files"
   add_foreign_key "receipt_files", "identities"
   add_foreign_key "receipt_files", "identity_files"
   add_foreign_key "receipt_files", "receipts"
