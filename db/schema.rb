@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_01_173244) do
+ActiveRecord::Schema.define(version: 2026_01_02_186152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6562,6 +6562,12 @@ ActiveRecord::Schema.define(version: 2026_01_01_173244) do
     t.decimal "location_latitude", precision: 24, scale: 20
     t.decimal "location_longitude", precision: 24, scale: 20
     t.text "description"
+    t.integer "desired_genders"
+    t.integer "desired_age_min"
+    t.integer "desired_age_max"
+    t.boolean "pref_allow_unmatched_messages"
+    t.boolean "pref_notify_daily_email"
+    t.boolean "pref_notify_weekly_email"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
