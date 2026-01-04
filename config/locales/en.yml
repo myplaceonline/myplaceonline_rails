@@ -3203,6 +3203,7 @@ en:
       add_website_domain_myplet: "Add Myplet"
       delete_website_domain_myplet: "Delete Myplet"
       ajax_config: "AJAX Configuration"
+      handlesubdomains: "Handle subdomains"
       ajax_configs:
         enable_always: "Always Enable"
         disable_always: "Always Disable"

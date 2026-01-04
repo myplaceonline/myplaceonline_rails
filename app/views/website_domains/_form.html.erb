@@ -316,6 +316,15 @@
   <%=
     input_field(
       form: f,
+      type: Myp::FIELD_BOOLEAN,
+      name: :handlesubdomains,
+      value: obj.handlesubdomains,
+      placeholder: "myplaceonline.website_domains.handlesubdomains"
+    )
+  %>
+  <%=
+    input_field(
+      form: f,
       type: Myp::FIELD_SELECT,
       name: :ajax_config,
       value: obj.ajax_config,

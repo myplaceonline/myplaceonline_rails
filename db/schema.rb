@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_02_186152) do
+ActiveRecord::Schema.define(version: 2026_01_04_145346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6523,6 +6523,7 @@ ActiveRecord::Schema.define(version: 2026_01_02_186152) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "approved"
+    t.integer "first_free"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
@@ -6571,6 +6572,16 @@ ActiveRecord::Schema.define(version: 2026_01_02_186152) do
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
+  end
+
+  create_table "rabbl_user_infos", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "accepted_terms"
+    t.boolean "accepted_cookies"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "accepted_essential_cookies"
+    t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
 
   create_table "rabbl_visual_files", force: :cascade do |t|
@@ -8727,6 +8738,7 @@ ActiveRecord::Schema.define(version: 2026_01_02_186152) do
     t.string "secondary_email_name"
     t.string "email_display_override"
     t.boolean "skipterms"
+    t.boolean "handlesubdomains"
     t.index ["default_header_icon_identity_file_id"], name: "index_website_domains_on_default_header_icon_identity_file_id"
     t.index ["domain_host_id"], name: "index_website_domains_on_domain_host_id"
     t.index ["favicon_ico_identity_file_id"], name: "index_website_domains_on_favicon_ico_identity_file_id"
@@ -9839,6 +9851,7 @@ ActiveRecord::Schema.define(version: 2026_01_02_186152) do
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "users"
+  add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
   add_foreign_key "rabbl_visual_files", "identity_files"
   add_foreign_key "receipt_files", "identities"

@@ -583,6 +583,11 @@ module Myp
               if !matching_host.blank?
                 @@all_website_domains[matching_host] = website_domain
                 @@all_website_domain_homepages[matching_host] = html
+                
+                if website_domain.handlesubdomains
+                  @@all_website_domains["*.#{matching_host}"] = website_domain
+                  @@all_website_domain_homepages["*.#{matching_host}"] = html
+                end
               end
             end
           end
@@ -710,7 +715,15 @@ module Myp
     result = nil
     
     if ExecutionContext.available?
-      result = @@all_website_domains[Myp.current_host(host: host)]
+      ch = Myp.current_host(host: host)
+      result = @@all_website_domains[ch]
+      if result.nil?
+        i = ch.index(".")
+        if !i.nil?
+          ch = ch[i+1..-1]
+          result = @@all_website_domains["*.#{ch}"]
+        end
+      end
     end
     
     if result.nil?

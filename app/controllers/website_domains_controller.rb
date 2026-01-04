@@ -65,6 +65,7 @@ class WebsiteDomainsController < MyplaceonlineController
         :secondary_email_name,
         :skipterms,
         :allow_public,
+        :handlesubdomains,
         website_attributes: WebsitesController.param_names,
         domain_host_attributes: MembershipsController.param_names,
         website_domain_ssh_keys_attributes: [
