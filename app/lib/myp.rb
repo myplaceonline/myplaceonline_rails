@@ -584,9 +584,12 @@ module Myp
                 @@all_website_domains[matching_host] = website_domain
                 @@all_website_domain_homepages[matching_host] = html
                 
-                if website_domain.handlesubdomains
-                  @@all_website_domains["*.#{matching_host}"] = website_domain
-                  @@all_website_domain_homepages["*.#{matching_host}"] = html
+                begin
+                  if website_domain.handlesubdomains
+                    @@all_website_domains["*.#{matching_host}"] = website_domain
+                    @@all_website_domain_homepages["*.#{matching_host}"] = html
+                  end
+                rescue NoMethodError => nme
                 end
               end
             end
