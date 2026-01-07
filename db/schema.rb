@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_06_021449) do
+ActiveRecord::Schema.define(version: 2026_01_06_234597) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6504,6 +6504,21 @@ ActiveRecord::Schema.define(version: 2026_01_06_021449) do
     t.index ["identity_id"], name: "index_quotes_on_identity_id"
   end
 
+  create_table "rabbl_activities", force: :cascade do |t|
+    t.bigint "rabbl_community_id"
+    t.integer "activity_type"
+    t.string "details"
+    t.bigint "rabbl_community_membership_id"
+    t.bigint "user_id"
+    t.bigint "identity_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_activities_on_identity_id"
+    t.index ["rabbl_community_id"], name: "index_rabbl_activities_on_rabbl_community_id"
+    t.index ["rabbl_community_membership_id"], name: "index_rabbl_activities_on_rabbl_community_membership_id"
+    t.index ["user_id"], name: "index_rabbl_activities_on_user_id"
+  end
+
   create_table "rabbl_communities", force: :cascade do |t|
     t.string "name"
     t.string "domain"
@@ -9845,6 +9860,10 @@ ActiveRecord::Schema.define(version: 2026_01_06_021449) do
   add_foreign_key "quiz_items", "quizzes"
   add_foreign_key "quizzes", "identities"
   add_foreign_key "quotes", "identities"
+  add_foreign_key "rabbl_activities", "identities"
+  add_foreign_key "rabbl_activities", "rabbl_communities"
+  add_foreign_key "rabbl_activities", "rabbl_community_memberships"
+  add_foreign_key "rabbl_activities", "users"
   add_foreign_key "rabbl_communities", "identities"
   add_foreign_key "rabbl_community_files", "identities"
   add_foreign_key "rabbl_community_files", "identity_files"
