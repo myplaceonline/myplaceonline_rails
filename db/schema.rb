@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_06_234597) do
+ActiveRecord::Schema.define(version: 2026_01_08_025586) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6543,7 +6543,7 @@ ActiveRecord::Schema.define(version: 2026_01_06_234597) do
   end
 
   create_table "rabbl_community_files", force: :cascade do |t|
-    t.bigint "rabbl_community_id", null: false
+    t.bigint "rabbl_community_id"
     t.bigint "identity_file_id", null: false
     t.bigint "identity_id", null: false
     t.integer "position"
@@ -6597,6 +6597,8 @@ ActiveRecord::Schema.define(version: 2026_01_06_234597) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "accepted_essential_cookies"
     t.boolean "set_password"
+    t.bigint "rabbl_community_id"
+    t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
 
@@ -9871,6 +9873,7 @@ ActiveRecord::Schema.define(version: 2026_01_06_234597) do
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "users"
+  add_foreign_key "rabbl_user_infos", "rabbl_communities"
   add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
   add_foreign_key "rabbl_visual_files", "identity_files"

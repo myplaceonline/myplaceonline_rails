@@ -488,7 +488,7 @@ class MyplaceonlineController < ApplicationController
     
     ApplicationRecord.transaction do
       all.each do |obj|
-        authorize! :destroy, obj
+        self.perform_authorization(:destroy, obj)
         obj.destroy
         if has_category
           Myp.subtract_point(User.current_user, category_name, session)
@@ -1814,6 +1814,10 @@ class MyplaceonlineController < ApplicationController
       model.table_name + ".visit_count DESC"
     end
 
+    def perform_authorization(action, o)
+      authorize! action.to_sym, o
+    end
+
     def set_obj(action = nil, p: params, override_existing: false)
       Rails.logger.debug{"MyplaceonlineController.set_obj action: #{action}, p: #{p.inspect}"}
       if action.nil?
@@ -1846,7 +1850,7 @@ class MyplaceonlineController < ApplicationController
         raise Myp::SuddenRedirectError.new(index_path)
       end
       
-      authorize! action.to_sym, @obj
+      self.perform_authorization(action, @obj)
       
       if @obj.respond_to?("identity_id")        
         # If this succeeds, then set the identity context for nested authorization checks

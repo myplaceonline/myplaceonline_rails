@@ -556,6 +556,8 @@ class ApiController < ApplicationController
             }
             status = 200
           end
+        else
+          Rails.logger.debug{"ApiController.newfile no identity found"}
         end
       end
     end
