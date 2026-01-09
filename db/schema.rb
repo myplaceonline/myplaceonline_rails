@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_08_025586) do
+ActiveRecord::Schema.define(version: 2026_01_09_043062) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6589,6 +6589,16 @@ ActiveRecord::Schema.define(version: 2026_01_08_025586) do
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
   end
 
+  create_table "rabbl_decisions", force: :cascade do |t|
+    t.bigint "rabbl_community_membership_decider_id", null: false
+    t.bigint "rabbl_community_membership_target_id", null: false
+    t.integer "decision"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rabbl_community_membership_decider_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_decider_id"
+    t.index ["rabbl_community_membership_target_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_target_id"
+  end
+
   create_table "rabbl_user_infos", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "accepted_terms"
@@ -6609,6 +6619,7 @@ ActiveRecord::Schema.define(version: 2026_01_08_025586) do
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uniqueid"
     t.index ["identity_file_id"], name: "index_rabbl_visual_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_rabbl_visual_files_on_identity_id"
   end
@@ -9873,6 +9884,8 @@ ActiveRecord::Schema.define(version: 2026_01_08_025586) do
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "users"
+  add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_decider_id"
+  add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_target_id"
   add_foreign_key "rabbl_user_infos", "rabbl_communities"
   add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
