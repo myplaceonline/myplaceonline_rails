@@ -551,7 +551,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
   
   def after_sign_up_path_for(resource)
-    '/'
+    result = '/'
+    homepage_path = Myp.website_domain.homepage_path
+    if !homepage_path.blank?
+      result = homepage_path
+    end
+    return result
   end
   
   def after_inactive_sign_up_path_for(resource)
