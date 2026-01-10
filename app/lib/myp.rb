@@ -2242,7 +2242,9 @@ module Myp
   end
   
   def self.requires_terms
-    !Myp.website_domain.skipterms?
+    d = Myp.website_domain
+    Rails.logger.debug{"Myp.requires_terms d: (#{d.inspect})"}
+    !d.skipterms?
   end
   
   def self.sanitize_with_null_for_conditions(val)

@@ -1576,7 +1576,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def deny_nonadmin
-      if !User.current_user.admin?
+      if !User.current_user.admin? && !User.current_user.secondary_admin?
         raise CanCan::AccessDenied
       end
     end
@@ -1613,7 +1613,7 @@ class MyplaceonlineController < ApplicationController
     end
     
     def before_all_actions
-      if requires_admin && !User.current_user.admin?
+      if requires_admin && !User.current_user.admin? && !User.current_user.secondary_admin?
         raise CanCan::AccessDenied
       end
     end
@@ -1770,7 +1770,7 @@ class MyplaceonlineController < ApplicationController
           "(#{model.table_name}.is_public = ? #{initial_or}) #{additional}",
           true
         )
-      elsif (User.current_user.admin? && self.admin_sees_all?) || self.nonadmin_sees_all?
+      elsif ((User.current_user.admin? || User.current_user.secondary_admin?) && self.admin_sees_all?) || self.nonadmin_sees_all?
         model.includes(all_includes).joins(all_joins).where(
           "(true #{initial_or}) #{additional}"
         )

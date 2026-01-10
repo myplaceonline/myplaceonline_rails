@@ -42,7 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       
       Rails.logger.info{"new resource: #{resource.inspect}"}
       
-      if @agree_terms.is_true?
+      if @agree_terms.is_true? || !Myp.requires_terms
         resource_saved = resource.save
         yield resource if block_given?
         if resource_saved

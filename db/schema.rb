@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_09_043062) do
+ActiveRecord::Schema.define(version: 2026_01_09_210961) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6599,6 +6599,32 @@ ActiveRecord::Schema.define(version: 2026_01_09_043062) do
     t.index ["rabbl_community_membership_target_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_target_id"
   end
 
+  create_table "rabbl_match_messages", force: :cascade do |t|
+    t.bigint "rabbl_match_id", null: false
+    t.bigint "rabbl_community_membership_source_id", null: false
+    t.bigint "rabbl_community_membership_destination_id", null: false
+    t.text "message"
+    t.integer "messagetype"
+    t.integer "messagestatus"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rabbl_community_membership_destination_id"], name: "rbm_rcmd"
+    t.index ["rabbl_community_membership_source_id"], name: "rbm_rcms"
+    t.index ["rabbl_match_id"], name: "index_rabbl_match_messages_on_rabbl_match_id"
+  end
+
+  create_table "rabbl_matches", force: :cascade do |t|
+    t.bigint "rabbl_community_id", null: false
+    t.bigint "rabbl_community_membership_one_id", null: false
+    t.bigint "rabbl_community_membership_two_id", null: false
+    t.integer "matchstatus"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["rabbl_community_id"], name: "index_rabbl_matches_on_rabbl_community_id"
+    t.index ["rabbl_community_membership_one_id"], name: "index_rabbl_matches_on_rabbl_community_membership_one_id"
+    t.index ["rabbl_community_membership_two_id"], name: "index_rabbl_matches_on_rabbl_community_membership_two_id"
+  end
+
   create_table "rabbl_user_infos", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "accepted_terms"
@@ -9886,6 +9912,12 @@ ActiveRecord::Schema.define(version: 2026_01_09_043062) do
   add_foreign_key "rabbl_community_memberships", "users"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_decider_id"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_target_id"
+  add_foreign_key "rabbl_match_messages", "rabbl_community_memberships", column: "rabbl_community_membership_destination_id"
+  add_foreign_key "rabbl_match_messages", "rabbl_community_memberships", column: "rabbl_community_membership_source_id"
+  add_foreign_key "rabbl_match_messages", "rabbl_matches"
+  add_foreign_key "rabbl_matches", "rabbl_communities"
+  add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_one_id"
+  add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_two_id"
   add_foreign_key "rabbl_user_infos", "rabbl_communities"
   add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
