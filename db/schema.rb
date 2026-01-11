@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_09_210961) do
+ActiveRecord::Schema.define(version: 2026_01_11_161670) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3305,6 +3305,16 @@ ActiveRecord::Schema.define(version: 2026_01_09_210961) do
     t.boolean "snack"
     t.boolean "broth"
     t.boolean "protein_powder"
+    t.boolean "category_meat_beef"
+    t.boolean "category_meat_chicken"
+    t.boolean "category_meat_pork"
+    t.boolean "category_meat_fish"
+    t.boolean "category_meat_turkey"
+    t.boolean "category_meat_mutton"
+    t.boolean "category_meat_venison"
+    t.boolean "category_meat_goat"
+    t.boolean "category_meat_bison"
+    t.boolean "category_meat_duck"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
