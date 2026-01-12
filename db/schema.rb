@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_11_170280) do
+ActiveRecord::Schema.define(version: 2026_01_12_033863) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3009,6 +3009,20 @@ ActiveRecord::Schema.define(version: 2026_01_11_170280) do
     t.decimal "geofence_distance", precision: 10, scale: 2
     t.string "srcset"
     t.index ["identity_id"], name: "index_find_humane_ads_on_identity_id"
+  end
+
+  create_table "find_humane_apikeys", force: :cascade do |t|
+    t.bigint "identity_id", null: false
+    t.string "u"
+    t.string "p"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_find_humane_apikeys_on_identity_id"
   end
 
   create_table "find_humane_humane_deliveries", force: :cascade do |t|
@@ -9454,6 +9468,7 @@ ActiveRecord::Schema.define(version: 2026_01_11_170280) do
   add_foreign_key "financial_asset_files", "identity_files"
   add_foreign_key "financial_assets", "identities"
   add_foreign_key "find_humane_ads", "identities"
+  add_foreign_key "find_humane_apikeys", "identities"
   add_foreign_key "find_humane_humane_deliveries", "find_humane_humane_locations"
   add_foreign_key "find_humane_humane_deliveries", "identities"
   add_foreign_key "find_humane_humane_location_humane_products", "find_humane_humane_locations"
