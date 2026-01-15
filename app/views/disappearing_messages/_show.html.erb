@@ -1,0 +1,3 @@
+<%= data_row(heading: t("myplaceonline.disappearing_messages.name"), content: obj.name) %>
+<%= data_row(heading: t("myplaceonline.disappearing_messages.notes"), content: obj.notes, markdown: true) %>
+<%= data_row(heading: t("myplaceonline.disappearing_messages.link"), content: Myp.root_url + "/disappearing_messages/read?id=#{obj.uuididentifier}", url: true, url_external: true, url_external_target_blank: true) %>

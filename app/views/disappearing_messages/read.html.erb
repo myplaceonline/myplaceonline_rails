@@ -1,0 +1,17 @@
+<% content_for :heading do -%><%= t("myplaceonline.disappearing_messages.read") %><% end -%>
+
+<h1><%= t("myplaceonline.disappearing_messages.read") %></h1>
+
+<p><%= t("myplaceonline.disappearing_messages.read_intro") %></p>
+
+<hr />
+
+<p><b><%= t("myplaceonline.disappearing_messages.read_name") %></b>: <%= @name %></p>
+
+<p><b><%= t("myplaceonline.disappearing_messages.read_message") %></b>:</p>
+
+<%= flashes! %>
+
+<div style="padding-left: 20px;">
+<%= Myp.markdown_to_html(@message, links_target_blank: true).html_safe %>
+</div>

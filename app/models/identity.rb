@@ -362,6 +362,7 @@ class Identity < ApplicationRecord
   has_many :merchant_accounts, :dependent => :destroy
   has_many :whatdidiwearthens, :dependent => :destroy
   has_many :wearables, :dependent => :destroy
+  has_many :disappearing_messages, :dependent => :destroy
 
   child_properties(name: :myplets, sort: "y_coordinate")
 
@@ -655,6 +656,7 @@ class Identity < ApplicationRecord
       :merchant_accounts => merchant_accounts.to_a.map{|x| x.as_json},
       :whatdidiwearthens => whatdidiwearthens.to_a.map{|x| x.as_json},
       :wearables => wearables.to_a.map{|x| x.as_json},
+      :disappearing_messages => disappearing_messages.to_a.map{|x| x.as_json},
       :identity_files => identity_files.to_a.map{|x| x.as_json},
     })
   end

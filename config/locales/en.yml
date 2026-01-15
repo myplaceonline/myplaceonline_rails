@@ -107,6 +107,7 @@ en:
       dietary_requirements: "Dietary Requirements"
       dietary_requirements_collections: "Dietary Requirements Collections"
       diets: "Diets"
+      disappearing_messages: "Disappearing Messages"
       dna_analyses: "DNA Analyses"
       doctor_visits: "Doctor Visits"
       doctors: "Doctors"
@@ -1009,6 +1010,14 @@ en:
       add_file: "Add File/Picture"
       add_files: "Add File(s)/Picture(s)"
       delete_file: "Delete File/Picture"
+    disappearing_messages:
+      name: "Name"
+      notes: "Message"
+      read: "Disappearing Message"
+      read_intro: "The following is a self-destructing message and will no longer be available after you close this page, so make sure to copy it off if needed."
+      read_name: "Description"
+      read_message: "Message"
+      link: "Link"
     to_dos:
       short_description: "Short Description"
       due_time: "Due"

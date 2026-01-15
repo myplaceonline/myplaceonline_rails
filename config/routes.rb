@@ -247,6 +247,9 @@ Rails.application.routes.draw do
         name: :diet_foods
       },
     ],
+    disappearing_messages: [
+      { instance: false, link: "read" },
+    ],
     dna_analyses: [
       { instance: true, link: "rerun" }
     ],

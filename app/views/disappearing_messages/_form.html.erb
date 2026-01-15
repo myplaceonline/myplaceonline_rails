@@ -1,0 +1,20 @@
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT,
+    name: :name,
+    value: obj.name,
+    placeholder: "myplaceonline.disappearing_messages.name",
+    autofocus: autofocus
+  )
+%>
+<%=
+  input_field(
+    form: f,
+    type: Myp::FIELD_TEXT_AREA,
+    name: :notes,
+    value: obj.notes,
+    placeholder: "myplaceonline.disappearing_messages.notes",
+    collapsed: false,
+  )
+%>
