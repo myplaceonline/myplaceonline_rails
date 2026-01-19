@@ -312,9 +312,11 @@ class MyplaceonlineController < ApplicationController
         
         precreate
         
+        Rails.logger.debug{"MyplaceonlineController.create calling save for #{@obj.inspect}"}
+
         save_result = @obj.save
         
-        Rails.logger.debug{"Saved #{save_result.to_s} for #{@obj.inspect}"}
+        Rails.logger.debug{"MyplaceonlineController.create saved #{save_result.to_s} for #{@obj.inspect}"}
         
         if save_result
           
@@ -349,6 +351,7 @@ class MyplaceonlineController < ApplicationController
           end
           return after_create_redirect
         else
+          Rails.logger.debug{"MyplaceonlineController.create failed to save, errors: #{@obj.errors.full_messages}"}
           return render :new
         end
       ensure

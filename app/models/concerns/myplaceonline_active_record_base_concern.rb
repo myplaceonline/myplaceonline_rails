@@ -182,7 +182,7 @@ module MyplaceonlineActiveRecordBaseConcern
       child_files(name: name, suffix: "pictures")
     end
     
-    def child_file(parent:, class_name: nil, destroy_dependent: nil, required: true, parent_required: true)
+    def child_file(parent:, class_name: nil, destroy_dependent: nil, required: true, parent_required: false)
       if class_name.nil?
         belongs_to parent, required: parent_required
       else

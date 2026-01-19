@@ -316,6 +316,7 @@ class ApiController < ApplicationController
     # involve side effects like updating calendars
     MyplaceonlineExecutionContext.disable_handling_updates do
       if !urlpath.blank?
+        status = 200
         spliturl = urlpath.split('/')
         if spliturl.length >= 3
           
@@ -433,7 +434,6 @@ class ApiController < ApplicationController
               accumulatedSingularNamePrefix = accumulatedSingularNamePrefix + "[" + pair[0] + "]"
               
               result = create_newfile_result(newfile, params, singular: true, singularNamePrefix: accumulatedSingularNamePrefix)
-              status = 200;
               
               Rails.logger.debug{"breaking loop"}
             elsif !!(key =~ /\A[-+]?[0-9]+\z/) # Regex checking for only digits
@@ -484,7 +484,6 @@ class ApiController < ApplicationController
                 end
 
                 result = create_newfile_result(newfile, params, newfilewrapper: newfilewrapper)
-                status = 200
                 
                 keepgoing = false
 
@@ -522,7 +521,6 @@ class ApiController < ApplicationController
               end
               Rails.logger.debug{"newfile final: #{newfile.inspect}"}
               result = create_newfile_result(newfile, params, singular: true)
-              status = 200
             end
           end
         end
