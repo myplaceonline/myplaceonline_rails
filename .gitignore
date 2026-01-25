@@ -49,3 +49,4 @@ db/migrate/*.rabbl.rb
 node_modules/
 yarn.lock
 
+duplicates.txt
