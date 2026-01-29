@@ -1,5 +1,7 @@
 <% if !params[:simple] %>
 <%= attribute_table_row(t("myplaceonline.locations.full_address"), obj.address_one_line, force_no_clipboard: params[:force_no_clipboard]) %>
+<% end %>
+<% if !params[:simple] || params[:showname] %>
 <%= attribute_table_row(t("myplaceonline.locations.name"), obj.name, force_no_clipboard: params[:force_no_clipboard]) %>
 <% end %>
 <%= attribute_table_row(t("myplaceonline.locations.address1"), obj.address1, force_no_clipboard: params[:force_no_clipboard]) %>
