@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_01_15_025823) do
+ActiveRecord::Schema.define(version: 2026_02_08_222493) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6606,28 +6606,19 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
     t.integer "rating"
     t.boolean "is_public"
     t.decimal "join_price", precision: 10, scale: 2
-    t.integer "gender"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "fullyactive"
     t.integer "payment_status"
     t.string "payment_token"
     t.bigint "user_id", null: false
-    t.boolean "has_email"
-    t.integer "age_month"
-    t.integer "age_year"
-    t.string "location_name"
-    t.decimal "location_latitude", precision: 24, scale: 20
-    t.decimal "location_longitude", precision: 24, scale: 20
-    t.text "description"
-    t.integer "desired_genders"
-    t.integer "desired_age_min"
-    t.integer "desired_age_max"
-    t.boolean "pref_allow_unmatched_messages"
-    t.boolean "pref_notify_daily_email"
-    t.boolean "pref_notify_weekly_email"
+    t.bigint "rabbl_profile_id"
+    t.bigint "rabbl_user_info_id", null: false
+    t.boolean "hidden"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
+    t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"
+    t.index ["rabbl_user_info_id"], name: "index_rabbl_community_memberships_on_rabbl_user_info_id"
     t.index ["user_id"], name: "index_rabbl_community_memberships_on_user_id"
   end
 
@@ -6650,6 +6641,7 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
     t.integer "messagestatus"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "readwhen"
     t.index ["rabbl_community_membership_destination_id"], name: "rbm_rcmd"
     t.index ["rabbl_community_membership_source_id"], name: "rbm_rcms"
     t.index ["rabbl_match_id"], name: "index_rabbl_match_messages_on_rabbl_match_id"
@@ -6667,6 +6659,36 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
     t.index ["rabbl_community_membership_two_id"], name: "index_rabbl_matches_on_rabbl_community_membership_two_id"
   end
 
+  create_table "rabbl_profile_visuals", force: :cascade do |t|
+    t.bigint "identity_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "rabbl_visual_file_id", null: false
+    t.bigint "rabbl_profile_id", null: false
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_profile_visuals_on_identity_id"
+    t.index ["rabbl_profile_id"], name: "index_rabbl_profile_visuals_on_rabbl_profile_id"
+    t.index ["rabbl_visual_file_id"], name: "index_rabbl_profile_visuals_on_rabbl_visual_file_id"
+    t.index ["user_id"], name: "index_rabbl_profile_visuals_on_user_id"
+  end
+
+  create_table "rabbl_profiles", force: :cascade do |t|
+    t.text "description"
+    t.bigint "identity_id", null: false
+    t.bigint "user_id", null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.index ["identity_id"], name: "index_rabbl_profiles_on_identity_id"
+    t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
+  end
+
   create_table "rabbl_user_infos", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "accepted_terms"
@@ -6676,6 +6698,23 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
     t.boolean "accepted_essential_cookies"
     t.boolean "set_password"
     t.bigint "rabbl_community_id"
+    t.boolean "has_email"
+    t.integer "age_month"
+    t.integer "age_year"
+    t.integer "gender"
+    t.string "location_name"
+    t.decimal "location_latitude", precision: 24, scale: 20
+    t.decimal "location_longitude", precision: 24, scale: 20
+    t.integer "desired_age_min"
+    t.integer "desired_age_max"
+    t.integer "desired_genders"
+    t.boolean "pref_allow_unmatched_messages"
+    t.boolean "pref_notify_daily_email"
+    t.boolean "pref_notify_weekly_email"
+    t.boolean "set_preferences"
+    t.decimal "height", precision: 5, scale: 2
+    t.decimal "desired_height_min", precision: 5, scale: 2
+    t.decimal "desired_height_max", precision: 5, scale: 2
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
@@ -9953,6 +9992,8 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
   add_foreign_key "rabbl_community_files", "rabbl_communities"
   add_foreign_key "rabbl_community_memberships", "identities"
   add_foreign_key "rabbl_community_memberships", "rabbl_communities"
+  add_foreign_key "rabbl_community_memberships", "rabbl_profiles"
+  add_foreign_key "rabbl_community_memberships", "rabbl_user_infos"
   add_foreign_key "rabbl_community_memberships", "users"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_decider_id"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_target_id"
@@ -9962,6 +10003,12 @@ ActiveRecord::Schema.define(version: 2026_01_15_025823) do
   add_foreign_key "rabbl_matches", "rabbl_communities"
   add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_one_id"
   add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_two_id"
+  add_foreign_key "rabbl_profile_visuals", "identities"
+  add_foreign_key "rabbl_profile_visuals", "rabbl_profiles"
+  add_foreign_key "rabbl_profile_visuals", "rabbl_visual_files"
+  add_foreign_key "rabbl_profile_visuals", "users"
+  add_foreign_key "rabbl_profiles", "identities"
+  add_foreign_key "rabbl_profiles", "users"
   add_foreign_key "rabbl_user_infos", "rabbl_communities"
   add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
