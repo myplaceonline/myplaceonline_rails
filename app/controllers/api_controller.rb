@@ -173,45 +173,39 @@ class ApiController < ApplicationController
   end
   
   def quickfeedback
-    if !current_user.nil? && !current_user.current_identity.nil?
-      user_input = params[:user_input]
-      begin
-        
-        params_massaged = Myp.debug_print(params.except(:user_input, :accumulatedDebug, :api), plain: true)
-        
-        plain_text = user_input
-        html_body = CGI::escapeHTML(user_input)
+    user_input = params[:user_input]
+    begin
 
-        if !params[:accumulatedDebug].blank?
-          plain_text = plain_text + "\n\nLog:\n\n" + params[:accumulatedDebug]
-          html_body = html_body + "<p />Log:<p />" + params[:accumulatedDebug].gsub("\n", "<br />\n")
-        end
+      params_massaged = Myp.debug_print(params.except(:user_input, :accumulatedDebug, :api), plain: true)
 
-        plain_text = plain_text + "\n\n" + params_massaged
-        html_body = html_body + "\n\n<!-- " + CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n") + " -->"
+      plain_text = user_input.to_s
+      html_body = CGI::escapeHTML(plain_text)
 
-        Myp.send_support_email_safe(
-          "Quick Feedback",
-          html_body,
-          plain_text,
-          email: current_user.email,
-          request: request,
-          html_comment_details: true
-        )
+      plain_text = plain_text + "\n\n" + params_massaged
+      html_body = html_body + "\n\n" + CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n")
+      #html_body = html_body + "\n\n<!-- " + CGI::escapeHTML(params_massaged).gsub("\n", "<br />\n") + " -->"
 
-        render json: {
-          :result => true
-        }
-      rescue Exception => e
-        render json: {
-          :result => false,
-          :error => e.to_s
-        }
+      if !params[:accumulatedDebug].blank?
+        plain_text = plain_text + "\n\nLog:\n\n" + params[:accumulatedDebug]
+        html_body = html_body + "<p />Log:<p />" + params[:accumulatedDebug].gsub("\n", "<br />\n")
       end
-    else
+
+      Myp.send_support_email_safe(
+        "Quick Feedback",
+        html_body,
+        plain_text,
+        email: current_user.nil? ? nil : current_user.email,
+        request: request,
+        html_comment_details: true
+      )
+
+      render json: {
+        :result => true
+      }
+    rescue Exception => e
       render json: {
         :result => false,
-        :error => I19n.t("myplaceonline.general.quick_feedback_none"),
+        :error => e.to_s
       }
     end
   end
