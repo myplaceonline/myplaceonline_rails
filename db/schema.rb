@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_08_222493) do
+ActiveRecord::Schema.define(version: 2026_02_16_040477) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6581,6 +6581,7 @@ ActiveRecord::Schema.define(version: 2026_02_08_222493) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "approved"
     t.integer "first_free"
+    t.string "uniqueid"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
@@ -6685,6 +6686,7 @@ ActiveRecord::Schema.define(version: 2026_02_08_222493) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.string "uniqueid"
     t.index ["identity_id"], name: "index_rabbl_profiles_on_identity_id"
     t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
   end
@@ -6715,6 +6717,7 @@ ActiveRecord::Schema.define(version: 2026_02_08_222493) do
     t.decimal "height", precision: 5, scale: 2
     t.decimal "desired_height_min", precision: 5, scale: 2
     t.decimal "desired_height_max", precision: 5, scale: 2
+    t.string "uniqueid"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
