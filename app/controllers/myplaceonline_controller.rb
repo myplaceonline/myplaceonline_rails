@@ -26,6 +26,18 @@ class MyplaceonlineController < ApplicationController
     self.class.layout(params[:no_layout] ? "blank" : "application")
   end
 
+  def process_index_all
+    @count_all = all(strict: true).count
+    cached_all = all
+    @count = cached_all.count
+
+    prepare_filtered_count
+    
+    @perpage = update_items_per_page(@perpage, @count)
+
+    @objs = cached_all.offset(@offset).limit(@perpage).order(Arel.sql(sorts_wrapper.join(", ")))
+  end
+
   def index
     initial_checks(edit: false, require_logged_in: false)
     
@@ -50,21 +62,13 @@ class MyplaceonlineController < ApplicationController
 
     process_filters
     
-    @count_all = all(strict: true).count
-    cached_all = all
-    @count = cached_all.count
+    Rails.logger.debug{"MyplaceonlineController.index getting @objs"}
+    self.process_index_all
 
-    prepare_filtered_count
-    
-    @perpage = update_items_per_page(@perpage, @count)
-    
     @items_next_page_link = items_next_page(@offset + @perpage)
     @items_previous_page_link = items_previous_page(@offset - @perpage)
     @items_all_link = items_all_link
 
-    Rails.logger.debug{"MyplaceonlineController.index getting @objs"}
-    @objs = cached_all.offset(@offset).limit(@perpage).order(Arel.sql(sorts_wrapper.join(", ")))
-    
     # If the controller wants to show top items (`additional_items?` returns
     # true), then the only other thing we'll check is if there's more than
     # a few items
@@ -802,6 +806,14 @@ class MyplaceonlineController < ApplicationController
   
   def show_add
     allow_add
+  end
+
+  def show_index_count
+    false
+  end
+
+  def show_filter_sort
+    true
   end
   
   def show_move_identity

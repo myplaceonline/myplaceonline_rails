@@ -145,7 +145,7 @@ end
 <%= yielded %>
 
 <% if !@myplet %>
-  <% if !MyplaceonlineExecutionContext.offline? %>
+  <% if !MyplaceonlineExecutionContext.offline? && controller.show_filter_sort %>
     <%=
       render partial: "myplaceonline/filter_select", locals: {
         filters: controller.index_filters
@@ -180,4 +180,8 @@ end
 
 <% if current_user.guest? && !@myplet %>
   <p><%= t("myplaceonline.general.seeing_as_guest") %> <%= link_to(t("myplaceonline.general.login"), main_app.new_user_session_path) %></p>
+<% end %>
+
+<% if controller.show_index_count %>
+  <p style="padding-top: 5px; padding-left: 20px;">Count: <%= @count %></p>
 <% end %>
