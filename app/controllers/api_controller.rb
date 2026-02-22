@@ -531,19 +531,28 @@ class ApiController < ApplicationController
             if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
               newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
             else
-              filepath = params[:identity_file][:file]
+              # {"file" =>
+              #   {"original_filename" => "2026-02-2211.37.123444.jpg",
+              #    "content_type" => "image/jpeg",
+              #    "path" => "/var/lib/remotenfs//uploads/ABC",
+              #    "md5" => "DEF",
+              #    "size" => "114000"
+              #   }
+              # }
+              file_hash = params[:identity_file][:file].to_unsafe_h
               strip = Myp.param_bool(params, :strip, default_value: false)
               if strip
                 # We don't have permission to write to this file, so make a copy
+                filepath = file_hash[:path]
                 filepath2 = "#{filepath}st"
                 Rails.logger.info{"ApiController.newfile stripping file #{filepath} to #{filepath2}"}
                 FileUtils.cp(filepath, filepath2)
                 child = Myp.spawn(
                   command_line: "/usr/bin/convert -auto-orient -strip #{filepath} #{filepath2}"
                 )
-                filepath = filepath2
+                file_hash[:path] = filepath2
               end
-              newfile = IdentityFile.create_for_path!(file_hash: filepath)
+              newfile = IdentityFile.create_for_path!(file_hash: file_hash)
             end
 
             Rails.logger.debug{"ApiController.newfile created file: #{newfile}"}
