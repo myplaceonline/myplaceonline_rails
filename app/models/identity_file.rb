@@ -594,7 +594,7 @@ class IdentityFile < ApplicationRecord
       when "csv"
         result = "text/csv"
       else
-        raise "Unimplemented extension #{ext}"
+        raise "Unimplemented extension #{ext} for #{path}"
       end
     else
       raise "No extension found for #{path}"
