@@ -534,9 +534,14 @@ class ApiController < ApplicationController
               filepath = params[:identity_file][:file]
               strip = Myp.param_bool(params, :strip, default_value: false)
               if strip
+                # We don't have permission to write to this file, so make a copy
+                filepath2 = "#{filepath}st"
+                Rails.logger.info{"ApiController.newfile stripping file #{filepath} to #{filepath2}"}
+                FileUtils.cp(filepath, filepath2)
                 child = Myp.spawn(
-                  command_line: "/usr/bin/mogrify -auto-orient -strip #{filepath}"
+                  command_line: "/usr/bin/convert -auto-orient -strip #{filepath} #{filepath2}"
                 )
+                filepath = filepath2
               end
               newfile = IdentityFile.create_for_path!(file_hash: filepath)
             end
