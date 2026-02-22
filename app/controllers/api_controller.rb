@@ -531,7 +531,14 @@ class ApiController < ApplicationController
             if params[:identity_file][:file].is_a?(ActionDispatch::Http::UploadedFile)
               newfile = IdentityFile.create!(params.require(:identity_file).permit(FilesController.param_names))
             else
-              newfile = IdentityFile.create_for_path!(file_hash: params[:identity_file][:file])
+              filepath = params[:identity_file][:file]
+              strip = Myp.param_bool(params, :strip, default_value: false)
+              if strip
+                child = Myp.spawn(
+                  command_line: "/usr/bin/mogrify -auto-orient -strip #{filepath}"
+                )
+              end
+              newfile = IdentityFile.create_for_path!(file_hash: filepath)
             end
 
             Rails.logger.debug{"ApiController.newfile created file: #{newfile}"}
