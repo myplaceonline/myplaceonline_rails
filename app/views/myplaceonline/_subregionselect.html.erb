@@ -3,7 +3,7 @@
   regionstr ||= params[:regionstr]
   regionstr ||= default_region
   subregion ||= nil
-  region = Carmen::Country.coded(regionstr)
+  region = Myp.getRegionDetails(regionstr)
   
   if defined?(f)
     subregion_select_field = myp_subregion_select_field(f, :sub_region1, "myplaceonline.general.sub_region1", region, subregion)

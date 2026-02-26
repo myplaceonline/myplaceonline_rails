@@ -43,23 +43,20 @@ class Location < ApplicationRecord
   end
   
   def region_name
-    if !region.blank?
-      r = region
-      if r == "United States"
-        r = "US"
-      end
-      Carmen::Country.coded(r).official_name
+    r = Myp.getRegionDetails(region)
+    if !r.nil?
+      return r.official_name
     else
-      nil
+      return nil
     end
   end
   
   def region_short_name
     result = nil
     if !region.blank?
-      codedResult = Carmen::Country.coded(region)
-      if !codedResult.nil?
-        result = codedResult.code
+      r = Myp.getRegionDetails(region)
+      if !r.nil?
+        result = r.code
       else
         result = region
       end
@@ -177,9 +174,9 @@ class Location < ApplicationRecord
   
   def sub_region1_name
     if !region.blank? && !sub_region1.blank?
-      reg = Carmen::Country.coded(region)
-      if reg.subregions.length > 0
-        subregion = reg.subregions.coded(sub_region1)
+      r = Myp.getRegionDetails(region)
+      if !r.nil? && r.subregions.length > 0
+        subregion = r.subregions.coded(sub_region1)
         if !subregion.nil?
           subregion.name
         else
@@ -199,9 +196,9 @@ class Location < ApplicationRecord
       targetRegion = "US"
     end
     if !sub_region1.blank?
-      reg = Carmen::Country.coded(targetRegion)
-      if !reg.nil? && !reg.subregions.nil? && reg.subregions.length > 0
-        subregion = reg.subregions.coded(sub_region1)
+      r = Myp.getRegionDetails(targetRegion)
+      if !r.nil? && !r.subregions.nil? && r.subregions.length > 0
+        subregion = r.subregions.coded(sub_region1)
         if !subregion.nil?
           subregion.code
         else

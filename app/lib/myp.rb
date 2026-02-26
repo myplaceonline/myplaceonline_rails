@@ -3917,6 +3917,21 @@ module Myp
     authorization_result = Doorkeeper::OAuth::RefreshTokenRequest.new(Doorkeeper.configuration, accessToken, client).authorize()
     return authorization_result
   end
+  
+  def self.getRegionDetails(r)
+    if !r.blank?
+      if r == "United States" ||
+         r == "United States of America" ||
+         r == "USA" ||
+         r == "U.S." ||
+         r == "U.S.A."
+        r = "US"
+      end
+      return Carmen::Country.coded(r)
+    else
+      return nil
+    end
+  end
 
   def self.do_login_or_register(request)
     email = request.params[:email]
