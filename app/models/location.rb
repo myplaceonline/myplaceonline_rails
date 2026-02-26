@@ -44,7 +44,11 @@ class Location < ApplicationRecord
   
   def region_name
     if !region.blank?
-      Carmen::Country.coded(region).official_name
+      r = region
+      if r == "United States"
+        r = "US"
+      end
+      Carmen::Country.coded(r).official_name
     else
       nil
     end
