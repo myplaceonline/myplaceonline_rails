@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_02_16_040477) do
+ActiveRecord::Schema.define(version: 2026_03_01_213093) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6635,8 +6635,8 @@ ActiveRecord::Schema.define(version: 2026_02_16_040477) do
 
   create_table "rabbl_match_messages", force: :cascade do |t|
     t.bigint "rabbl_match_id", null: false
-    t.bigint "rabbl_community_membership_source_id", null: false
-    t.bigint "rabbl_community_membership_destination_id", null: false
+    t.bigint "rabbl_community_membership_source_id"
+    t.bigint "rabbl_community_membership_destination_id"
     t.text "message"
     t.integer "messagetype"
     t.integer "messagestatus"
@@ -6650,8 +6650,8 @@ ActiveRecord::Schema.define(version: 2026_02_16_040477) do
 
   create_table "rabbl_matches", force: :cascade do |t|
     t.bigint "rabbl_community_id", null: false
-    t.bigint "rabbl_community_membership_one_id", null: false
-    t.bigint "rabbl_community_membership_two_id", null: false
+    t.bigint "rabbl_community_membership_one_id"
+    t.bigint "rabbl_community_membership_two_id"
     t.integer "matchstatus"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
