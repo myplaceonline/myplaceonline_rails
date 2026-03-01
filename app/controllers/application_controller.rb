@@ -308,7 +308,11 @@ class ApplicationController < ActionController::Base
             )
           end
         else
-          Rails.logger.debug{"ApplicationController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
+          if thumbnail || thumbnail2
+            Rails.logger.debug{"ApplicationController.respond_identity_file: Sending from #{identity_file.thumbnail_filesystem_path}"}
+          else
+            Rails.logger.debug{"ApplicationController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
+          end
           
           if filename.nil?
             filename = identity_file.file_file_name
