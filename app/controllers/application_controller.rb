@@ -275,8 +275,12 @@ class ApplicationController < ActionController::Base
         
         if send_from_memory
           Rails.logger.debug{"ApplicationController.respond_identity_file: #{identity_file.id} sending from memory"}
+
+          if thumbnail && !identity_file.has_thumbnail?
+            Rails.logger.debug{"ApplicationController.respond_identity_file: wanted thumbnail but we don't have one"}
+          end
           
-          if thumbnail
+          if thumbnail && identity_file.has_thumbnail?
             respond_data(
               respond_type,
               identity_file.thumbnail_contents,
