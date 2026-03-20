@@ -551,6 +551,7 @@ class ApiController < ApplicationController
                   command_line: "/usr/bin/convert -auto-orient -strip #{filepath} #{filepath2}"
                 )
                 file_hash[:path] = filepath2
+                file_hash[:size] = File.size(filepath2)
               end
               newfile = IdentityFile.create_for_path!(file_hash: file_hash)
             end
