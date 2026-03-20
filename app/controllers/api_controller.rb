@@ -553,6 +553,10 @@ class ApiController < ApplicationController
                 file_hash[:path] = filepath2
                 file_hash[:size] = File.size(filepath2)
               end
+              i = file_hash[:original_filename].index(".")
+              if !i.nil?
+                file_hash[:original_filename] = "#{SecureRandom.uuid}#{file_hash[:original_filename][i..-1]}"
+              end
               newfile = IdentityFile.create_for_path!(file_hash: file_hash)
             end
 
