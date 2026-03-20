@@ -256,6 +256,12 @@ class ApplicationController < ActionController::Base
         
         send_from_memory = true
         
+        if thumbnail
+          identity_file.ensure_thumbnail
+        elsif thumbnail2
+          identity_file.ensure_thumbnail2
+        end
+
         if !identity_file.filesystem_path.blank? && !thumbnail && !thumbnail2
           send_from_memory = false
         elsif !identity_file.thumbnail_filesystem_path.blank? && thumbnail
@@ -332,10 +338,8 @@ class ApplicationController < ActionController::Base
           end
           
           if thumbnail
-            identity_file.ensure_thumbnail
             path = identity_file.evaluated_thumbnail_path
           elsif thumbnail2
-            identity_file.ensure_thumbnail2
             path = identity_file.evaluated_thumbnail2_path
           else
             path = identity_file.evaluated_path
