@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_04_05_214360) do
+ActiveRecord::Schema.define(version: 2026_04_07_012895) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -3351,6 +3351,12 @@ ActiveRecord::Schema.define(version: 2026_04_05_214360) do
     t.boolean "regenerative_organic_certified_bronze"
     t.boolean "regenerative_organic_certified_silver"
     t.boolean "regenerative_organic_certified_gold"
+    t.boolean "regenified_1"
+    t.boolean "regenified_2"
+    t.boolean "regenified_3"
+    t.boolean "regenified_4"
+    t.boolean "regenified_5"
+    t.boolean "audubon_certified"
     t.index ["identity_id"], name: "index_find_humane_humane_products_on_identity_id"
   end
 
