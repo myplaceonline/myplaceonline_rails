@@ -735,6 +735,15 @@ module Myp
     
     result
   end
+
+  def self.getDefaultWebsiteDomain()
+    return @@default_website_domain
+  end
+
+  def self.isDefaultWebsiteDomain?()
+    current_domain = Myp.website_domain()
+    return current_domain.nil? || current_domain.id == @@default_website_domain.id
+  end
   
   def self.website_domains
     @@all_website_domains

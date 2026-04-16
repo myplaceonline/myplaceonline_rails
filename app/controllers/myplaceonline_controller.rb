@@ -1881,7 +1881,10 @@ class MyplaceonlineController < ApplicationController
     def before_show
       # Use update_column because we don't want updated_at to be updated
       if params[:myplet].nil?
-        MyplaceonlineController.increment_visit_count(@obj)
+        # Some locking issues on subdomains, so for now only do the main domain
+        if Myp.isDefaultWebsiteDomain?()
+          MyplaceonlineController.increment_visit_count(@obj)
+        end
       end
     end
     
