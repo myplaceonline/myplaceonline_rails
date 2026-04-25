@@ -1581,6 +1581,10 @@ class MyplaceonlineController < ApplicationController
     false
   end
   
+  def before_table
+    nil
+  end
+    
   protected
   
     def deny_guest
@@ -1877,7 +1881,7 @@ class MyplaceonlineController < ApplicationController
     def handle_object_not_found(id)
       raise ActiveRecord::RecordNotFound
     end
-    
+
     def before_show
       # Use update_column because we don't want updated_at to be updated
       if params[:myplet].nil?

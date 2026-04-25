@@ -13,6 +13,14 @@ locals = { obj: @obj }.merge(locals)
 
     <% if controller.show_wrap %>
       <h1><%= controller.display_obj(@obj) %></h1>
+      <%
+        bef = controller.before_table
+        if !bef.blank?
+      %>
+        <p><%= bef.html_safe %></p>
+      <%
+        end
+      %>
     <% end %>
 
     <% if !@myplet %>

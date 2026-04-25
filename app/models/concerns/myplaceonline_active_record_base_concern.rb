@@ -211,13 +211,20 @@ module MyplaceonlineActiveRecordBaseConcern
       end
       
       define_method(:update_file_folders) do
-        p = self.send(parent)
-        Rails.logger.debug{"child_file; parent: #{p.inspect}"}
-        if !p.nil?
-          folders = p.file_folders_final
-          Rails.logger.debug{"child_file; folders: #{folders}"}
-          put_file_in_folder(self, folders)
+        should_put = self.send(:should_put_in_folder)
+        if should_put
+          p = self.send(parent)
+          Rails.logger.debug{"child_file; parent: #{p.inspect}"}
+          if !p.nil?
+            folders = p.file_folders_final
+            Rails.logger.debug{"child_file; folders: #{folders}"}
+            put_file_in_folder(self, folders)
+          end
         end
+      end
+
+      define_method(:should_put_in_folder) do
+        true
       end
       
       define_singleton_method(:skip_check_attributes) do

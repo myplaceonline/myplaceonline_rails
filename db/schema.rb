@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_04_08_003483) do
+ActiveRecord::Schema.define(version: 2026_04_25_175421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6631,6 +6631,8 @@ ActiveRecord::Schema.define(version: 2026_04_08_003483) do
     t.bigint "rabbl_profile_id"
     t.bigint "rabbl_user_info_id", null: false
     t.boolean "hidden"
+    t.boolean "istest"
+    t.string "uniqueid"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"
@@ -6670,6 +6672,7 @@ ActiveRecord::Schema.define(version: 2026_04_08_003483) do
     t.integer "matchstatus"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uniqueid"
     t.index ["rabbl_community_id"], name: "index_rabbl_matches_on_rabbl_community_id"
     t.index ["rabbl_community_membership_one_id"], name: "index_rabbl_matches_on_rabbl_community_membership_one_id"
     t.index ["rabbl_community_membership_two_id"], name: "index_rabbl_matches_on_rabbl_community_membership_two_id"
