@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_04_25_175421) do
+ActiveRecord::Schema.define(version: 2026_04_26_042791) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6633,6 +6633,7 @@ ActiveRecord::Schema.define(version: 2026_04_25_175421) do
     t.boolean "hidden"
     t.boolean "istest"
     t.string "uniqueid"
+    t.boolean "showtest"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"

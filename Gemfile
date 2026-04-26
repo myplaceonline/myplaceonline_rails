@@ -117,3 +117,4 @@ gem 'rb_json5'
 gem "syslog"
 gem "ostruct"
 gem "benchmark"
+gem "rqrcode", "~> 3.0"
