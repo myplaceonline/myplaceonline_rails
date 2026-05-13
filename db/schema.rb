@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_04_26_042791) do
+ActiveRecord::Schema.define(version: 2026_05_13_001110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6572,6 +6572,24 @@ ActiveRecord::Schema.define(version: 2026_04_26_042791) do
     t.index ["user_id"], name: "index_rabbl_activities_on_user_id"
   end
 
+  create_table "rabbl_collaborations", force: :cascade do |t|
+    t.bigint "rabbl_community1_id", null: false
+    t.bigint "rabbl_community2_id", null: false
+    t.bigint "identity_id", null: false
+    t.integer "collabstatus"
+    t.boolean "exclusive"
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_collaborations_on_identity_id"
+    t.index ["rabbl_community1_id"], name: "index_rabbl_collaborations_on_rabbl_community1_id"
+    t.index ["rabbl_community2_id"], name: "index_rabbl_collaborations_on_rabbl_community2_id"
+  end
+
   create_table "rabbl_communities", force: :cascade do |t|
     t.string "name"
     t.string "domain"
@@ -6597,6 +6615,9 @@ ActiveRecord::Schema.define(version: 2026_04_26_042791) do
     t.integer "highlighted2"
     t.boolean "searchhidden"
     t.boolean "istest"
+    t.integer "members_total_lastmonth"
+    t.integer "members_men_lastmonth"
+    t.integer "members_women_lastmonth"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
@@ -6634,6 +6655,7 @@ ActiveRecord::Schema.define(version: 2026_04_26_042791) do
     t.boolean "istest"
     t.string "uniqueid"
     t.boolean "showtest"
+    t.boolean "adminhidden"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"
@@ -6737,6 +6759,7 @@ ActiveRecord::Schema.define(version: 2026_04_26_042791) do
     t.decimal "desired_height_min", precision: 5, scale: 2
     t.decimal "desired_height_max", precision: 5, scale: 2
     t.string "uniqueid"
+    t.integer "desired_max_distance_miles"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
@@ -10008,6 +10031,9 @@ ActiveRecord::Schema.define(version: 2026_04_26_042791) do
   add_foreign_key "rabbl_activities", "rabbl_communities"
   add_foreign_key "rabbl_activities", "rabbl_community_memberships"
   add_foreign_key "rabbl_activities", "users"
+  add_foreign_key "rabbl_collaborations", "identities"
+  add_foreign_key "rabbl_collaborations", "rabbl_communities", column: "rabbl_community1_id"
+  add_foreign_key "rabbl_collaborations", "rabbl_communities", column: "rabbl_community2_id"
   add_foreign_key "rabbl_communities", "identities"
   add_foreign_key "rabbl_community_files", "identities"
   add_foreign_key "rabbl_community_files", "identity_files"
