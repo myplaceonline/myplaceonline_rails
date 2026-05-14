@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_05_13_001110) do
+ActiveRecord::Schema.define(version: 2026_05_14_174326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6585,6 +6585,7 @@ ActiveRecord::Schema.define(version: 2026_05_13_001110) do
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "expires"
     t.index ["identity_id"], name: "index_rabbl_collaborations_on_identity_id"
     t.index ["rabbl_community1_id"], name: "index_rabbl_collaborations_on_rabbl_community1_id"
     t.index ["rabbl_community2_id"], name: "index_rabbl_collaborations_on_rabbl_community2_id"
