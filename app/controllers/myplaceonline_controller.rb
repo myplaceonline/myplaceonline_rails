@@ -50,7 +50,7 @@ class MyplaceonlineController < ApplicationController
     @dynamic_homepage = params[:dynamic_homepage]
     Rails.logger.debug{"MyplaceonlineController.index @myplet: #{@myplet}, @dynamic_homepage: #{@dynamic_homepage}"}
 
-    if has_category && params[:myplet].nil? && !User.current_user.guest?
+    if has_category && params[:myplet].nil? && !User.current_user.guest? && use_points?
       Myp.visit(User.current_user, category_name)
     end
     
@@ -345,7 +345,7 @@ class MyplaceonlineController < ApplicationController
               ).save!
             end
           end
-          if has_category
+          if has_category && use_points?
             Myp.add_point(User.current_user, category_name, session)
           end
           after_create_result = after_create
@@ -362,6 +362,10 @@ class MyplaceonlineController < ApplicationController
         Permission.current_target = nil
       end
     end
+  end
+
+  def use_points?
+    return true
   end
   
   def update
@@ -480,7 +484,7 @@ class MyplaceonlineController < ApplicationController
     
     ApplicationRecord.transaction do
       perform_destroy(obj_to_destroy)
-      if has_category
+      if has_category && use_points?
         Myp.subtract_point(User.current_user, category_name, session)
       end
     end
@@ -497,7 +501,7 @@ class MyplaceonlineController < ApplicationController
       all.each do |obj|
         self.perform_authorization(:destroy, obj)
         obj.destroy
-        if has_category
+        if has_category && use_points?
           Myp.subtract_point(User.current_user, category_name, session)
         end
       end

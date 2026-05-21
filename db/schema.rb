@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_05_15_152107) do
+ActiveRecord::Schema.define(version: 2026_05_20_234045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6703,6 +6703,25 @@ ActiveRecord::Schema.define(version: 2026_05_15_152107) do
     t.index ["rabbl_community_membership_two_id"], name: "index_rabbl_matches_on_rabbl_community_membership_two_id"
   end
 
+  create_table "rabbl_notifications", force: :cascade do |t|
+    t.bigint "rabbl_community_membership_notification_target_id", null: false
+    t.integer "notification_type"
+    t.text "notification_text"
+    t.integer "notification_stream"
+    t.bigint "rabbl_community_membership_context_id"
+    t.bigint "identity_id", null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_notifications_on_identity_id"
+    t.index ["rabbl_community_membership_context_id"], name: "rn_rcmc"
+    t.index ["rabbl_community_membership_notification_target_id"], name: "rn_rcmnt"
+  end
+
   create_table "rabbl_profile_visuals", force: :cascade do |t|
     t.bigint "identity_id", null: false
     t.bigint "user_id", null: false
@@ -10053,6 +10072,9 @@ ActiveRecord::Schema.define(version: 2026_05_15_152107) do
   add_foreign_key "rabbl_matches", "rabbl_communities"
   add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_one_id"
   add_foreign_key "rabbl_matches", "rabbl_community_memberships", column: "rabbl_community_membership_two_id"
+  add_foreign_key "rabbl_notifications", "identities"
+  add_foreign_key "rabbl_notifications", "rabbl_community_memberships", column: "rabbl_community_membership_context_id"
+  add_foreign_key "rabbl_notifications", "rabbl_community_memberships", column: "rabbl_community_membership_notification_target_id"
   add_foreign_key "rabbl_profile_visuals", "identities"
   add_foreign_key "rabbl_profile_visuals", "rabbl_profiles"
   add_foreign_key "rabbl_profile_visuals", "rabbl_visual_files"
