@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_05_20_234045) do
+ActiveRecord::Schema.define(version: 2026_05_28_201630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6781,6 +6781,7 @@ ActiveRecord::Schema.define(version: 2026_05_20_234045) do
     t.decimal "desired_height_max", precision: 5, scale: 2
     t.string "uniqueid"
     t.integer "desired_max_distance_miles"
+    t.string "subscriptions_uniqueid"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
