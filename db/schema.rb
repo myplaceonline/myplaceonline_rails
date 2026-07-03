@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_05_28_201630) do
+ActiveRecord::Schema.define(version: 2026_07_03_163102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6675,6 +6675,47 @@ ActiveRecord::Schema.define(version: 2026_05_28_201630) do
     t.index ["rabbl_community_membership_target_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_target_id"
   end
 
+  create_table "rabbl_discounts", force: :cascade do |t|
+    t.string "discount_name"
+    t.string "discount_code"
+    t.integer "discount_type"
+    t.decimal "discount_amount", precision: 10, scale: 2
+    t.integer "maxuses"
+    t.integer "currentuses"
+    t.integer "genders"
+    t.bigint "rabbl_community_id"
+    t.bigint "identity_id", null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_discounts_on_identity_id"
+    t.index ["rabbl_community_id"], name: "index_rabbl_discounts_on_rabbl_community_id"
+  end
+
+  create_table "rabbl_invitecodes", force: :cascade do |t|
+    t.string "code_name"
+    t.string "code"
+    t.integer "code_type"
+    t.integer "maxuses"
+    t.integer "currentuses"
+    t.integer "genders"
+    t.bigint "rabbl_community_id"
+    t.bigint "identity_id", null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_invitecodes_on_identity_id"
+    t.index ["rabbl_community_id"], name: "index_rabbl_invitecodes_on_rabbl_community_id"
+  end
+
   create_table "rabbl_match_messages", force: :cascade do |t|
     t.bigint "rabbl_match_id", null: false
     t.bigint "rabbl_community_membership_source_id"
@@ -6782,6 +6823,11 @@ ActiveRecord::Schema.define(version: 2026_05_28_201630) do
     t.string "uniqueid"
     t.integer "desired_max_distance_miles"
     t.string "subscriptions_uniqueid"
+    t.boolean "pref_marketing_messages"
+    t.boolean "pref_match_messages"
+    t.boolean "pref_collab_messages"
+    t.boolean "pref_welcome_messages"
+    t.boolean "pref_chat_messages"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
@@ -10067,6 +10113,10 @@ ActiveRecord::Schema.define(version: 2026_05_28_201630) do
   add_foreign_key "rabbl_community_memberships", "users"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_decider_id"
   add_foreign_key "rabbl_decisions", "rabbl_community_memberships", column: "rabbl_community_membership_target_id"
+  add_foreign_key "rabbl_discounts", "identities"
+  add_foreign_key "rabbl_discounts", "rabbl_communities"
+  add_foreign_key "rabbl_invitecodes", "identities"
+  add_foreign_key "rabbl_invitecodes", "rabbl_communities"
   add_foreign_key "rabbl_match_messages", "rabbl_community_memberships", column: "rabbl_community_membership_destination_id"
   add_foreign_key "rabbl_match_messages", "rabbl_community_memberships", column: "rabbl_community_membership_source_id"
   add_foreign_key "rabbl_match_messages", "rabbl_matches"
