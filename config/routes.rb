@@ -119,6 +119,7 @@ Rails.application.routes.draw do
     admin/run_load_feeds
     admin/reset_user_index
     admin/throw_server_exception
+    api/basicinfo
   ))
   
   # https://github.com/galetahub/ckeditor/issues/919

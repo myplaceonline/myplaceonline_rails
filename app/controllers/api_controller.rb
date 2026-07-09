@@ -32,6 +32,7 @@ class ApiController < ApplicationController
     :geolocate,
     :apple_touch_icon_precomposed,
     :newfile,
+    :basicinfo,
   ]
   
   def index
@@ -1589,6 +1590,76 @@ class ApiController < ApplicationController
         status: 500,
       )
     end
+  end
+
+  def basicinfo
+    title = "Basic Information"
+    html = <<~END
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <title>#{title}</title>
+          <meta charset="UTF-8">
+          <meta name="theme-color" content="#ffffff">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="description" content="#{title}">
+          <style type="text/css">
+            body {
+              margin: 10px;
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Basic Information</h1>
+          <ul>
+            <li>Current date/time (UTC): #{Time.current.utc}</li>
+            <li>Current date/time (user timezone): #{Time.now}</li>
+            <li>Server: #{ENV["NODENAME"]}</li>
+            <li>PID: #{Process.pid}</li>
+    END
+    
+    if !current_user.nil?
+      html += <<~END
+            <li>Current user ID: #{current_user.id}</li>
+            <li>Current user email: #{current_user.email}</li>
+      END
+    end
+
+    html += <<~END
+            <li>Cookies:<ul>
+    END
+
+    cookies.each do |cookie|
+      html += <<~END
+              <li>#{cookie[0]}:<br /><textarea style="width: 100%" rows="3">#{cookie[1]}</textarea></li>
+      END
+    end
+    html += <<~END
+            </ul></li>
+    END
+
+    html += <<~END
+            <li>Request headers:<ul>
+    END
+
+    request.headers.each do |key, value|
+      html += <<~END
+              <li>#{key}:<br /><textarea style="width: 100%" rows="3">#{value}</textarea></li>
+      END
+    end
+    html += <<~END
+            </ul></li>
+    END
+
+    html += <<~END
+          </ul>
+        </body>
+      </html>
+    END
+
+    render(
+      html: html.html_safe
+    )
   end
   
   protected

@@ -170,6 +170,17 @@ module Myplaceonline
           MyplaceonlineExecutionContext.host = host
           MyplaceonlineExecutionContext.query_string = query_string
           MyplaceonlineExecutionContext.cookie_hash = env["rack.request.cookie_hash"]
+
+          if !MyplaceonlineExecutionContext.cookie_hash.nil?
+            sessioncookie = MyplaceonlineExecutionContext.cookie_hash["rails_session"]
+            if !sessioncookie.nil?
+              Rails.logger.info{"application.rb request with user ID #{user_id} session #{sessioncookie} for #{MyplaceonlineExecutionContext.host} #{MyplaceonlineExecutionContext.request_uri}"}
+            end
+            sessioncookieremember = MyplaceonlineExecutionContext.cookie_hash["rails_session_remember"]
+            if !sessioncookieremember.nil?
+              Rails.logger.info{"application.rb request with user ID #{user_id} remember #{sessioncookieremember} for #{MyplaceonlineExecutionContext.host} #{MyplaceonlineExecutionContext.request_uri}"}
+            end
+          end
           
           Rails.logger.debug{"application.rb setting cookie domain = #{DynamicCookieOptions.cookie_domain}"}
           env["rack.session.options"][:domain] = DynamicCookieOptions.cookie_domain
@@ -200,7 +211,39 @@ module Myplaceonline
 
             #Rails.logger.debug{"MyplaceonlineRack.call setting context host: #{MyplaceonlineExecutionContext.host}, query_string: #{MyplaceonlineExecutionContext.query_string}, cookie_hash: #{Myp.debug_print(MyplaceonlineExecutionContext.cookie_hash)}"}
 
-            @app.call(env)
+            appresult = @app.call(env)
+
+            #Rails.logger.debug{"MyplaceonlineRack.call after response env: #{Myp.debug_print(env)}"}
+
+            responseCode = appresult[0]
+            responseHeaders = appresult[1]
+            responseBody = appresult[2] # e.g. ActionDispatch::Response::RackBody
+            #Rails.logger.debug{appresult}
+
+            Rails.logger.debug{"MyplaceonlineRack.call sending response code #{responseCode}"}
+
+            if false && !responseHeaders.nil? && responseHeaders.is_a?(Hash)
+              responseHeaders.each_pair do |responseHeaderKey, responseHeaderValue|
+                responseHeaderKeyLowercase = responseHeaderKey.downcase
+
+                # The set cookie for the session happens after Rack Middleware
+                #if responseHeaderKey == "set-cookie"
+                #  Rails.logger.info{"MyplaceonlineRack.call response Set-Cookie #{responseHeaderValue}"}
+                #end
+              end
+            end
+
+            #if !responseBody.nil? && responseBody.is_a?(ActionDispatch::Response::RackBody)
+            #  begin
+            #    innerResponse = responseBody.instance_variable_get(:@response)
+            #    if !innerResponse.nil? && innerResponse.is_a?(ActionDispatch::Response)
+            #      Rails.logger.debug{innerResponse.cookies}
+            #    end
+            #  rescue Exception
+            #  end
+            #end
+
+            appresult
           else
             request = ActionDispatch::Request.new(env)
             
