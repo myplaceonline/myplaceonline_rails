@@ -11,6 +11,11 @@
 # http://www.rubydoc.info/github/rack/rack/master/Rack/Session/Abstract/Persisted
 Rails.application.config.session_store(
   :cookie_store,
+  key: "rails_session",
+
+  # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
+  domain: :all,
+  #tld_length: 2,
 )
 
 Rails.application.config.session_options = DynamicCookieOptions.new(
