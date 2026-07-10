@@ -109,6 +109,8 @@ module Myplaceonline
         
         MyplaceonlineExecutionContext.request_uri = env["REQUEST_URI"]
         
+        Rails.logger.info{"application.rb request with user ID #{user_id} for #{MyplaceonlineExecutionContext.host} #{MyplaceonlineExecutionContext.request_uri}"}
+
         # Debug
         #awesome_print(env)
         
@@ -174,11 +176,11 @@ module Myplaceonline
           if !MyplaceonlineExecutionContext.cookie_hash.nil?
             sessioncookie = MyplaceonlineExecutionContext.cookie_hash["rails_session"]
             if !sessioncookie.nil?
-              Rails.logger.info{"application.rb request with user ID #{user_id} session #{sessioncookie} for #{MyplaceonlineExecutionContext.host} #{MyplaceonlineExecutionContext.request_uri}"}
+              Rails.logger.info{"application.rb request with session #{sessioncookie}"}
             end
             sessioncookieremember = MyplaceonlineExecutionContext.cookie_hash["rails_session_remember"]
             if !sessioncookieremember.nil?
-              Rails.logger.info{"application.rb request with user ID #{user_id} remember #{sessioncookieremember} for #{MyplaceonlineExecutionContext.host} #{MyplaceonlineExecutionContext.request_uri}"}
+              Rails.logger.info{"application.rb request with remember #{sessioncookieremember}"}
             end
           end
           
