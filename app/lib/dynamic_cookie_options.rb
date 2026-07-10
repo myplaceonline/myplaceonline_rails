@@ -21,6 +21,7 @@ class DynamicCookieOptions
   def self.create_cookie_options
     {
       domain: DynamicCookieOptions.cookie_domain,
+      #domain: :all,
       httponly: true,
       secure: Rails.env.production?
     }
@@ -29,6 +30,7 @@ class DynamicCookieOptions
   def self.delete_cookie_options
     {
       domain: DynamicCookieOptions.cookie_domain,
+      #domain: :all,
     }
   end
 end

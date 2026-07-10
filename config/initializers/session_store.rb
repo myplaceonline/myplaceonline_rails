@@ -14,7 +14,7 @@ Rails.application.config.session_store(
   key: "rails_session",
 
   # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
-  domain: :all,
+  #domain: :all,
   #tld_length: 2,
 )
 
@@ -23,7 +23,7 @@ Rails.application.config.session_options = DynamicCookieOptions.new(
     key: "rails_session",
     # expire_after: Myp::COOKIE_EXPIRATION,
     # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
-    domain: :all,
+    #domain: :all,
     #tld_length: 2,
   }
 )
