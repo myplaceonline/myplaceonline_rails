@@ -482,6 +482,8 @@ class MyplaceonlineController < ApplicationController
     
     obj_to_destroy = self.object_to_destroy(@obj)
     
+    do_update_before_destroy(obj_to_destroy)
+    
     ApplicationRecord.transaction do
       perform_destroy(obj_to_destroy)
       if has_category && use_points?
@@ -490,6 +492,9 @@ class MyplaceonlineController < ApplicationController
     end
 
     redirect_to index_path
+  end
+  
+  def do_update_before_destroy(obj)
   end
 
   def destroy_all
