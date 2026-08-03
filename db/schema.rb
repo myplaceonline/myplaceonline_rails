@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_07_03_163102) do
+ActiveRecord::Schema.define(version: 2026_08_03_010917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6794,6 +6794,24 @@ ActiveRecord::Schema.define(version: 2026_07_03_163102) do
     t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
   end
 
+  create_table "rabbl_transaction_infos", force: :cascade do |t|
+    t.integer "transaction_type"
+    t.integer "transaction_source"
+    t.string "transaction_identifier"
+    t.decimal "transaction_amount", precision: 10, scale: 2
+    t.string "email"
+    t.text "fulldetails"
+    t.bigint "identity_id", null: false
+    t.text "notes"
+    t.integer "visit_count"
+    t.datetime "archived"
+    t.integer "rating"
+    t.boolean "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["identity_id"], name: "index_rabbl_transaction_infos_on_identity_id"
+  end
+
   create_table "rabbl_user_infos", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.boolean "accepted_terms"
@@ -10132,6 +10150,7 @@ ActiveRecord::Schema.define(version: 2026_07_03_163102) do
   add_foreign_key "rabbl_profile_visuals", "users"
   add_foreign_key "rabbl_profiles", "identities"
   add_foreign_key "rabbl_profiles", "users"
+  add_foreign_key "rabbl_transaction_infos", "identities"
   add_foreign_key "rabbl_user_infos", "rabbl_communities"
   add_foreign_key "rabbl_user_infos", "users"
   add_foreign_key "rabbl_visual_files", "identities"
