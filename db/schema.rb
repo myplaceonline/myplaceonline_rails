@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_03_010917) do
+ActiveRecord::Schema.define(version: 2026_08_05_010461) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6620,6 +6620,8 @@ ActiveRecord::Schema.define(version: 2026_08_03_010917) do
     t.integer "members_total_lastmonth"
     t.integer "members_men_lastmonth"
     t.integer "members_women_lastmonth"
+    t.integer "web_payments_enabled"
+    t.string "paymentsaccount"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
@@ -6809,6 +6811,28 @@ ActiveRecord::Schema.define(version: 2026_08_03_010917) do
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "lookupkey"
+    t.boolean "istest"
+    t.string "subaccount"
+    t.string "event_type"
+    t.string "event_group"
+    t.string "transaction_currency"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address1"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "country"
+    t.string "ip_address"
+    t.string "payment_type"
+    t.string "card_type"
+    t.string "card_subtype"
+    t.string "failure_code"
+    t.string "failure_reason"
+    t.string "action_timestamp"
+    t.string "last4"
+    t.string "expdate"
     t.index ["identity_id"], name: "index_rabbl_transaction_infos_on_identity_id"
   end
 
