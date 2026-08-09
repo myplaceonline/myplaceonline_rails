@@ -201,6 +201,7 @@ class Identity < ApplicationRecord
   has_many :life_insurances, :dependent => :destroy
   has_many :diary_entries, :dependent => :destroy
   has_many :restaurants, :dependent => :destroy
+  has_many :restaurant_dishes, :dependent => :destroy
   has_many :camp_locations, :dependent => :destroy
   has_many :guns, :dependent => :destroy
   has_many :desired_products, :dependent => :destroy
