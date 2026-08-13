@@ -97,30 +97,34 @@ module MyplaceonlineActiveRecordIdentityConcern
     after_commit :chewy_destroy, on: :destroy
     
     def chewy_destroy
-      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy class: #{self.class.name}"}
-      elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
-      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy elastic class: #{elasticClass}"}
-      if !elasticClass.nil?
-        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy deleting from Elastic..."}
-        begin
-          # https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html
-          Chewy.client.delete(index: elasticClass.index_name, id: self.id)
-        rescue Exception => e
-          Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+      if Chewy.strategy.current.name != :bypass
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy class: #{self.class.name}"}
+        elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy elastic class: #{elasticClass}"}
+        if !elasticClass.nil?
+          Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.chewy_destroy deleting from Elastic..."}
+          begin
+            # https://www.elastic.co/guide/en/elasticsearch/client/ruby-api/current/examples.html
+            Chewy.client.delete(index: elasticClass.index_name, id: self.id)
+          rescue Exception => e
+            Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+          end
         end
       end
     end
 
     def update_chewy_indices
-      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices class: #{self.class.name}"}
-      elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
-      Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices elastic class: #{elasticClass}"}
-      if !elasticClass.nil?
-        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices updating Elastic..."}
-        begin
-          elasticClass.import self
-        rescue Exception => e
-          Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+      if Chewy.strategy.current.name != :bypass
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices class: #{self.class.name}, strategy: #{Chewy.strategy.current.name}"}
+        elasticClass = ElasticWrapper.getElasticClassByModelName(self.class.name)
+        Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices elastic class: #{elasticClass}"}
+        if !elasticClass.nil?
+          Rails.logger.debug{"MyplaceonlineActiveRecordIdentityConcern.update_chewy_indices updating Elastic..."}
+          begin
+            elasticClass.import self
+          rescue Exception => e
+            Myp.warn("Could not update Elastic for #{self.class.name} ID #{self.id}", e)
+          end
         end
       end
     end

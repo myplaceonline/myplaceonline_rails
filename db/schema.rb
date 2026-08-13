@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_06_156247) do
+ActiveRecord::Schema.define(version: 2026_08_12_033946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6622,6 +6622,10 @@ ActiveRecord::Schema.define(version: 2026_08_06_156247) do
     t.integer "members_women_lastmonth"
     t.boolean "web_payments_enabled"
     t.string "paymentsaccount"
+    t.text "justification"
+    t.integer "first_free_men"
+    t.integer "first_free_women"
+    t.boolean "inviteonly"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
