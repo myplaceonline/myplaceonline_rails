@@ -287,31 +287,40 @@ class ApplicationController < ActionController::Base
           end
           
           if thumbnail && identity_file.has_thumbnail?
+            if filename.blank?
+              filename = identity_file.thumbnail_name
+            end
             respond_data(
               respond_type,
               identity_file.thumbnail_contents,
               identity_file.thumbnail_size_bytes,
-              identity_file.thumbnail_name,
+              filename,
               identity_file.thumbnail_content_type,
               cacheType: cacheType,
               cacheAgeSeconds: cacheAgeSeconds,
             )
           elsif thumbnail2
+            if filename.blank?
+              filename = identity_file.thumbnail_name
+            end
             respond_data(
               respond_type,
               identity_file.thumbnail2_contents,
               identity_file.thumbnail2_size_bytes,
-              identity_file.thumbnail_name,
+              filename,
               identity_file.thumbnail_content_type,
               cacheType: cacheType,
               cacheAgeSeconds: cacheAgeSeconds,
             )
           else
+            if filename.blank?
+              filename = identity_file.file_file_name
+            end
             respond_data(
               respond_type,
               identity_file.get_file_contents,
               identity_file.file_file_size,
-              identity_file.file_file_name,
+              filename,
               identity_file.file_content_type,
               cacheType: cacheType,
               cacheAgeSeconds: cacheAgeSeconds,
@@ -324,17 +333,15 @@ class ApplicationController < ActionController::Base
             Rails.logger.debug{"ApplicationController.respond_identity_file: Sending from #{identity_file.filesystem_path}"}
           end
           
-          if filename.nil?
-            filename = identity_file.file_file_name
-          end
-          
           if content_type.nil?
             content_type = identity_file.file_content_type
           end
           
           if thumbnail || thumbnail2
             content_type = identity_file.thumbnail_content_type
-            filename = identity_file.thumbnail_name
+            if filename.blank?
+              filename = identity_file.thumbnail_name
+            end
           end
           
           if thumbnail
@@ -355,6 +362,10 @@ class ApplicationController < ActionController::Base
               expires_in(cacheAgeSeconds, public: false)
             end
 
+            if filename.blank?
+              filename = identity_file.file_file_name
+            end
+            
             send_file(
               path,
               type: content_type,
