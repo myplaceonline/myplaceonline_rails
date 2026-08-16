@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_12_033946) do
+ActiveRecord::Schema.define(version: 2026_08_16_213708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6637,6 +6637,7 @@ ActiveRecord::Schema.define(version: 2026_08_12_033946) do
     t.boolean "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "uniqueid"
     t.index ["identity_file_id"], name: "index_rabbl_community_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_rabbl_community_files_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_files_on_rabbl_community_id"
