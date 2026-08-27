@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_16_213708) do
+ActiveRecord::Schema.define(version: 2026_08_27_163316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6797,6 +6797,11 @@ ActiveRecord::Schema.define(version: 2026_08_16_213708) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
     t.string "uniqueid"
+    t.string "instagram"
+    t.string "tiktok"
+    t.string "snapchat"
+    t.string "facebook"
+    t.string "x"
     t.index ["identity_id"], name: "index_rabbl_profiles_on_identity_id"
     t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
   end
@@ -6875,6 +6880,7 @@ ActiveRecord::Schema.define(version: 2026_08_16_213708) do
     t.boolean "pref_collab_messages"
     t.boolean "pref_welcome_messages"
     t.boolean "pref_chat_messages"
+    t.boolean "publicage"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
