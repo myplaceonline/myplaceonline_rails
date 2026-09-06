@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_08_27_163316) do
+ActiveRecord::Schema.define(version: 2026_09_06_161732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6881,6 +6881,7 @@ ActiveRecord::Schema.define(version: 2026_08_27_163316) do
     t.boolean "pref_welcome_messages"
     t.boolean "pref_chat_messages"
     t.boolean "publicage"
+    t.integer "age_day"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
