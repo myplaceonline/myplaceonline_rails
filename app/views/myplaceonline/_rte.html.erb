@@ -27,7 +27,7 @@
     if !f.nil?
       rte_hidden_field = f.hidden_field(hidden_field_name)
     else
-      rte_hidden_field = hidden_field_tag(hidden_field_name, markdown_data)
+      rte_hidden_field = hidden_field_tag(hidden_field_name)
     end
     rte_hidden_field_id = extract_id(rte_hidden_field)
   end
@@ -66,6 +66,9 @@
                 }
               }
             );
+            <% if !hidden_field_name.nil? %>
+              $("#<%= rte_hidden_field_id %>").attr("value", initial_data);
+            <% end %>
           },
           change: function(ev) {
             if (ev.editor.fully_initialized) {
