@@ -77,7 +77,7 @@ gem "progeny"
 gem "colorize"
 gem 'concurrent-ruby', '1.3.4'
 #gem "paypal-sdk-rest"
-gem "json"
+gem "json", '< 3.0'
 gem "active_record_query_trace"
 gem "ruby-filemagic"
 gem "rubocop-rspec"

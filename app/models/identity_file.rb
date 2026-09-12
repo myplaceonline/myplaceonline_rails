@@ -38,7 +38,7 @@ class IdentityFile < ApplicationRecord
   belongs_to :encrypted_password, class_name: "EncryptedValue"
 
   has_attached_file :file, :storage => :database
-  do_not_validate_attachment_file_type :file
+  #do_not_validate_attachment_file_type :file
   
   child_property(name: :folder, model: IdentityFileFolder)
 
