@@ -67,7 +67,7 @@
               }
             );
             <% if !hidden_field_name.nil? %>
-              $("#<%= rte_hidden_field_id %>").attr("value", initial_data);
+              $("#<%= rte_hidden_field_id %>").attr("value", myplaceonline.toMarkdown(ev.editor.getData()));
             <% end %>
           },
           change: function(ev) {
