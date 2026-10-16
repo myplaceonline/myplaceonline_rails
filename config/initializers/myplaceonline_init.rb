@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading myplaceonline_init.rb"}
 class Object
   def is_true?
     self == true || self.is_a?(TrueClass) || self == "1" || self == "true"
@@ -30,13 +31,10 @@ class Numeric
   end
 end
 
-if Myp.is_web_server? || Rails.env.test?
-  ActiveSupport.on_load(:after_initialize) do
-    #if Myp.database_exists? && !Rails.env.test?
-    #  Myp.crontab
-    #end
-      
-    # Initialize any caches after Rails has loaded so that we have access to things like the asset pipeline digests
-    Myp.reinitialize_in_rails_context
+Rails.application.config.to_prepare do
+  if Myp.is_web_server? || Rails.env.test?
+    Rails.logger.info{"Myp Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
+  
+    Myp.reinitialize
   end
 end

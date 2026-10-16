@@ -1,3 +1,7 @@
+# To investigate this warning:
+# DEPRECATION WARNING: Initialization autoloaded the constants
+#pp caller_locations
+
 require "i18n"
 require "fileutils"
 require "github/markup"
@@ -46,7 +50,7 @@ module Myp
 
   EXTRA_DEBUG = false
   
-  Rails.logger.info{"Myp static initialization started"}
+  #Rails.logger.info{"Myp static initialization started"}
   
   DEFAULT_FROM_EMAIL = "contact"
   
@@ -445,8 +449,6 @@ module Myp
     end
   end
   
-  Rails.logger.info{"Myp Process pid: #{Process.pid}, ppid: #{Process.ppid}, uid: #{Process.uid}, gid: #{Process.gid}, argv: #{ARGV}"}
-  
   def self.prepare_website_domain_html(html:)
     i = 0
     while true do
@@ -640,8 +642,6 @@ module Myp
       Rails.logger.info{"Myp Website domains cached: #{@@all_website_domains.count}"}
     end
   end
-  
-  self.reinitialize
   
   @@fts_target = "localhost:9200"
   if !ENV["FTS_TARGET"].nil?
@@ -3074,7 +3074,6 @@ module Myp
   end
 
   def self.process_models(check_database: true, &block)
-    Rails.application.eager_load!
     ApplicationRecord.descendants.each do |klass|
       next unless klass.ancestors.include?(ApplicationRecord)
       if klass.include?(MyplaceonlineActiveRecordIdentityConcern) && (!check_database || ApplicationRecord.connection.data_source_exists?(klass.table_name))
@@ -4069,5 +4068,5 @@ module Myp
     return resultobj
   end
   
-  Rails.logger.info{"Myp static initialization ended"}
+  #Rails.logger.info{"Myp static initialization ended"}
 end

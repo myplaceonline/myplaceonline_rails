@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading warden.rb"}
 # https://github.com/hassox/warden/wiki/Callbacks
 Warden::Manager.before_logout do |user, auth, opts|
   # Handled in Users::SessionsController

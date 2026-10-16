@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading geocoder.rb"}
 Geocoder.configure(
   # Geocoding options
   timeout: 3,                 # geocoding service timeout (secs)

@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading session_store.rb"}
 # The Rails session cookie is separate from the Devise rememberable cookie. If "Remember Me" is not checked, then the
 # Devise cookie isn't created, and the user ID is in the Rails session cookie. If "Remember Me" is checked, then Devise
 # creates its cookie with the expiration specified in the devise.rb initializer. We don't set expire_after on the Rails
@@ -9,21 +10,23 @@
 # http://api.rubyonrails.org/classes/ActionDispatch/Session/CookieStore.html
 # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
 # http://www.rubydoc.info/github/rack/rack/master/Rack/Session/Abstract/Persisted
-Rails.application.config.session_store(
-  :cookie_store,
-  key: "rails_session",
-
-  # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
-  #domain: :all,
-  #tld_length: 2,
-)
-
-Rails.application.config.session_options = DynamicCookieOptions.new(
-  {
+Rails.application.config.after_initialize do
+  Rails.application.config.session_store(
+    :cookie_store,
     key: "rails_session",
-    # expire_after: Myp::COOKIE_EXPIRATION,
+
     # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
     #domain: :all,
     #tld_length: 2,
-  }
-)
+  )
+
+  Rails.application.config.session_options = DynamicCookieOptions.new(
+    {
+      key: "rails_session",
+      # expire_after: 1.year,
+      # https://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
+      #domain: :all,
+      #tld_length: 2,
+    }
+  )
+end

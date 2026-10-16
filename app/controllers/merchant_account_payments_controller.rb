@@ -1,4 +1,4 @@
-class MerchantAccountInstancesController < MyplaceonlineController
+class MerchantAccountPaymentsController < MyplaceonlineController
   def path_name
     "merchant_account_merchant_account_payment"
   end

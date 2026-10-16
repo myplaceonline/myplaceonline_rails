@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading devise.rb"}
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -132,7 +133,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  config.remember_for = Myp::COOKIE_EXPIRATION
+  config.remember_for = 1.year
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -142,9 +143,11 @@ Devise.setup do |config|
 
   # Options to be passed to the created cookie. For instance, you can set
   # secure: true in order to force SSL only cookies.
-  config.rememberable_options = DynamicCookieOptions.new({
-    key: "rails_session_remember"
-  })
+  Rails.application.config.after_initialize do
+    config.rememberable_options = DynamicCookieOptions.new({
+      key: "rails_session_remember"
+    })
+  end
 
   # ==> Configuration for :validatable
   # Range for password length.

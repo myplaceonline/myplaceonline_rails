@@ -80,7 +80,7 @@ gem 'concurrent-ruby', '1.3.4'
 gem "json", '< 3.0'
 gem "active_record_query_trace"
 gem "ruby-filemagic"
-gem "rubocop-rspec"
+#gem "rubocop-rspec"
 gem "doorkeeper", "~> 5.4.0"
 gem "devise-doorkeeper", "~> 1.1.2"
 gem "doorkeeper-openid_connect", "~> 1.7.5"

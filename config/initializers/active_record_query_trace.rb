@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading active_record_query_trace.rb"}
 if Rails.env.development?
   ActiveRecordQueryTrace.enabled = true
   ActiveRecordQueryTrace.ignore_cached_queries = true

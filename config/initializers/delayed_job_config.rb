@@ -1,3 +1,4 @@
+Rails.logger.debug{"Loading delayed_job_config.rb"}
 Delayed::Worker.logger = Rails.logger
 Delayed::Worker.destroy_failed_jobs = true
 #Delayed::Worker.sleep_delay = 60

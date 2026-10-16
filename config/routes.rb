@@ -636,4 +636,6 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   
   Rails.logger.debug{"routes.rb Finished loading routes"}
+
+  Rails.logger.debug{"Potentially processing after_initialize..."}
 end

@@ -37,10 +37,10 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
   
-  #config.log_formatter = ::Logger::Formatter.new
-  #logger           = ActiveSupport::Logger.new(STDOUT)
-  #logger.formatter = config.log_formatter
-  #config.logger = ActiveSupport::TaggedLogging.new(logger)
+  config.log_formatter = ::Logger::Formatter.new
+  logger           = ActiveSupport::Logger.new(STDOUT)
+  logger.formatter = config.log_formatter
+  config.logger = ActiveSupport::TaggedLogging.new(logger)
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -59,9 +59,6 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
-  # Raises error for missing translations
-  config.action_view.raise_on_missing_translations = true
-  
   config.assets.raise_runtime_errors = true
   config.default_url_options = { protocol: 'http', host: 'localhost', port: 3000 }
   config.action_mailer.default_url_options = config.default_url_options
