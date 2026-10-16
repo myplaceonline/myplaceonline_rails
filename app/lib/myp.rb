@@ -2069,13 +2069,15 @@ module Myp
       to = Myp.create_email(use_secondary: use_secondary, host: host)
       
       # Now check if the to address is valid
-      if Myp.is_supported_host?(host: Myp.email_to_host(email: to))
-        Rails.logger.info{"Myp.send_support_email_safe sending to: #{to} from: #{from}"}
-        UserMailer.send_support_email(from, to, subject, body_html, body_plain).deliver_now
-      else
+      #if Myp.is_supported_host?(host: Myp.email_to_host(email: to))
+
+      Rails.logger.info{"Myp.send_support_email_safe sending to: #{to} from: #{from}"}
+      UserMailer.send_support_email(from, to, subject, body_html, body_plain).deliver_now
+
+      #else
         # Maybe somebody trying to use this mechanism to send malicious emails
-        Rails.logger.info{"Myp.send_support_email_safe suppressing email to : #{to}"}
-      end
+        #Rails.logger.info{"Myp.send_support_email_safe suppressing email to : #{to}"}
+      #end
       
     rescue Exception => e
       puts "Could not send email. Subject: " + subject + ", Body: " + body_html + ", Email Problem: " + Myp.error_details(e)
