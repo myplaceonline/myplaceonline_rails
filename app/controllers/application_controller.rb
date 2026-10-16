@@ -1,4 +1,5 @@
 require 'colorize'
+require_relative "../../lib/myputils/dynamic_cookie_options.rb"
 
 class ApplicationController < ActionController::Base
   respond_to :html, :json

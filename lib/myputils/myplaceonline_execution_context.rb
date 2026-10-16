@@ -1,4 +1,6 @@
 require "browser"
+require_relative "./execution_context.rb"
+require_relative "./myp_utils.rb"
 
 class MyplaceonlineExecutionContext
   def self.[](name)
@@ -66,7 +68,7 @@ class MyplaceonlineExecutionContext
     end
 
     if result.blank?
-      result = Myp.default_host
+      result = MypUtils.default_host
     end
     
     result
@@ -239,5 +241,14 @@ class MyplaceonlineExecutionContext
       result = true
     end
     result
+  end
+
+  def self.top_host
+    host = MyplaceonlineExecutionContext.host
+    second_period = host.rindex(".", host.rindex(".") - 1)
+    if !second_period.nil?
+      host = host[second_period+1..-1]
+    end
+    host
   end
 end

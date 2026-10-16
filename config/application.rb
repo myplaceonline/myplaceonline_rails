@@ -31,6 +31,9 @@ module Myplaceonline
     
     config.load_defaults 6.1
     
+    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-new-activesupport-cache-serialization-format
+    #config.active_support.cache_format_version = 6.1
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -52,11 +55,17 @@ module Myplaceonline
       lib.join("tasks"),
       lib.join("generators"),
       lib.join("middleware"),
+      lib.join("myputils"),
     )
     
     require "middleware/myplaceonline_middleware"
     config.middleware.use(MyplaceonlineMiddleware)
     
+    require "myputils/dynamic_cookie_options"
+    require "myputils/execution_context"
+    require "myputils/myplaceonline_execution_context"
+    require "myputils/myp_utils"
+
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
@@ -119,6 +128,15 @@ module Myplaceonline
       config.active_job.queue_adapter = :delayed_job
     else
       config.active_job.queue_adapter = :async
+    end
+    
+    ActiveSupport::Inflector.inflections(:en) do |inflect|
+      inflect.plural /^(headache)$/i, '\1s'
+      inflect.singular /^(headache)s/i, '\1'
+      
+      inflect.irregular 'foot', 'feet'
+      inflect.irregular 'cafe', 'cafes'
+      inflect.irregular 'regimen', 'regimens'
     end
     
     # http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime

@@ -10,7 +10,7 @@
     </div>
     <div>
       <%= f.label :email, class: "ui-hidden-accessible" %>
-      <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email") %>
+      <%= f.email_field :email, class: "autofocus", placeholder: t("myplaceonline.general.email", spellcheck: "false", autocapitalize: "false", autocomplete: "email") %>
     </div>
 
     <div>

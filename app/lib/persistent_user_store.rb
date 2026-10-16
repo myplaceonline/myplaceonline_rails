@@ -1,3 +1,5 @@
+require_relative "../../lib/myputils/dynamic_cookie_options.rb"
+
 # http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html
 class PersistentUserStore
   

@@ -54,16 +54,6 @@ module Myp
   
   DEFAULT_FROM_EMAIL = "contact"
   
-  @@default_host = "myplaceonline.com"
-  
-  if !ENV["DEFAULT_HOST"].blank?
-    @@default_host = ENV["DEFAULT_HOST"]
-  end
-  
-  def self.default_host
-    @@default_host
-  end
-  
   @@spawn_max_vsize = 302400
   
   if !ENV["SPAWN_MAX_VSIZE"].blank?
@@ -72,15 +62,6 @@ module Myp
   
   def self.spawn_max_vsize
     @@spawn_max_vsize
-  end
-  
-  def self.top_host
-    host = MyplaceonlineExecutionContext.host
-    second_period = host.rindex(".", host.rindex(".") - 1)
-    if !second_period.nil?
-      host = host[second_period+1..-1]
-    end
-    host
   end
   
   def self.create_email(

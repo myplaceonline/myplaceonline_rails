@@ -1,3 +1,5 @@
+require_relative "./myplaceonline_execution_context"
+
 class DynamicCookieOptions
   def initialize(params = {})
     @params = params
@@ -12,7 +14,7 @@ class DynamicCookieOptions
     domain = "localhost"
     if ExecutionContext.available?
       if Rails.env.production?
-        domain = Myp.top_host
+        domain = MyplaceonlineExecutionContext.top_host
       end
     end
     domain

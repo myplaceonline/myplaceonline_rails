@@ -1,3 +1,5 @@
+require_relative "../myputils/dynamic_cookie_options.rb"
+
 class MyplaceonlineMiddleware
   def initialize(app)
     @app = app

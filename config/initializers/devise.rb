@@ -1,4 +1,7 @@
 Rails.logger.debug{"Loading devise.rb"}
+
+require_relative "../../lib/myputils/dynamic_cookie_options.rb"
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -143,11 +146,9 @@ Devise.setup do |config|
 
   # Options to be passed to the created cookie. For instance, you can set
   # secure: true in order to force SSL only cookies.
-  Rails.application.config.after_initialize do
-    config.rememberable_options = DynamicCookieOptions.new({
-      key: "rails_session_remember"
-    })
-  end
+  config.rememberable_options = DynamicCookieOptions.new({
+    key: "rails_session_remember"
+  })
 
   # ==> Configuration for :validatable
   # Range for password length.
