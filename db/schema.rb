@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_06_161732) do
+ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -6626,6 +6626,7 @@ ActiveRecord::Schema.define(version: 2026_09_06_161732) do
     t.integer "first_free_men"
     t.integer "first_free_women"
     t.boolean "inviteonly"
+    t.string "salt"
     t.index ["identity_id"], name: "index_rabbl_communities_on_identity_id"
   end
 
@@ -6665,6 +6666,7 @@ ActiveRecord::Schema.define(version: 2026_09_06_161732) do
     t.string "uniqueid"
     t.boolean "showtest"
     t.boolean "adminhidden"
+    t.boolean "hidepublicprofile"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"
@@ -6802,6 +6804,7 @@ ActiveRecord::Schema.define(version: 2026_09_06_161732) do
     t.string "snapchat"
     t.string "facebook"
     t.string "x"
+    t.string "website"
     t.index ["identity_id"], name: "index_rabbl_profiles_on_identity_id"
     t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
   end
@@ -6882,6 +6885,7 @@ ActiveRecord::Schema.define(version: 2026_09_06_161732) do
     t.boolean "pref_chat_messages"
     t.boolean "publicage"
     t.integer "age_day"
+    t.boolean "sent_welcome_email"
     t.index ["rabbl_community_id"], name: "index_rabbl_user_infos_on_rabbl_community_id"
     t.index ["user_id"], name: "index_rabbl_user_infos_on_user_id"
   end
