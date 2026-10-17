@@ -30,13 +30,13 @@ module Myplaceonline
     
     puts "Loading application.rb"
     
-    config.load_defaults 6.1
-    
-    # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-new-activesupport-cache-serialization-format
-    config.active_support.cache_format_version = 6.1
+    config.load_defaults 7.0
     
     # Rails 7.0 changed some defaults but keep some older behavior
-    Rails.application.config.active_record.partial_inserts = true
+    config.active_record.partial_inserts = true
+    config.action_controller.raise_on_open_redirects = false
+    config.action_dispatch.cookies_serializer = :hybrid
+    config.active_support.disable_to_s_conversion = false
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

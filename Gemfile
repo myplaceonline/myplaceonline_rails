@@ -1,7 +1,8 @@
 source "https://rubygems.org"
 
-# Due to Chewy
+# TODO: Due to Chewy
 gem "i18n", "~> 1.8.11"
+
 gem "irb"
 gem "rake"
 gem "rails", ">=7.0"
@@ -20,10 +21,7 @@ gem "thin"
 gem "roo"
 gem "remotipart"
 gem "kt-paperclip"
-
-#gem "paperclip_database"
 gem 'paperclip_database_myplaceonline'
-
 gem "rubyzip"
 gem "cancancan"
 gem "noty-rails"
@@ -48,10 +46,13 @@ gem "log4r"
 #
 # https://github.com/collectiveidea/delayed_job/issues/1246#issuecomment-5856104056
 gem "delayed_job", '~> 4.1.13'
+
 gem "delayed_job_active_record"
 gem "daemons"
+
 # ckeditor 5 requires a CDN: https://github.com/galetahub/ckeditor/issues/881#issuecomment-599766616
 gem "ckeditor", "~> 4"
+
 gem "github-markup"
 gem "redcarpet"
 gem "seed_dump"
@@ -74,28 +75,21 @@ gem "pkg-config"
 gem "rest-client"
 gem "immigrant"
 gem "listen"
-#gem "rails-controller-testing"
 gem "faraday_middleware"
 gem "google-api-client"
 gem "googlemaps-services"
-
-# TODO: https://github.com/composite-primary-keys/composite_primary_keys/issues/608#issuecomment-1753130066
-# When updating rails, update the major version of composite_primary_keys: https://github.com/composite-primary-keys/composite_primary_keys
-#gem "composite_primary_keys", "~> 14"
-
 gem "usda-nutrient-database"
 gem "activerecord-import"
 gem "reverse_markdown"
 gem "progeny"
 gem "colorize"
 gem 'concurrent-ruby'
-#gem "paypal-sdk-rest"
 
 # Error: "unknown keyword: quirks_mode"
 gem "json", '< 3.0'
+
 gem "active_record_query_trace"
 gem "ruby-filemagic"
-#gem "rubocop-rspec"
 gem "doorkeeper"
 gem "devise-doorkeeper"
 gem "doorkeeper-openid_connect"
@@ -104,7 +98,6 @@ gem "exponent-server-sdk"
 gem "sassc"
 gem "bootsnap"
 gem "haversine"
-#gem "yelp"
 gem "rack-cors"
 gem "rails-reverse-proxy"
 gem "mail"
