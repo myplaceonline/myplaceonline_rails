@@ -29,13 +29,16 @@ module Myplaceonline
   class Application < Rails::Application
     
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
     
     # Rails 7.0 changed some defaults but keep some older behavior
     config.active_record.partial_inserts = true
     config.action_dispatch.cookies_serializer = :hybrid
     config.active_support.disable_to_s_conversion = false
     
+    # Rails 8.1 changed some defaults but keep some older behavior
+    config.action_controller.action_on_path_relative_redirect = :log
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
