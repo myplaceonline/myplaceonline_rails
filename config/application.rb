@@ -33,7 +33,7 @@ module Myplaceonline
     config.load_defaults 6.1
     
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-new-activesupport-cache-serialization-format
-    #config.active_support.cache_format_version = 6.1
+    config.active_support.cache_format_version = 6.1
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
