@@ -3,6 +3,7 @@ class PasswordSharesController < MyplaceonlineController
   def transfer
     set_obj
     
+    return_result = nil
     ApplicationRecord.transaction do
       new_password = @obj.password.dup
       new_password.identity = User.current_user.current_identity
@@ -28,11 +29,12 @@ class PasswordSharesController < MyplaceonlineController
 
       @obj.destroy!
 
-      return redirect_to password_path(new_password),
+      return_result = redirect_to password_path(new_password),
                 :flash => { :notice =>
                   I18n.t("myplaceonline.passwords.transfer_success")
                 }
     end
+    return return_result
   end
   
   protected

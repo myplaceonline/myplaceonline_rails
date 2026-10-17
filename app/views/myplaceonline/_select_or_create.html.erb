@@ -212,7 +212,7 @@ Rails.logger.debug{"select_or_create context: #{f.object_name}[#{name}], collaps
         %>
             <%= f.fields_for name, existingobj do |sub_fields| %>
               <% if show_new_collapsible %><h3><%= (edit ? t("myplaceonline.general.replace_with_new") : t("myplaceonline.general.new")) + " " + heading %></h3><% end %>
-              <%= render partial: objform + ".html", locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true, simpleform: simpleform } %>
+              <%= render partial: objform, locals: { f: sub_fields, obj: existingobj, edit: false, autofocus: autofocus, nested: true, simpleform: simpleform } %>
               <%
               if autofocus && !collapsed && existingcollapsed
               %>

@@ -1,3 +1,5 @@
+require "active_support/core_ext/integer/time"
+
 class DynamicDefaultUrlOptions
   def initialize(params = {})
     @params = params
@@ -28,6 +30,9 @@ class DynamicSmtpSettings
 end
 
 Rails.application.configure do
+
+  config.active_support.report_deprecations = false
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

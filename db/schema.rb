@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_10_11_122729) do
-
+ActiveRecord::Schema[7.0].define(version: 2026_10_16_233605) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,10 +18,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "accomplishment"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_accomplishments_on_identity_id"
@@ -32,9 +31,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "acne_measurement_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -44,16 +43,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "acne_measurements", id: :serial, force: :cascade do |t|
-    t.datetime "measurement_datetime"
+    t.datetime "measurement_datetime", precision: nil
     t.string "acne_location", limit: 255
     t.integer "total_pimples"
     t.integer "new_pimples"
     t.integer "worrying_pimples"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_acne_measurements_on_identity_id"
@@ -63,8 +62,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "status", default: 0, null: false
     t.string "message_id", null: false
     t.string "message_checksum", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["message_id", "message_checksum"], name: "index_action_mailbox_inbound_emails_uniqueness", unique: true
   end
 
@@ -73,8 +72,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "body"
     t.string "record_type", null: false
     t.bigint "record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
@@ -83,7 +82,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -94,19 +93,26 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "content_type"
     t.text "metadata"
     t.bigint "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
+    t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "activities", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.text "notes"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_activities_on_identity_id"
@@ -117,9 +123,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.string "send_only_to"
     t.string "exclude_emails"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["email_id"], name: "index_admin_emails_on_email_id"
@@ -131,9 +137,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.string "send_only_to"
     t.string "exclude_numbers"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_admin_text_messages_on_identity_id"
@@ -143,12 +149,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "agents", force: :cascade do |t|
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "agent_identity_id"
     t.index ["agent_identity_id"], name: "index_agents_on_agent_identity_id"
     t.index ["identity_id"], name: "index_agents_on_identity_id"
@@ -161,12 +167,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "status"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_airline_programs_on_identity_id"
     t.index ["membership_id"], name: "index_airline_programs_on_membership_id"
     t.index ["password_id"], name: "index_airline_programs_on_password_id"
@@ -174,10 +180,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "alerts_displays", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "suppress_hotel"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_alerts_displays_on_identity_id"
@@ -189,12 +195,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "ended"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_allergies_on_identity_id"
   end
 
@@ -204,8 +210,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["allergy_id"], name: "index_allergy_files_on_allergy_id"
     t.index ["identity_file_id"], name: "index_allergy_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_allergy_files_on_identity_id"
@@ -216,9 +222,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_annuities_on_identity_id"
@@ -229,9 +235,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["apartment_lease_id"], name: "index_apartment_lease_files_on_apartment_lease_id"
@@ -243,14 +249,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "start_date"
     t.date "end_date"
     t.integer "apartment_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.decimal "monthly_rent", precision: 10, scale: 2
     t.decimal "moveout_fee", precision: 10, scale: 2
     t.decimal "deposit", precision: 10, scale: 2
     t.date "terminate_by"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["apartment_id"], name: "index_apartment_leases_on_apartment_id"
@@ -261,9 +267,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "apartment_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -277,10 +283,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "apartment_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "repeat_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["apartment_id"], name: "index_apartment_trash_pickups_on_apartment_id"
@@ -291,12 +297,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "apartments", id: :serial, force: :cascade do |t|
     t.integer "location_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "landlord_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.integer "total_square_footage"
@@ -314,8 +320,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["art_id"], name: "index_art_files_on_art_id"
     t.index ["identity_file_id"], name: "index_art_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_art_files_on_identity_id"
@@ -328,12 +334,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "art_link"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_arts_on_identity_id"
   end
 
@@ -341,8 +347,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "item_name"
     t.integer "awesome_list_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["awesome_list_id"], name: "index_awesome_list_items_on_awesome_list_id"
     t.index ["identity_id"], name: "index_awesome_list_items_on_identity_id"
@@ -353,9 +359,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_awesome_lists_on_identity_id"
@@ -368,8 +374,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["bank_account_id"], name: "index_bank_account_files_on_bank_account_id"
     t.index ["identity_file_id"], name: "index_bank_account_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_bank_account_files_on_identity_id"
@@ -387,9 +393,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "company_id"
     t.integer "home_address_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "visit_count"
     t.integer "rating"
     t.boolean "is_public"
@@ -406,9 +412,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "bar_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -421,12 +427,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_barbecues_on_identity_id"
     t.index ["location_id"], name: "index_barbecues_on_location_id"
   end
@@ -437,9 +443,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.boolean "rooftop"
     t.boolean "secretive"
@@ -453,8 +459,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["basketball_court_id"], name: "index_basketball_court_files_on_basketball_court_id"
     t.index ["identity_file_id"], name: "index_basketball_court_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_basketball_court_files_on_identity_id"
@@ -464,12 +470,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_basketball_courts_on_identity_id"
     t.index ["location_id"], name: "index_basketball_courts_on_location_id"
   end
@@ -479,11 +485,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "crowded"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.boolean "fires_allowed"
     t.boolean "fires_disallowed"
@@ -504,9 +510,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "bet_id"
     t.integer "identity_id"
     t.integer "contact_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["bet_id"], name: "index_bet_contacts_on_bet_id"
@@ -524,9 +530,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "bet_currency"
     t.integer "bet_status"
@@ -539,8 +545,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["bill_id"], name: "index_bill_files_on_bill_id"
     t.index ["identity_file_id"], name: "index_bill_files_on_identity_file_id"
@@ -553,11 +559,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_bills_on_identity_id"
   end
@@ -567,8 +573,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["blog_id"], name: "index_blog_files_on_blog_id"
     t.index ["identity_file_id"], name: "index_blog_files_on_identity_file_id"
@@ -582,11 +588,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "commenter_email"
     t.string "commenter_website"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "commenter_identity_id"
     t.boolean "is_public"
     t.index ["blog_post_id"], name: "index_blog_post_comments_on_blog_post_id"
@@ -599,16 +605,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "blog_post_title"
     t.text "post"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "hide_title"
     t.text "import_original"
     t.integer "edit_type"
     t.boolean "last_updated_bottom"
-    t.datetime "post_date"
+    t.datetime "post_date", precision: nil
     t.boolean "is_public"
     t.boolean "requireslogin"
     t.index ["blog_id"], name: "index_blog_posts_on_blog_id"
@@ -619,11 +625,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "blog_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "main_post_id"
     t.boolean "is_public"
     t.boolean "reverse"
@@ -638,10 +644,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "concentration_minimum", precision: 10, scale: 3
     t.decimal "concentration_maximum", precision: 10, scale: 3
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "notes"
     t.boolean "is_public"
@@ -654,10 +660,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "measurement_date"
     t.string "measurement_source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_blood_pressures_on_identity_id"
@@ -668,9 +674,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["blood_test_id"], name: "index_blood_test_files_on_blood_test_id"
@@ -683,9 +689,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "blood_concentration_id"
     t.decimal "concentration", precision: 10, scale: 3
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "flag"
     t.boolean "is_public"
@@ -695,16 +701,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "blood_tests", id: :serial, force: :cascade do |t|
-    t.datetime "fast_started"
-    t.datetime "test_time"
+    t.datetime "fast_started", precision: nil
+    t.datetime "test_time", precision: nil
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "doctor_id"
     t.integer "location_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "preceding_changes"
     t.boolean "is_public"
@@ -718,8 +724,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["book_id"], name: "index_book_files_on_book_id"
     t.index ["identity_file_id"], name: "index_book_files_on_identity_file_id"
@@ -730,9 +736,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "book_id"
     t.string "pages"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "quote_id"
     t.boolean "is_public"
@@ -746,9 +752,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "rating"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_book_stores_on_identity_id"
     t.index ["location_id"], name: "index_book_stores_on_location_id"
@@ -758,11 +764,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "book_name", limit: 255
     t.string "isbn", limit: 255
     t.string "author", limit: 255
-    t.datetime "when_read"
+    t.datetime "when_read", precision: nil
     t.integer "identity_id"
     t.text "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "recommender_id"
     t.text "review"
@@ -770,12 +776,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "lent_date"
     t.integer "borrowed_from_id"
     t.date "borrowed_date"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "book_category"
     t.date "acquired"
-    t.datetime "when_owned"
-    t.datetime "when_discarded"
+    t.datetime "when_owned", precision: nil
+    t.datetime "when_discarded", precision: nil
     t.integer "gift_from_id"
     t.string "book_location"
     t.boolean "is_public"
@@ -790,12 +796,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "camp_location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["camp_location_id"], name: "index_boondockings_on_camp_location_id"
     t.index ["identity_id"], name: "index_boondockings_on_identity_id"
   end
@@ -806,8 +812,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["boycott_id"], name: "index_boycott_files_on_boycott_id"
     t.index ["identity_file_id"], name: "index_boycott_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_boycott_files_on_identity_id"
@@ -818,11 +824,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "boycott_start"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_boycotts_on_identity_id"
   end
@@ -832,9 +838,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["business_card_id"], name: "index_business_card_files_on_business_card_id"
@@ -847,9 +853,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_business_cards_on_contact_id"
@@ -862,9 +868,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_cafes_on_identity_id"
     t.index ["location_id"], name: "index_cafes_on_location_id"
@@ -874,10 +880,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "left_operand_id"
     t.integer "right_operand_id"
     t.integer "operator"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_calculation_elements_on_identity_id"
@@ -888,13 +894,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "calculation_forms", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "root_element_id"
     t.text "equation"
     t.boolean "is_duplicate"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_calculation_forms_on_identity_id"
@@ -905,11 +911,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "input_name", limit: 255
     t.string "input_value", limit: 255
     t.integer "calculation_form_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "variable_name", limit: 255
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calculation_form_id"], name: "index_calculation_inputs_on_calculation_form_id"
@@ -919,11 +925,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "calculation_operands", id: :serial, force: :cascade do |t|
     t.string "constant_value", limit: 255
     t.integer "calculation_element_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "calculation_input_id"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calculation_element_id"], name: "index_calculation_operands_on_calculation_element_id"
@@ -935,11 +941,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "calculation_form_id"
     t.decimal "result", precision: 10, scale: 2
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "original_calculation_form_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calculation_form_id"], name: "index_calculations_on_calculation_form_id"
@@ -949,11 +955,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "calendar_item_reminder_pendings", id: :serial, force: :cascade do |t|
     t.integer "calendar_item_reminder_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "calendar_id"
     t.integer "calendar_item_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_calendar_item_reminder_pendings_on_calendar_id"
@@ -971,10 +977,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "expire_type"
     t.integer "calendar_item_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "max_pending"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_item_id"], name: "index_calendar_item_reminders_on_calendar_item_id"
@@ -983,7 +989,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "calendar_items", id: :serial, force: :cascade do |t|
     t.integer "calendar_id"
-    t.datetime "calendar_item_time"
+    t.datetime "calendar_item_time", precision: nil
     t.text "notes"
     t.boolean "persistent"
     t.integer "repeat_amount"
@@ -991,11 +997,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "model_class"
     t.integer "model_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "context_info"
     t.boolean "is_repeat"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_calendar_items_on_calendar_id"
@@ -1005,8 +1011,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "calendars", id: :serial, force: :cascade do |t|
     t.boolean "trash"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "exercise_threshold"
     t.integer "contact_best_friend_threshold"
@@ -1033,7 +1039,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "general_threshold"
     t.integer "happy_things_threshold"
     t.integer "website_domain_registration_threshold"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_calendars_on_identity_id"
@@ -1055,14 +1061,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "overnight_allowed"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.boolean "boondocking"
     t.boolean "cell_phone_reception"
     t.boolean "cell_phone_data"
     t.integer "membership_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.boolean "chance_high_wind"
     t.boolean "birds_chirping"
     t.boolean "near_busy_road"
@@ -1086,10 +1092,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "end_date"
     t.decimal "yearly_maximum", precision: 10, scale: 2
     t.text "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "default_cashback"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_cashbacks_on_identity_id"
@@ -1100,8 +1106,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "link", limit: 255
     t.integer "position"
     t.integer "parent_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "additional_filtertext", limit: 255
     t.string "icon", limit: 255
     t.boolean "explicit"
@@ -1118,11 +1124,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "subject_class"
     t.bigint "user_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "target_identity_id"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_category_permissions_on_identity_id"
@@ -1134,11 +1140,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "category_id"
     t.integer "count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visits"
-    t.datetime "last_visit"
-    t.datetime "archived"
+    t.datetime "last_visit", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["category_id"], name: "index_category_points_amounts_on_category_id"
@@ -1151,9 +1157,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "rating"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_charities_on_identity_id"
     t.index ["location_id"], name: "index_charities_on_location_id"
@@ -1164,8 +1170,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["check_id"], name: "index_check_files_on_check_id"
     t.index ["identity_file_id"], name: "index_check_files_on_identity_file_id"
@@ -1177,9 +1183,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "checklist_id"
     t.integer "position"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
@@ -1191,9 +1197,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "checklist_id"
     t.integer "identity_id"
     t.boolean "pre_checklist"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["checklist_id"], name: "index_checklist_references_on_checklist_id"
@@ -1204,10 +1210,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "checklists", id: :serial, force: :cascade do |t|
     t.string "checklist_name", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_checklists_on_identity_id"
@@ -1223,11 +1229,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "received_date"
     t.integer "bank_account_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["bank_account_id"], name: "index_checks_on_bank_account_id"
     t.index ["company_id"], name: "index_checks_on_company_id"
@@ -1237,10 +1243,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "companies", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "company_identity_id"
     t.boolean "is_public"
@@ -1253,8 +1259,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["company_interaction_id"], name: "index_company_interaction_files_on_company_interaction_id"
     t.index ["identity_file_id"], name: "index_company_interaction_files_on_identity_file_id"
@@ -1263,14 +1269,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "company_interactions", id: :serial, force: :cascade do |t|
     t.integer "company_id"
-    t.datetime "company_interaction_date"
+    t.datetime "company_interaction_date", precision: nil
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["company_id"], name: "index_company_interactions_on_company_id"
     t.index ["identity_id"], name: "index_company_interactions_on_identity_id"
@@ -1280,14 +1286,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.string "display", limit: 255
     t.string "link", limit: 255
-    t.datetime "due_date"
+    t.datetime "due_date", precision: nil
     t.string "myp_model_name", limit: 255
     t.integer "model_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "original_due_date"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "original_due_date", precision: nil
     t.integer "calendar_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_complete_due_items_on_calendar_id"
@@ -1300,8 +1306,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "ip_address"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["computer_environment_id"], name: "index_computer_environment_addresses_on_computer_environment_id"
     t.index ["identity_id"], name: "index_computer_environment_addresses_on_identity_id"
@@ -1312,8 +1318,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["computer_environment_id"], name: "index_computer_environment_files_on_computer_environment_id"
     t.index ["identity_file_id"], name: "index_computer_environment_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_computer_environment_files_on_identity_id"
@@ -1324,8 +1330,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "password_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["computer_environment_id"], name: "index_computer_environment_passwords_on_computer_environment_id"
     t.index ["identity_id"], name: "index_computer_environment_passwords_on_identity_id"
     t.index ["password_id"], name: "index_computer_environment_passwords_on_password_id"
@@ -1336,12 +1342,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "computer_environment_type"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_computer_environments_on_identity_id"
   end
 
@@ -1351,8 +1357,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["computer_id"], name: "index_computer_files_on_computer_id"
     t.index ["identity_file_id"], name: "index_computer_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_computer_files_on_identity_id"
@@ -1362,10 +1368,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "computer_id"
     t.integer "ssh_key_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "username"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["computer_id"], name: "index_computer_ssh_keys_on_computer_id"
@@ -1388,8 +1394,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "max_cpu_speed", precision: 10, scale: 2
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "administrator_id"
     t.integer "main_user_id"
     t.integer "dimensions_type"
@@ -1400,7 +1406,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "weight", precision: 10, scale: 2
     t.integer "visit_count"
     t.string "hostname"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "hard_drive_password_id"
@@ -1415,9 +1421,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "concert_id"
     t.integer "musical_group_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["concert_id"], name: "index_concert_musical_groups_on_concert_id"
@@ -1429,9 +1435,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "concert_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -1446,10 +1452,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_concerts_on_identity_id"
@@ -1461,11 +1467,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "connection_status"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "connection_request_token"
     t.integer "contact_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_connections_on_contact_id"
@@ -1474,15 +1480,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "consumed_foods", force: :cascade do |t|
-    t.datetime "consumed_food_time"
+    t.datetime "consumed_food_time", precision: nil
     t.bigint "food_id"
     t.decimal "quantity", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["food_id"], name: "index_consumed_foods_on_food_id"
     t.index ["identity_id"], name: "index_consumed_foods_on_identity_id"
@@ -1491,11 +1497,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "contacts", id: :serial, force: :cascade do |t|
     t.integer "contact_identity_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "contact_type"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_identity_id"], name: "index_contacts_on_contact_identity_id"
@@ -1507,8 +1513,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["conversation_id"], name: "index_conversation_files_on_conversation_id"
     t.index ["identity_file_id"], name: "index_conversation_files_on_identity_file_id"
@@ -1518,11 +1524,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "conversations", id: :serial, force: :cascade do |t|
     t.integer "contact_id"
     t.text "conversation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.date "conversation_date"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_conversations_on_contact_id"
@@ -1533,9 +1539,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "credit_card_id"
     t.integer "cashback_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["cashback_id"], name: "index_credit_card_cashbacks_on_cashback_id"
@@ -1548,8 +1554,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["credit_card_id"], name: "index_credit_card_files_on_credit_card_id"
     t.index ["identity_file_id"], name: "index_credit_card_files_on_identity_file_id"
@@ -1563,8 +1569,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "security_code", limit: 255
     t.integer "password_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "pin", limit: 255
     t.text "notes"
     t.integer "address_id"
@@ -1572,7 +1578,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "security_code_encrypted_id"
     t.integer "pin_encrypted_id"
     t.integer "expires_encrypted_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "card_type"
     t.decimal "total_credit", precision: 10, scale: 2
     t.integer "visit_count"
@@ -1596,8 +1602,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["credit_report_id"], name: "index_credit_report_files_on_credit_report_id"
     t.index ["identity_file_id"], name: "index_credit_report_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_credit_report_files_on_identity_id"
@@ -1610,12 +1616,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "annual_free_report"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_credit_reports_on_identity_id"
   end
 
@@ -1624,8 +1630,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["credit_score_id"], name: "index_credit_score_files_on_credit_score_id"
     t.index ["identity_file_id"], name: "index_credit_score_files_on_identity_file_id"
@@ -1637,10 +1643,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "score"
     t.string "source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_credit_scores_on_identity_id"
@@ -1652,16 +1658,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "run_class"
     t.string "run_method"
     t.string "minutes"
-    t.datetime "last_success"
+    t.datetime "last_success", precision: nil
     t.string "run_data"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "disabled"
     t.index ["identity_id"], name: "index_crontabs_on_identity_id"
   end
@@ -1670,9 +1676,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.text "notes"
@@ -1686,8 +1692,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["dating_profile_id"], name: "index_dating_profile_files_on_dating_profile_id"
     t.index ["identity_file_id"], name: "index_dating_profile_files_on_identity_file_id"
@@ -1703,11 +1709,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "music"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_dating_profiles_on_identity_id"
   end
@@ -1717,13 +1723,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
     t.text "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
+    t.datetime "run_at", precision: nil
+    t.datetime "locked_at", precision: nil
+    t.datetime "failed_at", precision: nil
     t.string "locked_by"
     t.string "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
@@ -1732,8 +1738,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["dental_insurance_id"], name: "index_dental_insurance_files_on_dental_insurance_id"
     t.index ["identity_file_id"], name: "index_dental_insurance_files_on_identity_file_id"
@@ -1750,12 +1756,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "account_number", limit: 255
     t.string "group_number", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "doctor_id"
     t.integer "visit_count"
     t.integer "rating"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["doctor_id"], name: "index_dental_insurances_on_doctor_id"
     t.index ["group_company_id"], name: "index_dental_insurances_on_group_company_id"
@@ -1771,8 +1777,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["dentist_visit_id"], name: "index_dentist_visit_files_on_dentist_visit_id"
     t.index ["identity_file_id"], name: "index_dentist_visit_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_dentist_visit_files_on_identity_id"
@@ -1787,10 +1793,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "paid", precision: 10, scale: 2
     t.boolean "cleaning"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.boolean "xrays_taken"
@@ -1803,10 +1809,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "website_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.text "notes"
@@ -1819,10 +1825,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "product_name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_desired_products_on_identity_id"
@@ -1835,24 +1841,24 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "visited"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_dessert_locations_on_identity_id"
     t.index ["location_id"], name: "index_dessert_locations_on_location_id"
   end
 
   create_table "diary_entries", id: :serial, force: :cascade do |t|
-    t.datetime "diary_time"
+    t.datetime "diary_time", precision: nil
     t.text "entry"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "diary_title", limit: 255
     t.integer "visit_count"
     t.integer "entry_encrypted_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["entry_encrypted_id"], name: "index_diary_entries_on_entry_encrypted_id"
@@ -1864,11 +1870,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "food_id"
     t.decimal "quantity", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "food_type"
     t.bigint "reminder_id"
     t.boolean "is_public"
@@ -1882,11 +1888,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "dietary_requirement_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "dietary_requirement_amount", precision: 10, scale: 2
     t.integer "dietary_requirement_type"
     t.integer "dietary_requirement_context"
@@ -1901,8 +1907,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["dietary_requirements_collection_id"], name: "drcf_on_drc"
     t.index ["identity_file_id"], name: "index_dietary_requirements_collection_files_on_identity_file_id"
@@ -1913,11 +1919,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "dietary_requirements_collection_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_dietary_requirements_collections_on_identity_id"
   end
@@ -1927,11 +1933,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "dietary_requirements_collection_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["dietary_requirements_collection_id"], name: "index_diets_on_dietary_requirements_collection_id"
     t.index ["identity_id"], name: "index_diets_on_identity_id"
@@ -1942,12 +1948,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "uuididentifier"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_disappearing_messages_on_identity_id"
   end
 
@@ -1955,11 +1961,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "import_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "reference_genome"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_dna_analyses_on_identity_id"
@@ -1971,8 +1977,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["doctor_visit_id"], name: "index_doctor_visit_files_on_doctor_visit_id"
     t.index ["identity_file_id"], name: "index_doctor_visit_files_on_identity_file_id"
@@ -1987,10 +1993,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "paid", precision: 10, scale: 2
     t.boolean "physical"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["doctor_id"], name: "index_doctor_visits_on_doctor_id"
@@ -2001,11 +2007,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "doctors", id: :serial, force: :cascade do |t|
     t.integer "contact_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "doctor_type"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_doctors_on_contact_id"
@@ -2017,8 +2023,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["document_id"], name: "index_document_files_on_document_id"
     t.index ["identity_file_id"], name: "index_document_files_on_identity_file_id"
@@ -2030,11 +2036,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.string "document_category"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "important"
     t.date "document_date"
     t.boolean "is_public"
@@ -2047,8 +2053,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["donation_id"], name: "index_donation_files_on_donation_id"
     t.index ["identity_file_id"], name: "index_donation_files_on_identity_file_id"
@@ -2062,11 +2068,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_donations_on_identity_id"
     t.index ["location_id"], name: "index_donations_on_location_id"
@@ -2077,9 +2083,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_drafts_on_identity_id"
@@ -2087,15 +2093,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "dreams", id: :serial, force: :cascade do |t|
     t.string "dream_name"
-    t.datetime "dream_time"
+    t.datetime "dream_time", precision: nil
     t.text "dream"
     t.integer "dream_encrypted_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "dream_encrypted_id_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["dream_encrypted_id"], name: "index_dreams_on_dream_encrypted_id"
@@ -2107,12 +2113,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "drink_list_id"
     t.bigint "drink_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["drink_id"], name: "index_drink_list_drinks_on_drink_id"
     t.index ["drink_list_id"], name: "index_drink_list_drinks_on_drink_list_id"
     t.index ["identity_id"], name: "index_drink_list_drinks_on_identity_id"
@@ -2122,12 +2128,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "drink_list_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_drink_lists_on_identity_id"
   end
 
@@ -2137,10 +2143,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.decimal "calories", precision: 10, scale: 2
     t.decimal "price", precision: 10, scale: 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_drinks_on_identity_id"
@@ -2151,8 +2157,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["driver_license_id"], name: "index_driver_license_files_on_driver_license_id"
     t.index ["identity_file_id"], name: "index_driver_license_files_on_identity_file_id"
@@ -2167,11 +2173,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "address_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "region"
     t.boolean "is_public"
     t.index ["address_id"], name: "index_driver_licenses_on_address_id"
@@ -2194,15 +2200,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "link"
     t.string "extra_link"
     t.string "keywords"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "drom_match_chosen_dealbreakers", force: :cascade do |t|
     t.bigint "drom_match_dealbreaker_id"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "match_type"
     t.integer "selection"
     t.decimal "range_start", precision: 10, scale: 2
@@ -2223,8 +2229,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name"
     t.decimal "center_latitude", precision: 24, scale: 20
     t.decimal "center_longitude", precision: 24, scale: 20
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "picture"
     t.string "timezone"
     t.string "short_name"
@@ -2233,7 +2239,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_drom_match_cities_on_identity_id"
@@ -2244,8 +2250,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "region_name"
     t.string "key"
     t.string "picture"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "center_latitude", precision: 24, scale: 20
     t.decimal "center_longitude", precision: 24, scale: 20
     t.string "placeid"
@@ -2254,7 +2260,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["drom_match_city_id"], name: "index_drom_match_city_regions_on_drom_match_city_id"
@@ -2264,8 +2270,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "drom_match_dates", force: :cascade do |t|
     t.bigint "identity_id"
     t.integer "date_status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "other_date_id"
     t.integer "date_option"
     t.integer "substep"
@@ -2291,11 +2297,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "drom_match_dealbreaker_relationships", force: :cascade do |t|
     t.integer "relationship"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "drom_match_dealbreaker1_id"
     t.bigint "drom_match_dealbreaker2_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.index ["drom_match_dealbreaker1_id"], name: "dmdr_on_dmd1"
     t.index ["drom_match_dealbreaker2_id"], name: "dmdr_on_dmd2"
     t.index ["identity_id"], name: "index_drom_match_dealbreaker_relationships_on_identity_id"
@@ -2304,8 +2310,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "drom_match_dealbreaker_reports", force: :cascade do |t|
     t.bigint "drom_match_dealbreaker_id"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "report"
     t.index ["drom_match_dealbreaker_id"], name: "dmdr_on_dmd"
     t.index ["identity_id"], name: "index_drom_match_dealbreaker_reports_on_identity_id"
@@ -2313,12 +2319,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "drom_match_dealbreakers", force: :cascade do |t|
     t.bigint "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "prefix_positive"
     t.string "dealbreaker_name"
     t.integer "flags"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "completely_hidden"
     t.boolean "hidden"
     t.integer "created_by"
@@ -2347,13 +2353,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.string "name"
     t.integer "stops"
-    t.datetime "depart"
+    t.datetime "depart", precision: nil
     t.string "depart_code"
-    t.datetime "arrive"
+    t.datetime "arrive", precision: nil
     t.string "arrive_code"
     t.string "context"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["drom_match_flight_package_id"], name: "dmfc_dmfp_id"
     t.index ["identity_id"], name: "index_drom_match_flight_components_on_identity_id"
   end
@@ -2367,15 +2373,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "quote_source"
     t.decimal "amount", precision: 10, scale: 2
     t.string "source_identifier"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "related_id"
     t.string "depart_airport_code"
     t.string "arrival_airport_code"
-    t.datetime "date_start_min"
-    t.datetime "date_start_max"
-    t.datetime "date_end_min"
-    t.datetime "date_end_max"
+    t.datetime "date_start_min", precision: nil
+    t.datetime "date_start_max", precision: nil
+    t.datetime "date_end_min", precision: nil
+    t.datetime "date_end_max", precision: nil
     t.boolean "for_me"
     t.boolean "checked"
     t.string "title"
@@ -2393,12 +2399,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "amount", precision: 10, scale: 2
     t.integer "currency"
     t.string "depart_airport_code"
-    t.datetime "depart_time"
+    t.datetime "depart_time", precision: nil
     t.string "arrival_airport_code"
-    t.datetime "arrival_time"
+    t.datetime "arrival_time", precision: nil
     t.string "seat_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "stop_number"
     t.integer "segment_type"
     t.bigint "drom_match_flight_component_id"
@@ -2410,8 +2416,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.boolean "has_gender_dealbreaker"
     t.boolean "has_gender_descriptor"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "setting_explicit"
     t.boolean "asked_name"
     t.boolean "setting_controversial"
@@ -2425,8 +2431,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.text "message"
     t.bigint "identity_file_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "system"
     t.string "messageid"
     t.integer "messagetype"
@@ -2441,8 +2447,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "suggestion_type"
     t.text "pattern"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_drom_match_match_suggestions_on_identity_id"
   end
 
@@ -2450,11 +2456,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "status"
     t.decimal "match_percent", precision: 10, scale: 2
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "target_identity_id"
     t.boolean "chat_unread"
-    t.datetime "last_read"
+    t.datetime "last_read", precision: nil
     t.integer "chat_status"
     t.boolean "demo"
     t.index ["identity_id"], name: "index_drom_match_matches_on_identity_id"
@@ -2468,9 +2474,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "cost"
     t.string "location_address"
     t.string "reservation_link"
-    t.datetime "start_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "start_time", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "drom_match_city_region_id"
     t.bigint "identity_id"
     t.string "openTableLink"
@@ -2495,8 +2501,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.integer "position"
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "expectedbytes"
     t.string "cacheuri"
     t.integer "status"
@@ -2507,8 +2513,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "drom_match_user_infos", force: :cascade do |t|
     t.bigint "user_id"
     t.boolean "setting_multiple_profiles"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "usedmorethanonce"
     t.text "debuglevels"
     t.index ["user_id"], name: "index_drom_match_user_infos_on_user_id"
@@ -2517,16 +2523,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "due_items", id: :serial, force: :cascade do |t|
     t.string "display", limit: 255
     t.string "link", limit: 255
-    t.datetime "due_date"
+    t.datetime "due_date", precision: nil
     t.string "myp_model_name", limit: 255
     t.integer "model_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "original_due_date"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "original_due_date", precision: nil
     t.boolean "is_date_arbitrary"
     t.integer "calendar_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_due_items_on_calendar_id"
@@ -2538,8 +2544,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["education_id"], name: "index_education_files_on_education_id"
     t.index ["identity_file_id"], name: "index_education_files_on_identity_file_id"
@@ -2554,14 +2560,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "degree_name"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "degree_type"
-    t.datetime "graduated"
+    t.datetime "graduated", precision: nil
     t.string "student_id"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_educations_on_identity_id"
@@ -2571,11 +2577,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "email_accounts", id: :serial, force: :cascade do |t|
     t.integer "password_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_email_accounts_on_identity_id"
     t.index ["password_id"], name: "index_email_accounts_on_password_id"
@@ -2585,9 +2591,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "email_id"
     t.integer "identity_id"
     t.integer "contact_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_email_contacts_on_contact_id"
@@ -2599,9 +2605,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "email_id"
     t.integer "group_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["email_id"], name: "index_email_groups_on_email_id"
@@ -2615,9 +2621,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "do_send"
     t.integer "identity_id"
     t.integer "email_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["email_id"], name: "index_email_personalizations_on_email_id"
@@ -2627,8 +2633,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "email_tokens", id: :serial, force: :cascade do |t|
     t.string "email"
     t.string "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "identity_id"
     t.index ["identity_id"], name: "index_email_tokens_on_identity_id"
   end
@@ -2636,8 +2642,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "email_unsubscriptions", id: :serial, force: :cascade do |t|
     t.string "email"
     t.string "category"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "identity_id"
     t.index ["identity_id"], name: "index_email_unsubscriptions_on_identity_id"
   end
@@ -2649,12 +2655,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "email_category"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "use_bcc"
     t.boolean "draft"
     t.boolean "personalize"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.boolean "suppress_signature"
@@ -2667,9 +2673,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "email_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["email_id"], name: "index_emergency_contacts_on_email_id"
@@ -2680,8 +2686,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.binary "val"
     t.binary "salt"
     t.integer "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "encryption_type"
     t.index ["user_id"], name: "index_encrypted_values_on_user_id"
   end
@@ -2689,8 +2695,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "entered_invite_codes", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "website_domain_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "saved_invite_code"
     t.index ["user_id"], name: "index_entered_invite_codes_on_user_id"
     t.index ["website_domain_id"], name: "index_entered_invite_codes_on_website_domain_id"
@@ -2700,9 +2706,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "event_id"
     t.integer "contact_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_event_contacts_on_contact_id"
@@ -2714,10 +2720,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "event_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "position"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["event_id"], name: "index_event_pictures_on_event_id"
@@ -2730,9 +2736,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "rsvp_type"
     t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["event_id"], name: "index_event_rsvps_on_event_id"
@@ -2743,9 +2749,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "event_id"
     t.bigint "story_id"
     t.bigint "identity_id"
-    t.datetime "archived"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "archived", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["event_id"], name: "index_event_stories_on_event_id"
     t.index ["identity_id"], name: "index_event_stories_on_identity_id"
@@ -2755,15 +2761,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "events", id: :serial, force: :cascade do |t|
     t.string "event_name", limit: 255
     t.text "notes"
-    t.datetime "event_time"
+    t.datetime "event_time", precision: nil
     t.integer "visit_count"
     t.integer "identity_id"
     t.integer "repeat_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "event_end_time"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "event_end_time", precision: nil
     t.integer "location_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.decimal "cost", precision: 10, scale: 2
     t.boolean "is_public"
@@ -2777,9 +2783,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["exercise_regimen_exercise_id"], name: "eref_on_erei"
@@ -2793,9 +2799,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.integer "exercise_regimen_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["exercise_regimen_id"], name: "index_exercise_regimen_exercises_on_exercise_regimen_id"
@@ -2807,27 +2813,27 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_exercise_regimens_on_identity_id"
   end
 
   create_table "exercises", id: :serial, force: :cascade do |t|
-    t.datetime "exercise_start"
-    t.datetime "exercise_end"
+    t.datetime "exercise_start", precision: nil
+    t.datetime "exercise_end", precision: nil
     t.string "exercise_activity", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "situps"
     t.integer "pushups"
     t.integer "cardio_time"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_exercises_on_identity_id"
@@ -2838,8 +2844,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["export_id"], name: "index_export_files_on_export_id"
     t.index ["identity_file_id"], name: "index_export_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_export_files_on_identity_id"
@@ -2852,12 +2858,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "export_progress"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "security_token_id"
     t.string "parameter"
     t.boolean "encrypt_output"
@@ -2870,9 +2876,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_favorite_locations_on_identity_id"
@@ -2884,9 +2890,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["favorite_product_id"], name: "index_favorite_product_files_on_favorite_product_id"
@@ -2898,9 +2904,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "favorite_product_id"
     t.integer "identity_id"
     t.string "link", limit: 2000
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["favorite_product_id"], name: "index_favorite_product_links_on_favorite_product_id"
@@ -2911,10 +2917,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "product_name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_favorite_products_on_identity_id"
@@ -2925,13 +2931,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "feed_id"
     t.string "feed_link"
     t.text "content"
-    t.datetime "publication_date"
+    t.datetime "publication_date", precision: nil
     t.string "guid"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "read"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "read", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["feed_id"], name: "index_feed_items_on_feed_id"
@@ -2942,8 +2948,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "items_total"
     t.integer "items_complete"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "items_error"
     t.index ["identity_id"], name: "index_feed_load_statuses_on_identity_id"
   end
@@ -2952,10 +2958,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.string "url", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "total_items"
     t.integer "unread_items"
@@ -2980,8 +2986,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["financial_asset_id"], name: "index_financial_asset_files_on_financial_asset_id"
     t.index ["identity_file_id"], name: "index_financial_asset_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_financial_asset_files_on_identity_id"
@@ -2991,15 +2997,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "asset_name"
     t.decimal "asset_value", precision: 10, scale: 2
     t.string "asset_location"
-    t.datetime "asset_received"
+    t.datetime "asset_received", precision: nil
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "quantity"
     t.index ["identity_id"], name: "index_financial_assets_on_identity_id"
   end
@@ -3009,12 +3015,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "img"
     t.string "link"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "noutm"
     t.boolean "delivery"
     t.integer "position"
@@ -3031,11 +3037,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "p"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_find_humane_apikeys_on_identity_id"
   end
 
@@ -3046,13 +3052,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "website"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id", null: false
     t.boolean "localpickup"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["find_humane_humane_location_id"], name: "fhhd_fhhl"
     t.index ["identity_id"], name: "index_find_humane_humane_deliveries_on_identity_id"
   end
@@ -3063,8 +3069,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "noinherit"
     t.boolean "manuallyadded"
     t.index ["find_humane_humane_location_id"], name: "fhhlp_fhhl"
@@ -3075,11 +3081,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "find_humane_humane_locations", force: :cascade do |t|
     t.bigint "location_id", null: false
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "parent_location_id"
@@ -3170,8 +3176,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["find_humane_humane_product_id"], name: "fhfhhpf_fhhp"
     t.index ["identity_file_id"], name: "fhfhhpf_if"
     t.index ["identity_id"], name: "fhfhhpf_i"
@@ -3190,12 +3196,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "applegate_humanely_raised"
     t.boolean "self_certified"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "animal_welfare_approved"
     t.decimal "score", precision: 10, scale: 2
     t.integer "spiciness"
@@ -3367,8 +3373,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["find_humane_maintenance_id"], name: "fhmf_m"
     t.index ["identity_file_id"], name: "fhmf_if"
     t.index ["identity_id"], name: "fhmf_i"
@@ -3379,14 +3385,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "status"
     t.integer "iteration_type"
     t.integer "maintenance_type"
-    t.datetime "started"
-    t.datetime "finished"
+    t.datetime "started", precision: nil
+    t.datetime "finished", precision: nil
     t.text "notes"
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_find_humane_maintenance_iterations_on_identity_id"
@@ -3396,18 +3402,18 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name"
     t.integer "maintenance_type"
     t.string "name_model"
-    t.datetime "first_started"
-    t.datetime "finally_finished"
-    t.datetime "last_accumulation_start"
+    t.datetime "first_started", precision: nil
+    t.datetime "finally_finished", precision: nil
+    t.datetime "last_accumulation_start", precision: nil
     t.integer "total_accumulated_seconds"
     t.integer "status"
     t.text "notes"
     t.bigint "find_humane_maintenance_iteration_id"
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.integer "total_accumulated_coding_seconds"
@@ -3421,11 +3427,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "find_humane_humane_location_id", null: false
     t.bigint "identity_id", null: false
     t.string "producer_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.string "aspca_scorecard"
@@ -3437,12 +3443,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "email"
     t.text "zip"
     t.boolean "extra"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "bademail"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
@@ -3455,16 +3461,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "flight_company_id"
     t.string "depart_airport_code"
     t.integer "depart_location_id"
-    t.datetime "depart_time"
+    t.datetime "depart_time", precision: nil
     t.string "arrival_airport_code"
     t.integer "arrival_location_id"
-    t.datetime "arrive_time"
+    t.datetime "arrive_time", precision: nil
     t.string "seat_number"
     t.integer "position"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["arrival_location_id"], name: "index_flight_legs_on_arrival_location_id"
@@ -3476,14 +3482,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "flights", id: :serial, force: :cascade do |t|
     t.string "flight_name"
-    t.datetime "flight_start_date"
+    t.datetime "flight_start_date", precision: nil
     t.string "confirmation_number"
     t.integer "visit_count"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "website_id"
     t.string "website_confirmation_number"
@@ -3498,8 +3504,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["food_id"], name: "index_food_files_on_food_id"
     t.index ["identity_file_id"], name: "index_food_files_on_identity_file_id"
@@ -3510,8 +3516,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "food_name"
     t.text "notes"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "usda_food_nutrient_databank_number"
     t.string "usda_weight_nutrient_databank_number"
     t.string "usda_weight_sequence_number"
@@ -3523,9 +3529,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "parent_food_id"
     t.integer "food_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["food_id"], name: "index_food_ingredients_on_food_id"
@@ -3537,12 +3543,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "food_id"
     t.bigint "food_list_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["food_id"], name: "index_food_list_foods_on_food_id"
     t.index ["food_list_id"], name: "index_food_list_foods_on_food_list_id"
     t.index ["identity_id"], name: "index_food_list_foods_on_identity_id"
@@ -3552,12 +3558,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "food_list_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_food_lists_on_identity_id"
   end
 
@@ -3565,8 +3571,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "nutrient_name"
     t.string "usda_nutrient_nutrient_number"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_food_nutrient_informations_on_identity_id"
   end
@@ -3578,11 +3584,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "food_nutrition_information_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["food_nutrition_information_id"], name: "fnia_on_fni"
     t.index ["identity_id"], name: "index_food_nutrition_information_amounts_on_identity_id"
@@ -3594,8 +3600,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["food_nutrition_information_id"], name: "fnif_on_fni"
     t.index ["identity_file_id"], name: "index_food_nutrition_information_files_on_identity_file_id"
@@ -3609,11 +3615,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "calories_per_serving_from_fat", precision: 10, scale: 2
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "serving_size_type"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_food_nutrition_informations_on_identity_id"
@@ -3625,12 +3631,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.decimal "calories", precision: 10, scale: 2
     t.decimal "price", precision: 10, scale: 2
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "weight_type"
     t.decimal "weight", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "food_nutrition_information_id"
     t.bigint "food_information_id"
@@ -3648,9 +3654,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "propane_fillup"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "notes"
     t.boolean "rv_dump_station"
@@ -3678,12 +3684,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_gift_stores_on_identity_id"
     t.index ["location_id"], name: "index_gift_stores_on_location_id"
   end
@@ -3692,17 +3698,17 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "search"
     t.string "placeid"
     t.text "jsonresult"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "group_contacts", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.integer "group_id"
     t.integer "contact_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_group_contacts_on_contact_id"
@@ -3716,8 +3722,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["group_id"], name: "index_group_files_on_group_id"
     t.index ["identity_file_id"], name: "index_group_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_group_files_on_identity_id"
@@ -3727,9 +3733,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "parent_group_id"
     t.integer "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["group_id"], name: "index_group_references_on_group_id"
@@ -3741,10 +3747,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "group_name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.boolean "mailing_list"
@@ -3756,8 +3762,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["gun_id"], name: "index_gun_files_on_gun_id"
     t.index ["identity_file_id"], name: "index_gun_files_on_identity_file_id"
@@ -3769,8 +3775,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["gun_registration_id"], name: "index_gun_registration_files_on_gun_registration_id"
     t.index ["identity_file_id"], name: "index_gun_registration_files_on_identity_file_id"
@@ -3783,9 +3789,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "expires"
     t.integer "gun_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["gun_id"], name: "index_gun_registrations_on_gun_id"
@@ -3803,10 +3809,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "purchased"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_guns_on_identity_id"
@@ -3818,26 +3824,26 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["haircut_id"], name: "index_haircut_files_on_haircut_id"
     t.index ["identity_file_id"], name: "index_haircut_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_haircut_files_on_identity_id"
   end
 
   create_table "haircuts", force: :cascade do |t|
-    t.datetime "haircut_time"
+    t.datetime "haircut_time", precision: nil
     t.decimal "total_cost", precision: 10, scale: 2
     t.bigint "cutter_id"
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["cutter_id"], name: "index_haircuts_on_cutter_id"
     t.index ["identity_id"], name: "index_haircuts_on_identity_id"
     t.index ["location_id"], name: "index_haircuts_on_location_id"
@@ -3848,24 +3854,24 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_happy_things_on_identity_id"
   end
 
   create_table "headaches", id: :serial, force: :cascade do |t|
-    t.datetime "started"
-    t.datetime "ended"
+    t.datetime "started", precision: nil
+    t.datetime "ended", precision: nil
     t.integer "intensity"
     t.string "headache_location", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_headaches_on_identity_id"
@@ -3877,8 +3883,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["health_change_id"], name: "index_health_change_files_on_health_change_id"
     t.index ["identity_file_id"], name: "index_health_change_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_health_change_files_on_identity_id"
@@ -3889,12 +3895,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "change_date"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_health_changes_on_identity_id"
   end
 
@@ -3903,8 +3909,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["health_insurance_id"], name: "index_health_insurance_files_on_health_insurance_id"
     t.index ["identity_file_id"], name: "index_health_insurance_files_on_identity_file_id"
@@ -3914,7 +3920,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "health_insurances", id: :serial, force: :cascade do |t|
     t.string "insurance_name", limit: 255
     t.integer "insurance_company_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "periodic_payment_id"
     t.text "notes"
     t.integer "group_company_id"
@@ -3922,8 +3928,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "account_number", limit: 255
     t.string "group_number", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "doctor_id"
     t.integer "visit_count"
     t.integer "rating"
@@ -3941,10 +3947,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "measurement_date"
     t.string "measurement_source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_heart_rates_on_identity_id"
@@ -3956,10 +3962,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "measurement_date"
     t.string "measurement_source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_heights_on_identity_id"
@@ -3969,10 +3975,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "hobby_name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_hobbies_on_identity_id"
@@ -3983,8 +3989,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["hospital_visit_id"], name: "index_hospital_visit_files_on_hospital_visit_id"
     t.index ["identity_file_id"], name: "index_hospital_visit_files_on_identity_file_id"
@@ -3997,12 +4003,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "hospital_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
     t.boolean "emergency_room"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.decimal "cost", precision: 10, scale: 2
     t.index ["hospital_id"], name: "index_hospital_visits_on_hospital_id"
@@ -4014,12 +4020,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "health_insurance_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["health_insurance_id"], name: "index_hospitals_on_health_insurance_id"
     t.index ["identity_id"], name: "index_hospitals_on_identity_id"
     t.index ["location_id"], name: "index_hospitals_on_location_id"
@@ -4031,10 +4037,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "room_number"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.date "checkin_date"
     t.date "checkout_date"
@@ -4050,10 +4056,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "question_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "position"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_hypotheses_on_identity_id"
@@ -4067,9 +4073,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "ended"
     t.integer "hypothesis_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["hypothesis_id"], name: "index_hypothesis_experiments_on_hypothesis_id"
@@ -4080,10 +4086,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "idea"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_ideas_on_identity_id"
@@ -4091,8 +4097,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "identities", id: :serial, force: :cascade do |t|
     t.integer "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "points"
     t.string "name", limit: 255
     t.date "birthday"
@@ -4108,7 +4114,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "middle_name"
     t.string "last_name"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "display_note"
     t.integer "identity_type"
@@ -4143,13 +4149,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "identity_clothes", force: :cascade do |t|
     t.bigint "identity_id"
     t.bigint "parent_identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.date "when_date"
     t.text "clothes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_identity_clothes_on_identity_id"
     t.index ["parent_identity_id"], name: "index_identity_clothes_on_parent_identity_id"
   end
@@ -4160,11 +4166,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "sub_region1", limit: 255
     t.date "expires"
     t.integer "parent_identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["parent_identity_id"], name: "index_identity_drivers_licenses_on_parent_identity_id"
@@ -4173,11 +4179,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "identity_emails", id: :serial, force: :cascade do |t|
     t.string "email", limit: 255
     t.integer "parent_identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
     t.boolean "secondary"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_emails_on_identity_id"
@@ -4188,10 +4194,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "folder_name", limit: 255
     t.integer "parent_folder_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_file_folders_on_identity_id"
@@ -4200,12 +4206,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "identity_files", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "file_file_name", limit: 255
     t.string "file_content_type", limit: 255
     t.bigint "file_file_size"
-    t.datetime "file_updated_at"
+    t.datetime "file_updated_at", precision: nil
     t.integer "encrypted_password_id"
     t.text "notes"
     t.integer "folder_id"
@@ -4215,7 +4221,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "filesystem_path"
     t.boolean "thumbnail_skip"
     t.string "file_hash"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "thumbnail_filesystem_path"
     t.integer "thumbnail_filesystem_size"
@@ -4232,10 +4238,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "identity_locations", id: :serial, force: :cascade do |t|
     t.integer "location_id"
     t.integer "parent_identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "secondary"
     t.boolean "is_public"
@@ -4247,11 +4253,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "identity_phones", id: :serial, force: :cascade do |t|
     t.string "number", limit: 255
     t.integer "parent_identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
     t.integer "phone_type"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_identity_phones_on_identity_id"
@@ -4262,9 +4268,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "parent_identity_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -4278,9 +4284,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "relationship_type"
     t.integer "identity_id"
     t.integer "parent_identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_identity_relationships_on_contact_id"
@@ -4293,8 +4299,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_import_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_import_files_on_identity_id"
@@ -4306,11 +4312,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "import_type"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "import_status"
     t.text "import_progress"
     t.boolean "is_public"
@@ -4322,11 +4328,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "injury_date"
     t.integer "location_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "notes"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_injuries_on_identity_id"
@@ -4338,8 +4344,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_injury_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_injury_files_on_identity_id"
@@ -4351,8 +4357,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_insurance_card_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_insurance_card_files_on_identity_id"
@@ -4365,11 +4371,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "insurance_card_end"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_insurance_cards_on_identity_id"
   end
@@ -4380,9 +4386,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "max_uses"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "website_domain_id"
@@ -4406,8 +4412,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "email"
     t.text "invite_body"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_invites_on_user_id"
   end
 
@@ -4416,8 +4422,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_item_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_item_files_on_identity_id"
@@ -4431,11 +4437,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "cost", precision: 10, scale: 2
     t.date "acquired"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.date "expires"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_items_on_identity_id"
@@ -4446,10 +4452,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.string "accomplishment_title"
     t.text "accomplishment"
-    t.datetime "accomplishment_time"
-    t.datetime "archived"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "accomplishment_time", precision: nil
+    t.datetime "archived", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "major"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_accomplishments_on_identity_id"
@@ -4463,11 +4469,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "job_award_description"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_awards_on_identity_id"
     t.index ["job_id"], name: "index_job_awards_on_job_id"
@@ -4478,8 +4484,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_job_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_job_files_on_identity_id"
@@ -4493,9 +4499,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "start_date"
     t.date "end_date"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_job_managers_on_contact_id"
@@ -4507,9 +4513,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "job_id"
     t.integer "myreference_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_job_myreferences_on_identity_id"
@@ -4522,9 +4528,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_job_review_files_on_identity_file_id"
@@ -4539,9 +4545,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "company_score"
     t.integer "contact_id"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "self_evaluation"
     t.boolean "is_public"
@@ -4558,10 +4564,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.decimal "salary", precision: 10, scale: 2
     t.integer "salary_period"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "new_title"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.decimal "hours_per_week", precision: 10, scale: 2
     t.boolean "is_public"
@@ -4577,8 +4583,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "manager_contact_id"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "days_holiday"
     t.integer "days_vacation"
     t.string "employee_identifier", limit: 255
@@ -4593,7 +4599,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "division_identifier", limit: 255
     t.string "personnel_code", limit: 255
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.decimal "hours_per_week", precision: 10, scale: 2
     t.boolean "is_public"
@@ -4609,10 +4615,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "joke"
     t.string "source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_jokes_on_identity_id"
@@ -4622,8 +4628,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "phone_number"
     t.string "category"
     t.bigint "from_identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "to_identity_id"
     t.string "from_display"
     t.string "to_display"
@@ -4638,8 +4644,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_life_change_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_life_change_files_on_identity_id"
     t.index ["life_change_id"], name: "index_life_change_files_on_life_change_id"
@@ -4651,12 +4657,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "end_day"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_life_changes_on_identity_id"
   end
 
@@ -4664,13 +4670,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "life_goal_name", limit: 255
     t.text "notes"
     t.integer "position"
-    t.datetime "goal_started"
-    t.datetime "goal_ended"
+    t.datetime "goal_started", precision: nil
+    t.datetime "goal_ended", precision: nil
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "long_term"
     t.boolean "is_public"
@@ -4682,8 +4688,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_life_highlight_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_life_highlight_files_on_identity_id"
@@ -4691,15 +4697,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "life_highlights", id: :serial, force: :cascade do |t|
-    t.datetime "life_highlight_time"
+    t.datetime "life_highlight_time", precision: nil
     t.string "life_highlight_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_life_highlights_on_identity_id"
   end
@@ -4709,8 +4715,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_life_insurance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_life_insurance_files_on_identity_id"
@@ -4726,10 +4732,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "identity_id"
     t.integer "life_insurance_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.decimal "cash_value", precision: 10, scale: 2
     t.integer "beneficiary_id"
@@ -4744,10 +4750,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "list_items", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.integer "list_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_list_items_on_identity_id"
@@ -4757,10 +4763,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "lists", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_lists_on_identity_id"
@@ -4773,9 +4779,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "paid_off"
     t.decimal "monthly_payment", precision: 10, scale: 2
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_loans_on_identity_id"
@@ -4784,10 +4790,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "location_phones", id: :serial, force: :cascade do |t|
     t.string "number", limit: 255
     t.integer "location_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_location_phones_on_identity_id"
@@ -4798,9 +4804,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -4818,15 +4824,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "sub_region1", limit: 255
     t.string "sub_region2", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "postal_code", limit: 255
     t.text "notes"
     t.decimal "latitude", precision: 24, scale: 20
     t.decimal "longitude", precision: 24, scale: 20
     t.integer "visit_count"
     t.integer "website_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "time_from_home"
     t.boolean "is_public"
@@ -4844,8 +4850,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_lock_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_lock_files_on_identity_id"
     t.index ["lock_id"], name: "index_lock_files_on_lock_id"
@@ -4856,12 +4862,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "password_id"
     t.index ["identity_id"], name: "index_locks_on_identity_id"
     t.index ["location_id"], name: "index_locks_on_location_id"
@@ -4874,9 +4880,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.text "notes"
     t.boolean "visited"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.bigint "trek_id"
     t.index ["identity_id"], name: "index_meadows_on_identity_id"
@@ -4887,10 +4893,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "meal_id"
     t.integer "drink_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.decimal "drink_servings", precision: 10, scale: 2
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["drink_id"], name: "index_meal_drinks_on_drink_id"
@@ -4902,10 +4908,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "meal_id"
     t.integer "food_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.decimal "food_servings", precision: 10, scale: 2
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["food_id"], name: "index_meal_foods_on_food_id"
@@ -4917,9 +4923,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "meal_id"
     t.integer "vitamin_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_meal_vitamins_on_identity_id"
@@ -4928,16 +4934,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "meals", id: :serial, force: :cascade do |t|
-    t.datetime "meal_time"
+    t.datetime "meal_time", precision: nil
     t.text "notes"
     t.integer "location_id"
     t.decimal "price", precision: 10, scale: 2
     t.decimal "calories", precision: 10, scale: 2
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_meals_on_identity_id"
@@ -4948,12 +4954,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_mechanics_on_identity_id"
     t.index ["location_id"], name: "index_mechanics_on_location_id"
   end
@@ -4963,9 +4969,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_media_dump_files_on_identity_file_id"
@@ -4978,9 +4984,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_media_dumps_on_identity_id"
@@ -4991,8 +4997,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_medical_condition_evaluation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_medical_condition_evaluation_files_on_identity_id"
@@ -5002,13 +5008,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "medical_condition_evaluations", id: :serial, force: :cascade do |t|
     t.integer "medical_condition_id"
     t.text "notes"
-    t.datetime "evaluation_datetime"
+    t.datetime "evaluation_datetime", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.bigint "location_id"
     t.bigint "doctor_id"
@@ -5023,8 +5029,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_medical_condition_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_medical_condition_files_on_identity_id"
@@ -5032,14 +5038,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "medical_condition_instances", id: :serial, force: :cascade do |t|
-    t.datetime "condition_start"
-    t.datetime "condition_end"
+    t.datetime "condition_start", precision: nil
+    t.datetime "condition_end", precision: nil
     t.text "notes"
     t.integer "medical_condition_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_medical_condition_instances_on_identity_id"
@@ -5049,14 +5055,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "medical_condition_treatments", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.integer "medical_condition_id"
-    t.datetime "treatment_date"
+    t.datetime "treatment_date", precision: nil
     t.text "notes"
     t.string "treatment_description"
     t.integer "doctor_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "location_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["doctor_id"], name: "index_medical_condition_treatments_on_doctor_id"
@@ -5069,10 +5075,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "medical_condition_name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_medical_conditions_on_identity_id"
@@ -5084,8 +5090,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_medicine_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_medicine_files_on_identity_id"
     t.index ["medicine_id"], name: "index_medicine_files_on_medicine_id"
@@ -5095,9 +5101,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "medicine_usage_id"
     t.integer "medicine_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_medicine_usage_medicines_on_identity_id"
@@ -5106,18 +5112,18 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "medicine_usages", id: :serial, force: :cascade do |t|
-    t.datetime "usage_time"
+    t.datetime "usage_time", precision: nil
     t.integer "medicine_id"
     t.text "usage_notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.string "description"
-    t.datetime "usage_end"
+    t.datetime "usage_end", precision: nil
     t.index ["identity_id"], name: "index_medicine_usages_on_identity_id"
     t.index ["medicine_id"], name: "index_medicine_usages_on_medicine_id"
   end
@@ -5128,10 +5134,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "dosage_type"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_medicines_on_identity_id"
@@ -5142,9 +5148,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_membership_files_on_identity_file_id"
@@ -5157,13 +5163,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "start_date"
     t.date "end_date"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.text "notes"
     t.integer "periodic_payment_id"
     t.integer "visit_count"
     t.string "membership_identifier", limit: 255
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "password_id"
     t.boolean "is_public"
@@ -5178,8 +5184,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_meme_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_meme_files_on_identity_id"
     t.index ["meme_id"], name: "index_meme_files_on_meme_id"
@@ -5189,12 +5195,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "meme_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_memes_on_identity_id"
   end
 
@@ -5203,11 +5209,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "memory_date"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "feeling"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_memories_on_identity_id"
@@ -5218,8 +5224,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_memory_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_memory_files_on_identity_id"
@@ -5232,8 +5238,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_merchant_account_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_merchant_account_files_on_identity_id"
     t.index ["merchant_account_id"], name: "index_merchant_account_files_on_merchant_account_id"
@@ -5249,8 +5255,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.boolean "is_public"
     t.text "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_merchant_account_payments_on_identity_file_id"
     t.index ["identity_id"], name: "index_merchant_account_payments_on_identity_id"
     t.index ["merchant_account_id"], name: "index_merchant_account_payments_on_merchant_account_id"
@@ -5264,12 +5270,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "ship_to_countries"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_merchant_accounts_on_identity_id"
   end
 
@@ -5277,9 +5283,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "message_id"
     t.integer "contact_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_message_contacts_on_contact_id"
@@ -5291,9 +5297,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "message_id"
     t.integer "group_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["group_id"], name: "index_message_groups_on_group_id"
@@ -5309,10 +5315,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "personalize"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "subject"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "long_body"
     t.integer "send_preferences"
@@ -5332,9 +5338,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "visit_count"
     t.integer "identity_id"
     t.integer "money_balance_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_money_balance_item_templates_on_identity_id"
@@ -5345,13 +5351,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "money_balance_id"
     t.integer "identity_id"
     t.decimal "amount", precision: 10, scale: 2
-    t.datetime "item_time"
+    t.datetime "item_time", precision: nil
     t.string "money_balance_item_name"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "original_amount", precision: 10, scale: 2
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_money_balance_items_on_identity_id"
@@ -5363,9 +5369,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_money_balances_on_contact_id"
@@ -5377,9 +5383,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_movie_theaters_on_identity_id"
@@ -5388,23 +5394,23 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "movies", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
-    t.datetime "watched"
+    t.datetime "watched", precision: nil
     t.string "url", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "recommender_id"
     t.string "genre"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "review"
     t.integer "lent_to_id"
     t.date "lent_date"
     t.integer "borrowed_from_id"
     t.date "borrowed_date"
-    t.datetime "when_owned"
-    t.datetime "when_discarded"
+    t.datetime "when_owned", precision: nil
+    t.datetime "when_discarded", precision: nil
     t.integer "media_type"
     t.integer "number_of_media"
     t.boolean "is_public"
@@ -5420,8 +5426,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_mrobble_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_mrobble_files_on_identity_id"
     t.index ["mrobble_id"], name: "index_mrobble_files_on_mrobble_id"
@@ -5434,12 +5440,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "finished"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_mrobbles_on_identity_id"
   end
 
@@ -5451,10 +5457,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "museum_source", limit: 255
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_museums_on_identity_id"
@@ -5467,8 +5473,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_music_album_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_music_album_files_on_identity_id"
@@ -5479,11 +5485,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "music_album_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_music_albums_on_identity_id"
   end
@@ -5491,16 +5497,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "musical_groups", id: :serial, force: :cascade do |t|
     t.string "musical_group_name", limit: 255
     t.text "notes"
-    t.datetime "listened"
+    t.datetime "listened", precision: nil
     t.integer "rating"
     t.boolean "awesome"
     t.boolean "secret"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "musical_genre", limit: 255
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_musical_groups_on_identity_id"
   end
@@ -5508,10 +5514,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "myplaceonline_quick_category_displays", id: :serial, force: :cascade do |t|
     t.boolean "trash"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_myplaceonline_quick_category_displays_on_identity_id"
@@ -5520,10 +5526,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "myplaceonline_searches", id: :serial, force: :cascade do |t|
     t.integer "identity_id"
     t.boolean "trash"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_myplaceonline_searches_on_identity_id"
@@ -5538,9 +5544,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "border_type"
     t.boolean "collapsed"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.string "action_string"
@@ -5553,9 +5559,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "reference_type"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "reference_relationship"
     t.decimal "years_experience", precision: 10, scale: 2
@@ -5569,10 +5575,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "title", limit: 255
     t.text "notepad_data"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_notepads_on_identity_id"
@@ -5584,12 +5590,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "notifications_enabled"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_notification_preferences_on_identity_id"
   end
 
@@ -5597,8 +5603,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "token"
     t.bigint "user_id"
     t.string "platform"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_notification_registrations_on_user_id"
   end
 
@@ -5608,12 +5614,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "notification_type"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "notification_category"
     t.integer "count"
     t.index ["identity_id"], name: "index_notifications_on_identity_id"
@@ -5624,11 +5630,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "measurement_type"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_nutrients_on_identity_id"
   end
@@ -5639,8 +5645,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri"
-    t.datetime "created_at", null: false
-    t.datetime "revoked_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "revoked_at", precision: nil
     t.string "scopes"
     t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
     t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
@@ -5653,8 +5659,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
+    t.datetime "revoked_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
     t.string "scopes"
     t.string "previous_refresh_token", default: "", null: false
     t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
@@ -5670,8 +5676,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "redirect_uri"
     t.string "scopes", default: "", null: false
     t.boolean "confidential", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
@@ -5685,8 +5691,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_paid_tax_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_paid_tax_files_on_identity_id"
@@ -5702,11 +5708,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "password_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "total_taxes_paid", precision: 10, scale: 2
     t.decimal "agi", precision: 10, scale: 2
     t.boolean "is_public"
@@ -5721,14 +5727,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "pains", id: :serial, force: :cascade do |t|
     t.string "pain_location", limit: 255
     t.integer "intensity"
-    t.datetime "pain_start_time"
-    t.datetime "pain_end_time"
+    t.datetime "pain_start_time", precision: nil
+    t.datetime "pain_end_time", precision: nil
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_pains_on_identity_id"
@@ -5740,8 +5746,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_park_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_park_files_on_identity_id"
     t.index ["park_id"], name: "index_park_files_on_park_id"
@@ -5751,12 +5757,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_parking_locations_on_identity_id"
     t.index ["location_id"], name: "index_parking_locations_on_location_id"
   end
@@ -5767,12 +5773,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "drinking_times"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_parks_on_identity_id"
     t.index ["location_id"], name: "index_parks_on_location_id"
   end
@@ -5781,9 +5787,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "passport_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -5798,13 +5804,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "expires"
     t.date "issued"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "issuing_authority", limit: 255
     t.string "name", limit: 255
     t.integer "visit_count"
     t.text "notes"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_passports_on_identity_id"
@@ -5815,9 +5821,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "password_share_id"
     t.integer "identity_id"
     t.string "unencrypted_answer"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_password_secret_shares_on_identity_id"
@@ -5830,10 +5836,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "answer", limit: 255
     t.integer "answer_encrypted_id"
     t.integer "password_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["answer_encrypted_id"], name: "index_password_secrets_on_answer_encrypted_id"
@@ -5846,9 +5852,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "user_id"
     t.integer "identity_id"
     t.string "unencrypted_password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_password_shares_on_identity_id"
@@ -5863,11 +5869,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "url", limit: 2000
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "password_encrypted_id"
     t.string "account_number", limit: 255
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.string "email", limit: 255
     t.integer "visit_count"
     t.integer "rating"
@@ -5881,8 +5887,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_patent_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_patent_files_on_identity_id"
@@ -5900,11 +5906,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "patent_text"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_patents_on_identity_id"
   end
@@ -5912,8 +5918,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "paypal_web_profiles", force: :cascade do |t|
     t.bigint "website_domain_id"
     t.string "profile_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["website_domain_id"], name: "index_paypal_web_profiles_on_website_domain_id"
   end
 
@@ -5923,8 +5929,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_periodic_payment_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_periodic_payment_files_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_periodic_payment_files_on_periodic_payment_id"
@@ -5935,8 +5941,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_periodic_payment_instance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_periodic_payment_instance_files_on_identity_id"
@@ -5949,11 +5955,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_periodic_payment_instances_on_identity_id"
     t.index ["periodic_payment_id"], name: "index_periodic_payment_instances_on_periodic_payment_id"
@@ -5967,12 +5973,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "date_period"
     t.decimal "payment_amount", precision: 10, scale: 2
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.boolean "suppress_reminder"
     t.integer "password_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_periodic_payments_on_identity_id"
@@ -5986,12 +5992,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "storage_location"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "quantity"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["food_id"], name: "index_perishable_foods_on_food_id"
     t.index ["identity_id"], name: "index_perishable_foods_on_identity_id"
@@ -6003,9 +6009,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "permission_share_id"
     t.integer "identity_id"
     t.integer "share_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_permission_share_children_on_identity_id"
@@ -6021,11 +6027,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "copy_self"
     t.integer "share_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "email_id"
     t.string "child_selections"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "valid_guest_actions"
     t.boolean "is_public"
@@ -6040,10 +6046,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "subject_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "user_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "valid_guest_actions"
     t.boolean "is_public"
@@ -6055,9 +6061,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "phone_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -6088,8 +6094,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "identity_id"
     t.integer "password_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "dimensions_type"
     t.decimal "width", precision: 10, scale: 2
     t.decimal "height", precision: 10, scale: 2
@@ -6097,7 +6103,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "weight_type"
     t.decimal "weight", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_phones_on_identity_id"
@@ -6109,11 +6115,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.boolean "shadedareas"
     t.boolean "treeshade"
@@ -6126,10 +6132,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "playlist_id"
     t.integer "song_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "position"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_playlist_songs_on_identity_id"
@@ -6141,10 +6147,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "playlist_name", limit: 255
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_file_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_playlists_on_identity_file_id"
@@ -6155,9 +6161,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "feed_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["feed_id"], name: "index_podcasts_on_feed_id"
@@ -6168,10 +6174,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "poem_name", limit: 255
     t.text "poem"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "poem_author"
     t.string "poem_link"
@@ -6182,10 +6188,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "point_displays", id: :serial, force: :cascade do |t|
     t.boolean "trash"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_point_displays_on_identity_id"
@@ -6196,8 +6202,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_prescription_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_prescription_files_on_identity_id"
@@ -6210,11 +6216,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_prescription_refills_on_identity_id"
     t.index ["location_id"], name: "index_prescription_refills_on_location_id"
@@ -6227,11 +6233,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "doctor_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "refill_maximum"
     t.boolean "is_public"
     t.index ["doctor_id"], name: "index_prescriptions_on_doctor_id"
@@ -6244,8 +6250,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_present_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_present_files_on_identity_id"
     t.index ["present_id"], name: "index_present_files_on_present_id"
@@ -6259,12 +6265,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "contact_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["contact_id"], name: "index_presents_on_contact_id"
     t.index ["identity_id"], name: "index_presents_on_identity_id"
   end
@@ -6274,9 +6280,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_problem_report_files_on_identity_file_id"
@@ -6289,13 +6295,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "problem_started"
-    t.datetime "problem_resolved"
+    t.datetime "problem_started", precision: nil
+    t.datetime "problem_resolved", precision: nil
     t.index ["identity_id"], name: "index_problem_reports_on_identity_id"
   end
 
@@ -6304,9 +6310,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_project_issue_files_on_identity_file_id"
@@ -6318,9 +6324,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "contact_id"
     t.integer "project_issue_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_project_issue_notifiers_on_contact_id"
@@ -6334,9 +6340,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.string "issue_name"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_project_issues_on_identity_id"
@@ -6350,9 +6356,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "end_date"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "default_to_top"
     t.boolean "is_public"
@@ -6364,10 +6370,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "due"
     t.text "promise"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_promises_on_identity_id"
@@ -6379,8 +6385,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_promotion_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_promotion_files_on_identity_id"
     t.index ["promotion_id"], name: "index_promotion_files_on_promotion_id"
@@ -6393,10 +6399,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "promotion_amount", precision: 10, scale: 2
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_promotions_on_identity_id"
@@ -6407,8 +6413,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_psychological_evaluation_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_psychological_evaluation_files_on_identity_id"
@@ -6422,11 +6428,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "score", precision: 10, scale: 2
     t.text "evaluation"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["evaluator_id"], name: "index_psychological_evaluations_on_evaluator_id"
     t.index ["identity_id"], name: "index_psychological_evaluations_on_identity_id"
@@ -6437,9 +6443,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_quest_files_on_identity_file_id"
@@ -6451,10 +6457,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_questions_on_identity_id"
@@ -6465,9 +6471,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_quests_on_identity_id"
@@ -6475,17 +6481,17 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "quiz_instances", force: :cascade do |t|
     t.bigint "quiz_id"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
     t.integer "orderby"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "last_question_id"
     t.integer "correct"
     t.string "incorrect_questions"
@@ -6501,8 +6507,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_quiz_item_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_quiz_item_files_on_identity_id"
     t.index ["quiz_item_id"], name: "index_quiz_item_files_on_quiz_item_id"
@@ -6515,12 +6521,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "link"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "ignore"
     t.integer "correct_choice"
     t.index ["identity_id"], name: "index_quiz_items_on_identity_id"
@@ -6531,12 +6537,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "quiz_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "autolink"
     t.string "autogenerate_context"
     t.integer "choices"
@@ -6547,11 +6553,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "quote_text"
     t.date "quote_date"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "source"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_quotes_on_identity_id"
@@ -6564,8 +6570,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "rabbl_community_membership_id"
     t.bigint "user_id"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_rabbl_activities_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_activities_on_rabbl_community_id"
     t.index ["rabbl_community_membership_id"], name: "index_rabbl_activities_on_rabbl_community_membership_id"
@@ -6580,12 +6586,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "exclusive"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "expires"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "expires", precision: nil
     t.string "uniqueid"
     t.index ["identity_id"], name: "index_rabbl_collaborations_on_identity_id"
     t.index ["rabbl_community1_id"], name: "index_rabbl_collaborations_on_rabbl_community1_id"
@@ -6605,11 +6611,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "approved"
     t.integer "first_free"
     t.string "uniqueid"
@@ -6636,8 +6642,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uniqueid"
     t.index ["identity_file_id"], name: "index_rabbl_community_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_rabbl_community_files_on_identity_id"
@@ -6649,12 +6655,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.decimal "join_price", precision: 10, scale: 2
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "fullyactive"
     t.integer "payment_status"
     t.string "payment_token"
@@ -6678,8 +6684,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "rabbl_community_membership_decider_id", null: false
     t.bigint "rabbl_community_membership_target_id", null: false
     t.integer "decision"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["rabbl_community_membership_decider_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_decider_id"
     t.index ["rabbl_community_membership_target_id"], name: "index_rabbl_decisions_on_rabbl_community_membership_target_id"
   end
@@ -6696,11 +6702,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_rabbl_discounts_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_discounts_on_rabbl_community_id"
   end
@@ -6716,11 +6722,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_rabbl_invitecodes_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_invitecodes_on_rabbl_community_id"
   end
@@ -6732,9 +6738,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "message"
     t.integer "messagetype"
     t.integer "messagestatus"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "readwhen"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "readwhen", precision: nil
     t.index ["rabbl_community_membership_destination_id"], name: "rbm_rcmd"
     t.index ["rabbl_community_membership_source_id"], name: "rbm_rcms"
     t.index ["rabbl_match_id"], name: "index_rabbl_match_messages_on_rabbl_match_id"
@@ -6745,8 +6751,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "rabbl_community_membership_one_id"
     t.bigint "rabbl_community_membership_two_id"
     t.integer "matchstatus"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uniqueid"
     t.index ["rabbl_community_id"], name: "index_rabbl_matches_on_rabbl_community_id"
     t.index ["rabbl_community_membership_one_id"], name: "index_rabbl_matches_on_rabbl_community_membership_one_id"
@@ -6762,11 +6768,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_rabbl_notifications_on_identity_id"
     t.index ["rabbl_community_membership_context_id"], name: "rn_rcmc"
     t.index ["rabbl_community_membership_notification_target_id"], name: "rn_rcmnt"
@@ -6778,8 +6784,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "rabbl_visual_file_id", null: false
     t.bigint "rabbl_profile_id", null: false
     t.integer "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_rabbl_profile_visuals_on_identity_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_profile_visuals_on_rabbl_profile_id"
     t.index ["rabbl_visual_file_id"], name: "index_rabbl_profile_visuals_on_rabbl_visual_file_id"
@@ -6792,11 +6798,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "user_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "name"
     t.string "uniqueid"
     t.string "instagram"
@@ -6819,11 +6825,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "lookupkey"
     t.boolean "istest"
     t.string "subaccount"
@@ -6853,8 +6859,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "user_id", null: false
     t.boolean "accepted_terms"
     t.boolean "accepted_cookies"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "accepted_essential_cookies"
     t.boolean "set_password"
     t.bigint "rabbl_community_id"
@@ -6895,8 +6901,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id", null: false
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "uniqueid"
     t.index ["identity_file_id"], name: "index_rabbl_visual_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_rabbl_visual_files_on_identity_id"
@@ -6906,9 +6912,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "receipt_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -6919,14 +6925,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "receipts", id: :serial, force: :cascade do |t|
     t.string "receipt_name"
-    t.datetime "receipt_time"
+    t.datetime "receipt_time", precision: nil
     t.decimal "amount", precision: 10, scale: 2
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_receipts_on_identity_id"
@@ -6936,9 +6942,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "recipe_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -6951,11 +6957,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "recipe"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.string "recipe_category"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.integer "recipe_type"
@@ -6970,9 +6976,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "recreational_vehicle_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["company_id"], name: "index_recreational_vehicle_insurances_on_company_id"
@@ -6984,9 +6990,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "recreational_vehicle_id"
     t.integer "loan_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_loans_on_identity_id"
@@ -7003,9 +7009,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "identity_id"
     t.integer "recreational_vehicle_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_measurements_on_identity_id"
@@ -7015,9 +7021,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "recreational_vehicle_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -7031,8 +7037,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_recreational_vehicle_service_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_recreational_vehicle_service_files_on_identity_id"
@@ -7048,11 +7054,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "service_location"
     t.decimal "cost", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicle_services_on_identity_id"
     t.index ["recreational_vehicle_id"], name: "index_recreational_vehicle_services_on_recreational_vehicle_id"
@@ -7091,13 +7097,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "weight_type"
     t.integer "refrigerator"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.decimal "exterior_length_over", precision: 10, scale: 2
     t.decimal "slideouts_extra_width", precision: 10, scale: 2
     t.decimal "floor_length", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_recreational_vehicles_on_identity_id"
@@ -7111,11 +7117,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_regimen_items_on_identity_id"
     t.index ["regimen_id"], name: "index_regimen_items_on_regimen_id"
@@ -7125,18 +7131,18 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "regimen_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "regimen_type"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_regimens_on_identity_id"
   end
 
   create_table "reminders", force: :cascade do |t|
-    t.datetime "start_time"
+    t.datetime "start_time", precision: nil
     t.string "reminder_name"
     t.integer "reminder_threshold_amount"
     t.integer "reminder_threshold_type"
@@ -7147,11 +7153,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "max_pending"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.bigint "calendar_item_id"
     t.boolean "is_public"
     t.index ["calendar_item_id"], name: "index_reminders_on_calendar_item_id"
@@ -7163,9 +7169,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "period_type"
     t.integer "period"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_repeats_on_identity_id"
@@ -7176,8 +7182,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_reputation_report_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_reputation_report_files_on_identity_id"
     t.index ["reputation_report_id"], name: "index_reputation_report_files_on_reputation_report_id"
@@ -7188,8 +7194,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_reputation_report_message_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_reputation_report_message_files_on_identity_id"
     t.index ["reputation_report_message_id"], name: "rrmf_on_rrmi"
@@ -7199,10 +7205,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "reputation_report_id"
     t.bigint "message_id"
     t.bigint "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_reputation_report_messages_on_identity_id"
     t.index ["message_id"], name: "index_reputation_report_messages_on_message_id"
     t.index ["reputation_report_id"], name: "index_reputation_report_messages_on_reputation_report_id"
@@ -7213,12 +7219,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "story"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "report_status"
     t.integer "report_type"
     t.bigint "agent_id"
@@ -7234,12 +7240,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "document_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["document_id"], name: "index_research_papers_on_document_id"
     t.index ["identity_id"], name: "index_research_papers_on_identity_id"
   end
@@ -7250,8 +7256,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_restaurant_dish_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_restaurant_dish_files_on_identity_id"
     t.index ["restaurant_dish_id"], name: "index_restaurant_dish_files_on_restaurant_dish_id"
@@ -7263,12 +7269,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "cost", precision: 10, scale: 2
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_restaurant_dishes_on_identity_id"
     t.index ["restaurant_id"], name: "index_restaurant_dishes_on_restaurant_id"
   end
@@ -7277,9 +7283,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "restaurant_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -7293,11 +7299,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "rating"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.boolean "visited"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.boolean "ethical_meat"
     t.boolean "rooftop"
@@ -7310,8 +7316,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_retirement_plan_amount_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_retirement_plan_amount_files_on_identity_id"
@@ -7324,10 +7330,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "amount", precision: 10, scale: 2
     t.integer "identity_id"
     t.text "notes"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_retirement_plan_amounts_on_identity_id"
     t.index ["retirement_plan_id"], name: "index_retirement_plan_amounts_on_retirement_plan_id"
@@ -7342,11 +7348,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "password_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["company_id"], name: "index_retirement_plans_on_company_id"
     t.index ["identity_id"], name: "index_retirement_plans_on_identity_id"
@@ -7359,8 +7365,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_reward_program_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_reward_program_files_on_identity_id"
@@ -7376,11 +7382,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "password_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "program_type"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_reward_programs_on_identity_id"
@@ -7393,8 +7399,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_saved_game_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_saved_game_files_on_identity_id"
     t.index ["saved_game_id"], name: "index_saved_game_files_on_saved_game_id"
@@ -7402,16 +7408,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "saved_games", force: :cascade do |t|
     t.string "game_name"
-    t.datetime "game_time"
+    t.datetime "game_time", precision: nil
     t.bigint "contact_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["contact_id"], name: "index_saved_games_on_contact_id"
     t.index ["identity_id"], name: "index_saved_games_on_identity_id"
   end
@@ -7420,12 +7426,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "security_token_value"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "password"
     t.integer "available_uses"
     t.index ["identity_id"], name: "index_security_tokens_on_identity_id"
@@ -7436,8 +7442,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "setting_value"
     t.bigint "category_id"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["category_id"], name: "index_settings_on_category_id"
     t.index ["identity_id"], name: "index_settings_on_identity_id"
@@ -7446,11 +7452,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "shares", id: :serial, force: :cascade do |t|
     t.string "token", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "use_count"
     t.integer "max_use_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_shares_on_identity_id"
@@ -7461,9 +7467,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "shopping_list_id"
     t.string "shopping_list_item_name", limit: 255
     t.integer "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_shopping_list_items_on_identity_id"
@@ -7473,10 +7479,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "shopping_lists", id: :serial, force: :cascade do |t|
     t.string "shopping_list_name", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_shopping_lists_on_identity_id"
@@ -7487,8 +7493,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_sickness_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_sickness_files_on_identity_id"
@@ -7505,11 +7511,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "runny_nose"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.boolean "sore_throat"
     t.index ["identity_id"], name: "index_sicknesses_on_identity_id"
@@ -7520,24 +7526,24 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "email"
     t.string "subject"
     t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "site_invoices", force: :cascade do |t|
-    t.datetime "invoice_time"
+    t.datetime "invoice_time", precision: nil
     t.decimal "invoice_amount", precision: 10, scale: 2
     t.string "model_class"
     t.integer "model_id"
     t.integer "invoice_status"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "invoice_description"
     t.decimal "first_charge", precision: 10, scale: 2
     t.decimal "total_paid", precision: 10, scale: 2
@@ -7546,27 +7552,27 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "skin_treatments", id: :serial, force: :cascade do |t|
-    t.datetime "treatment_time"
+    t.datetime "treatment_time", precision: nil
     t.string "treatment_activity", limit: 255
     t.string "treatment_location", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_skin_treatments_on_identity_id"
   end
 
   create_table "sleep_measurements", id: :serial, force: :cascade do |t|
-    t.datetime "sleep_start_time"
-    t.datetime "sleep_end_time"
+    t.datetime "sleep_start_time", precision: nil
+    t.datetime "sleep_end_time", precision: nil
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_sleep_measurements_on_identity_id"
@@ -7576,14 +7582,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.string "display", limit: 255
     t.string "link", limit: 255
-    t.datetime "due_date"
-    t.datetime "original_due_date"
+    t.datetime "due_date", precision: nil
+    t.datetime "original_due_date", precision: nil
     t.string "myp_model_name", limit: 255
     t.integer "model_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "calendar_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["calendar_id"], name: "index_snoozed_due_items_on_calendar_id"
@@ -7603,8 +7609,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_soccer_field_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_soccer_field_files_on_identity_id"
     t.index ["soccer_field_id"], name: "index_soccer_field_files_on_soccer_field_id"
@@ -7614,12 +7620,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_soccer_fields_on_identity_id"
     t.index ["location_id"], name: "index_soccer_fields_on_location_id"
   end
@@ -7629,8 +7635,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_software_license_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_software_license_files_on_identity_id"
@@ -7644,11 +7650,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "license_key"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_software_licenses_on_identity_id"
   end
@@ -7658,16 +7664,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "song_rating", precision: 10, scale: 2
     t.text "lyrics"
     t.integer "song_plays"
-    t.datetime "lastplay"
+    t.datetime "lastplay", precision: nil
     t.boolean "secret"
     t.boolean "awesome"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "identity_file_id"
     t.integer "musical_group_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.text "notes"
@@ -7683,10 +7689,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "password_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "ssh_private_key_encrypted_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.text "notes"
@@ -7696,17 +7702,17 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "statuses", id: :serial, force: :cascade do |t|
-    t.datetime "status_time"
+    t.datetime "status_time", precision: nil
     t.text "three_good_things"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "feeling"
     t.integer "visit_count"
     t.string "status1", limit: 255
     t.string "status2", limit: 255
     t.string "status3", limit: 255
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "stoic_ailments"
     t.string "stoic_failings"
@@ -7722,12 +7728,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_steakhouses_on_identity_id"
     t.index ["location_id"], name: "index_steakhouses_on_location_id"
   end
@@ -7737,8 +7743,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_file_id"
     t.bigint "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_stock_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_stock_files_on_identity_id"
@@ -7753,9 +7759,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "password_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["company_id"], name: "index_stocks_on_company_id"
@@ -7766,12 +7772,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "stories", id: :serial, force: :cascade do |t|
     t.string "story_name"
     t.text "story"
-    t.datetime "story_time"
+    t.datetime "story_time", precision: nil
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_stories_on_identity_id"
@@ -7781,9 +7787,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "story_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -7793,16 +7799,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   end
 
   create_table "sun_exposures", id: :serial, force: :cascade do |t|
-    t.datetime "exposure_start"
-    t.datetime "exposure_end"
+    t.datetime "exposure_start", precision: nil
+    t.datetime "exposure_end", precision: nil
     t.string "uncovered_body_parts", limit: 255
     t.string "sunscreened_body_parts", limit: 255
     t.string "sunscreen_type", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_sun_exposures_on_identity_id"
@@ -7815,11 +7821,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "doctor_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["doctor_id"], name: "index_surgeries_on_doctor_id"
     t.index ["hospital_id"], name: "index_surgeries_on_hospital_id"
@@ -7831,8 +7837,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_surgery_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_surgery_files_on_identity_id"
@@ -7844,8 +7850,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_tax_document_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_tax_document_files_on_identity_id"
@@ -7860,25 +7866,25 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "fiscal_year"
     t.decimal "amount", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_tax_documents_on_identity_id"
   end
 
   create_table "temperatures", id: :serial, force: :cascade do |t|
-    t.datetime "measured"
+    t.datetime "measured", precision: nil
     t.decimal "measured_temperature", precision: 10, scale: 2
     t.string "measurement_source", limit: 255
     t.integer "temperature_type"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_temperatures_on_identity_id"
@@ -7890,8 +7896,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_tennis_court_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_tennis_court_files_on_identity_id"
     t.index ["tennis_court_id"], name: "index_tennis_court_files_on_tennis_court_id"
@@ -7901,12 +7907,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_tennis_courts_on_identity_id"
     t.index ["location_id"], name: "index_tennis_courts_on_location_id"
   end
@@ -7916,8 +7922,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_object_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_object_files_on_identity_id"
@@ -7929,8 +7935,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_object_instance_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_object_instance_files_on_identity_id"
@@ -7942,11 +7948,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "test_object_instance_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_test_object_instances_on_identity_id"
     t.index ["test_object_id"], name: "index_test_object_instances_on_test_object_id"
@@ -7956,15 +7962,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "test_object_name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "contact_id"
     t.string "test_object_string"
     t.date "test_object_date"
-    t.datetime "test_object_datetime"
+    t.datetime "test_object_datetime", precision: nil
     t.time "test_object_time"
     t.integer "test_object_number"
     t.decimal "test_object_decimal", precision: 10, scale: 2
@@ -7981,8 +7987,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_test_score_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_test_score_files_on_identity_id"
@@ -7994,11 +8000,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "test_score_date"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.decimal "test_score", precision: 10, scale: 2
     t.boolean "is_public"
     t.integer "percentile"
@@ -8009,9 +8015,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "text_message_id"
     t.integer "contact_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_text_message_contacts_on_contact_id"
@@ -8023,9 +8029,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "text_message_id"
     t.integer "group_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["group_id"], name: "index_text_message_groups_on_group_id"
@@ -8037,8 +8043,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "phone_number"
     t.string "token"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_text_message_tokens_on_identity_id"
   end
 
@@ -8046,8 +8052,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "phone_number"
     t.string "category"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_text_message_unsubscriptions_on_identity_id"
   end
 
@@ -8059,9 +8065,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "personalize"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.text "long_body"
     t.boolean "is_public"
@@ -8073,11 +8079,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "contact_id"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["contact_id"], name: "index_therapists_on_contact_id"
@@ -8086,14 +8092,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "timing_events", id: :serial, force: :cascade do |t|
     t.integer "timing_id"
-    t.datetime "timing_event_start"
-    t.datetime "timing_event_end"
+    t.datetime "timing_event_start", precision: nil
+    t.datetime "timing_event_end", precision: nil
     t.text "notes"
     t.integer "identity_id"
     t.integer "visit_count"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_timing_events_on_identity_id"
@@ -8105,9 +8111,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_timings_on_identity_id"
@@ -8117,11 +8123,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "short_description", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "due_time"
-    t.datetime "archived"
+    t.datetime "due_time", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_to_dos_on_identity_id"
@@ -8136,11 +8142,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "website"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_translations_on_identity_id"
   end
@@ -8149,9 +8155,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "trek_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -8166,9 +8172,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.boolean "is_public"
     t.bigint "parking_location_id"
     t.bigint "end_location_id"
@@ -8182,9 +8188,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "trip_id"
     t.integer "flight_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["flight_id"], name: "index_trip_flights_on_flight_id"
@@ -8196,10 +8202,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "trip_id"
     t.integer "identity_file_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "position"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_trip_pictures_on_identity_file_id"
@@ -8211,9 +8217,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "trip_id"
     t.integer "story_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_trip_stories_on_identity_id"
@@ -8228,14 +8234,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.boolean "work"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.integer "hotel_id"
     t.integer "identity_file_id"
     t.boolean "notify_emergency_contacts"
     t.boolean "explicitly_completed"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.string "trip_name"
     t.bigint "event_id"
@@ -8254,15 +8260,15 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "tv_shows", id: :serial, force: :cascade do |t|
     t.string "tv_show_name"
     t.text "notes"
-    t.datetime "watched"
+    t.datetime "watched", precision: nil
     t.string "url"
     t.integer "recommender_id"
     t.string "tv_genre"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_tv_shows_on_identity_id"
@@ -8276,8 +8282,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "county"
     t.decimal "latitude", precision: 12, scale: 8
     t.decimal "longitude", precision: 12, scale: 8
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "households"
     t.integer "mean_income"
   end
@@ -8285,8 +8291,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "usda_food_groups", id: false, force: :cascade do |t|
     t.string "code", null: false
     t.string "description", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["code"], name: "index_usda_food_groups_on_code", unique: true
   end
 
@@ -8304,8 +8310,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.float "protein_factor"
     t.float "fat_factor"
     t.float "carbohydrate_factor"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["food_group_code"], name: "index_usda_foods_on_food_group_code"
     t.index ["nutrient_databank_number"], name: "index_usda_foods_on_nutrient_databank_number", unique: true
   end
@@ -8329,8 +8335,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "statistical_comments"
     t.string "add_mod_date"
     t.string "confidence_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["nutrient_databank_number", "nutrient_number"], name: "foods_nutrients_index"
     t.index ["nutrient_databank_number", "nutrient_number"], name: "index_usda_foods_nutrients_on_databank_number_and_number", unique: true
   end
@@ -8341,8 +8347,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "footnote_type", null: false
     t.string "nutrient_number"
     t.string "footnote_text", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["nutrient_databank_number", "footnote_type"], name: "index_usda_footnotes_on_databank_number_and_type"
     t.index ["nutrient_databank_number", "nutrient_number", "footnote_number"], name: "index_usda_footnotes_on_unique_keys", unique: true
   end
@@ -8354,16 +8360,16 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "nutrient_description", null: false
     t.string "number_decimal_places", null: false
     t.integer "sort_record_order", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["nutrient_number"], name: "index_usda_nutrients_on_nutrient_number", unique: true
   end
 
   create_table "usda_source_codes", force: :cascade do |t|
     t.string "code", null: false
     t.string "description", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["code"], name: "index_usda_source_codes_on_code", unique: true
   end
 
@@ -8375,8 +8381,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.float "gram_weight", null: false
     t.integer "num_data_points"
     t.float "standard_deviation"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["nutrient_databank_number", "sequence_number"], name: "uw_for_ndn_sn", unique: true
   end
 
@@ -8384,11 +8390,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "capability"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_user_capabilities_on_identity_id"
   end
@@ -8397,21 +8403,21 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "email", limit: 255, default: "", null: false
     t.string "encrypted_password", limit: 255, default: "", null: false
     t.string "reset_password_token", limit: 255
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "confirmation_token", limit: 255
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
+    t.datetime "confirmed_at", precision: nil
+    t.datetime "confirmation_sent_at", precision: nil
     t.integer "failed_attempts", default: 0
     t.string "unlock_token", limit: 255
-    t.datetime "locked_at"
+    t.datetime "locked_at", precision: nil
     t.string "unconfirmed_email", limit: 255
     t.boolean "encrypt_by_default", default: false
     t.string "timezone", limit: 255
@@ -8440,11 +8446,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "encryption_mode"
     t.boolean "non_fixed_header"
     t.boolean "toggle_hide_footer"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.string "used_invite_code"
     t.string "origcode"
     t.boolean "skip_suggestions"
-    t.datetime "last_suggestions"
+    t.datetime "last_suggestions", precision: nil
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -8456,8 +8462,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vaccine_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vaccine_files_on_identity_id"
@@ -8469,11 +8475,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "vaccine_date"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.bigint "location_id"
     t.index ["identity_id"], name: "index_vaccines_on_identity_id"
@@ -8488,9 +8494,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "vehicle_id"
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["company_id"], name: "index_vehicle_insurances_on_company_id"
@@ -8501,11 +8507,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
 
   create_table "vehicle_loans", id: :serial, force: :cascade do |t|
     t.integer "vehicle_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "loan_id"
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_loans_on_identity_id"
@@ -8516,9 +8522,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "vehicle_id"
     t.integer "identity_file_id"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "position"
     t.boolean "is_public"
@@ -8532,8 +8538,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vehicle_registration_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vehicle_registration_files_on_identity_id"
@@ -8546,11 +8552,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "registration_date"
     t.decimal "amount", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_registrations_on_identity_id"
     t.index ["vehicle_id"], name: "index_vehicle_registrations_on_vehicle_id"
@@ -8561,8 +8567,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_vehicle_service_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_vehicle_service_files_on_identity_id"
@@ -8578,10 +8584,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "service_location"
     t.decimal "cost", precision: 10, scale: 2
     t.integer "miles"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "identity_id"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_services_on_identity_id"
@@ -8592,9 +8598,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "warranty_id"
     t.integer "vehicle_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vehicle_warranties_on_identity_id"
@@ -8606,12 +8612,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "rvs"
     t.index ["identity_id"], name: "index_vehicle_washes_on_identity_id"
     t.index ["location_id"], name: "index_vehicle_washes_on_location_id"
@@ -8631,8 +8637,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "region", limit: 255
     t.string "sub_region1", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "trim_name", limit: 255
     t.integer "dimensions_type"
     t.decimal "height", precision: 10, scale: 2
@@ -8678,7 +8684,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "price", precision: 10, scale: 2
     t.decimal "msrp", precision: 10, scale: 2
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.decimal "bought_miles", precision: 10, scale: 2
     t.boolean "is_public"
@@ -8691,8 +8697,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_video_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_video_files_on_identity_id"
     t.index ["video_id"], name: "index_video_files_on_video_id"
@@ -8705,12 +8711,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.boolean "finished"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_videos_on_identity_id"
   end
 
@@ -8718,9 +8724,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "parent_vitamin_id"
     t.integer "vitamin_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vitamin_ingredients_on_identity_id"
@@ -8734,10 +8740,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.decimal "vitamin_amount", precision: 10, scale: 2
     t.integer "amount_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_vitamins_on_identity_id"
@@ -8748,9 +8754,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_volunteering_activities_on_identity_id"
@@ -8763,8 +8769,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "winConditions"
     t.integer "status"
     t.bigint "identity_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_wager_ref_bets_on_identity_id"
   end
 
@@ -8778,8 +8784,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "email"
     t.string "phone"
     t.integer "position"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_wager_ref_team_members_on_identity_id"
     t.index ["wager_ref_bet_id"], name: "index_wager_ref_team_members_on_wager_ref_bet_id"
   end
@@ -8790,8 +8796,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_wallet_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_wallet_files_on_identity_id"
     t.index ["wallet_id"], name: "index_wallet_files_on_wallet_id"
@@ -8803,8 +8809,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_file_id"], name: "index_wallet_transaction_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_wallet_transaction_files_on_identity_id"
     t.index ["wallet_transaction_id"], name: "index_wallet_transaction_files_on_wallet_transaction_id"
@@ -8813,7 +8819,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "wallet_transactions", force: :cascade do |t|
     t.bigint "wallet_id"
     t.decimal "transaction_amount", precision: 20, scale: 8
-    t.datetime "transaction_time"
+    t.datetime "transaction_time", precision: nil
     t.string "short_description"
     t.string "transaction_identifier"
     t.bigint "contact_id"
@@ -8823,12 +8829,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.decimal "exchanged_amount", precision: 20, scale: 8
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["contact_id"], name: "index_wallet_transactions_on_contact_id"
     t.index ["identity_id"], name: "index_wallet_transactions_on_identity_id"
     t.index ["wallet_id"], name: "index_wallet_transactions_on_wallet_id"
@@ -8841,12 +8847,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "password_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_wallets_on_identity_id"
     t.index ["password_id"], name: "index_wallets_on_password_id"
   end
@@ -8858,10 +8864,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "warranty_condition", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_warranties_on_identity_id"
@@ -8873,8 +8879,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_warranty_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_warranty_files_on_identity_id"
     t.index ["warranty_id"], name: "index_warranty_files_on_warranty_id"
@@ -8886,8 +8892,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_wearable_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_wearable_files_on_identity_id"
     t.index ["wearable_id"], name: "index_wearable_files_on_wearable_id"
@@ -8897,12 +8903,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_wearables_on_identity_id"
   end
 
@@ -8912,9 +8918,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "feed_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["feed_id"], name: "index_web_comics_on_feed_id"
@@ -8927,11 +8933,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name"
     t.string "val"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_myplet_parameters_on_identity_id"
     t.index ["website_domain_myplet_id"], name: "wdmp_on_wdmi"
@@ -8947,11 +8953,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "singleton"
     t.boolean "emulate_guest"
     t.boolean "is_public"
@@ -8966,8 +8972,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "property_key"
     t.text "property_value"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_properties_on_identity_id"
     t.index ["website_domain_id"], name: "index_website_domain_properties_on_website_domain_id"
@@ -8978,9 +8984,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "repeat_id"
     t.integer "periodic_payment_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_registrations_on_identity_id"
@@ -8994,9 +9000,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_id"
     t.integer "ssh_key_id"
     t.string "username"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_domain_ssh_keys_on_identity_id"
@@ -9011,9 +9017,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "website_id"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "verified"
     t.boolean "default_domain"
@@ -9061,9 +9067,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "website_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_list_items_on_identity_id"
@@ -9076,11 +9082,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.text "notes"
     t.integer "visit_count"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "disable_autoload"
     t.integer "iframe_height"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_lists_on_identity_id"
@@ -9090,9 +9096,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "website_id"
     t.integer "password_id"
     t.integer "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_passwords_on_identity_id"
@@ -9103,13 +9109,13 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   create_table "website_scraper_transformations", force: :cascade do |t|
     t.integer "transformation_type"
     t.text "transformation"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
     t.integer "position"
     t.bigint "website_scraper_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_scraper_transformations_on_identity_id"
     t.index ["website_scraper_id"], name: "index_website_scraper_transformations_on_website_scraper_id"
@@ -9120,11 +9126,11 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "website_url"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "content_type"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_website_scrapers_on_identity_id"
@@ -9134,14 +9140,14 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "title", limit: 255
     t.string "url", limit: 2000
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
     t.boolean "to_visit"
     t.integer "recommender_id"
     t.text "notes"
     t.string "website_category"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_websites_on_identity_id"
@@ -9154,10 +9160,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.date "measure_date"
     t.string "source", limit: 255
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_weights_on_identity_id"
@@ -9170,8 +9176,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.boolean "is_public"
     t.text "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["contact_id"], name: "index_whatdidiwearthen_contacts_on_contact_id"
     t.index ["identity_id"], name: "index_whatdidiwearthen_contacts_on_identity_id"
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_contacts_on_whatdidiwearthen_id"
@@ -9183,8 +9189,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "identity_id"
     t.integer "position"
     t.boolean "is_public"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_file_id"], name: "index_whatdidiwearthen_files_on_identity_file_id"
     t.index ["identity_id"], name: "index_whatdidiwearthen_files_on_identity_id"
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_files_on_whatdidiwearthen_id"
@@ -9197,8 +9203,8 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.boolean "is_public"
     t.text "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_whatdidiwearthen_locations_on_identity_id"
     t.index ["location_id"], name: "index_whatdidiwearthen_locations_on_location_id"
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_locations_on_whatdidiwearthen_id"
@@ -9211,23 +9217,23 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "position"
     t.boolean "is_public"
     t.text "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_whatdidiwearthen_wearables_on_identity_id"
     t.index ["wearable_id"], name: "index_whatdidiwearthen_wearables_on_wearable_id"
     t.index ["whatdidiwearthen_id"], name: "index_whatdidiwearthen_wearables_on_whatdidiwearthen_id"
   end
 
   create_table "whatdidiwearthens", force: :cascade do |t|
-    t.datetime "weartime"
+    t.datetime "weartime", precision: nil
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["identity_id"], name: "index_whatdidiwearthens_on_identity_id"
   end
 
@@ -9237,12 +9243,12 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.bigint "location_id"
     t.text "notes"
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.bigint "identity_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["identity_id"], name: "index_wireless_networks_on_identity_id"
     t.index ["location_id"], name: "index_wireless_networks_on_location_id"
     t.index ["password_id"], name: "index_wireless_networks_on_password_id"
@@ -9253,9 +9259,9 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.integer "identity_file_id"
     t.integer "identity_id"
     t.integer "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "archived"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_file_id"], name: "index_wisdom_files_on_identity_file_id"
@@ -9267,10 +9273,10 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
     t.string "name", limit: 255
     t.text "notes"
     t.integer "identity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "visit_count"
-    t.datetime "archived"
+    t.datetime "archived", precision: nil
     t.integer "rating"
     t.boolean "is_public"
     t.index ["identity_id"], name: "index_wisdoms_on_identity_id"
@@ -9282,6 +9288,7 @@ ActiveRecord::Schema.define(version: 2026_10_11_122729) do
   add_foreign_key "acne_measurement_pictures", "identity_files", name: "acne_measurement_pictures_identity_file_id_fk"
   add_foreign_key "acne_measurements", "identities", name: "acne_measurements_identity_id_fk"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "activities", "identities", name: "activities_identity_id_fk"
   add_foreign_key "admin_emails", "emails"
   add_foreign_key "admin_emails", "identities"

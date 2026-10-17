@@ -12,6 +12,7 @@ require "colorize"
 require "base64"
 require "objspace"
 require "progeny"
+require_relative "../../lib/myputils/myplaceonline_execution_context.rb"
 
 module Myp
   
@@ -91,7 +92,7 @@ module Myp
       host = wd.email_host_override
     else
       if host.blank?
-        host = Myp.top_host
+        host = MyplaceonlineExecutionContext.top_host
       end
     end
     
@@ -3896,7 +3897,7 @@ module Myp
     app = Doorkeeper::Application.where(name: "Internal").take!
     client = Doorkeeper::OAuth::Client::Credentials.new(app.uid, app.secret)
     authenticated_app = Doorkeeper::OAuth::Client.authenticate(client)
-    authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, user).authorize()
+    authorization_result = Doorkeeper::OAuth::PasswordAccessTokenRequest.new(Doorkeeper.configuration, authenticated_app, client, user).authorize()
     return authorization_result
   end
 

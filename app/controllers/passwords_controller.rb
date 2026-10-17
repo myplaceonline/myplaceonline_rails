@@ -231,6 +231,7 @@ class PasswordsController < MyplaceonlineController
     @password_share.identity = @obj.identity
 
     if request.patch? || request.post?
+      return_result = nil
       ApplicationRecord.transaction do
         @password_share.save!
         
@@ -262,11 +263,12 @@ class PasswordsController < MyplaceonlineController
           share_details + "\n\n" + url
         )
 
-        return redirect_to password_path(@obj),
+        return_result = redirect_to password_path(@obj),
           :flash => { :notice =>
                       I18n.t("myplaceonline.passwords.shared_sucess")
                     }
       end
+      return_result
     else
       render :password_share
     end

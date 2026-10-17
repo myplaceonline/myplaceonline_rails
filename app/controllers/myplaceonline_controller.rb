@@ -276,6 +276,8 @@ class MyplaceonlineController < ApplicationController
     if sensitive
       check_password
     end
+    
+    return_result = nil
     ApplicationRecord.transaction do
       begin
         if @parent.nil?
@@ -303,65 +305,67 @@ class MyplaceonlineController < ApplicationController
         end
 
         if do_check_double_post
-          return after_create_redirect
-        end
-        
-        if nested
-          parent_name = parent_table_last_name2
-          parent_id = parent_table_last_name1 + "_id"
-          new_parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
-          Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect} for #{parent_name}"}
-          @obj.send("#{parent_name}=", new_parent)
-        end
-        
-        precreate
-        
-        Rails.logger.debug{"MyplaceonlineController.create calling save for #{@obj.inspect}"}
-
-        save_result = @obj.save
-        
-        Rails.logger.debug{"MyplaceonlineController.create saved #{save_result.to_s} for #{@obj.inspect}"}
-        
-        if save_result
-          
-          Rails.logger.debug{"Parent: #{@parent.inspect}"}
-          
-          if !@parent.nil? && !@obj.current_user_owns?
-            existing_permission = Permission.where(
-              user_id: User.current_user.id,
-              subject_class: Myp.model_to_category_name(@parent.class),
-              subject_id: @parent.id
-            ).first
-            
-            Rails.logger.debug{"Existing permission: #{existing_permission.inspect}"}
-            
-            if !existing_permission.nil?
-              Permission.new(
-                identity_id: existing_permission.identity_id,
-                user_id: existing_permission.user_id,
-                subject_class: Myp.model_to_category_name(model),
-                subject_id: @obj.id,
-                action: existing_permission.action
-              ).save!
-            end
-          end
-          if has_category && use_points?
-            Myp.add_point(User.current_user, category_name, session)
-          end
-          after_create_result = after_create
-          if !after_create_result.nil?
-            Rails.logger.debug{"after_create_result not nil"}
-            return after_create_result
-          end
-          return after_create_redirect
+          return_result = after_create_redirect
         else
-          Rails.logger.debug{"MyplaceonlineController.create failed to save, errors: #{@obj.errors.full_messages}"}
-          return render :new
+          if nested
+            parent_name = parent_table_last_name2
+            parent_id = parent_table_last_name1 + "_id"
+            new_parent = Myp.find_existing_object(parent_model_last, params[parent_id], false)
+            Rails.logger.debug{"Setting parent #{parent_id} to #{new_parent.inspect} for #{parent_name}"}
+            @obj.send("#{parent_name}=", new_parent)
+          end
+          
+          precreate
+          
+          Rails.logger.debug{"MyplaceonlineController.create calling save for #{@obj.inspect}"}
+
+          save_result = @obj.save
+          
+          Rails.logger.debug{"MyplaceonlineController.create saved #{save_result.to_s} for #{@obj.inspect}"}
+          
+          if save_result
+            
+            Rails.logger.debug{"Parent: #{@parent.inspect}"}
+            
+            if !@parent.nil? && !@obj.current_user_owns?
+              existing_permission = Permission.where(
+                user_id: User.current_user.id,
+                subject_class: Myp.model_to_category_name(@parent.class),
+                subject_id: @parent.id
+              ).first
+              
+              Rails.logger.debug{"Existing permission: #{existing_permission.inspect}"}
+              
+              if !existing_permission.nil?
+                Permission.new(
+                  identity_id: existing_permission.identity_id,
+                  user_id: existing_permission.user_id,
+                  subject_class: Myp.model_to_category_name(model),
+                  subject_id: @obj.id,
+                  action: existing_permission.action
+                ).save!
+              end
+            end
+            if has_category && use_points?
+              Myp.add_point(User.current_user, category_name, session)
+            end
+            after_create_result = after_create
+            if !after_create_result.nil?
+              Rails.logger.debug{"after_create_result not nil"}
+              return_result = after_create_result
+            else
+              return_result = after_create_redirect
+            end
+          else
+            Rails.logger.debug{"MyplaceonlineController.create failed to save, errors: #{@obj.errors.full_messages}"}
+            return_result = render :new
+          end
         end
       ensure
         Permission.current_target = nil
       end
     end
+    return_result
   end
 
   def use_points?
@@ -409,6 +413,7 @@ class MyplaceonlineController < ApplicationController
   def do_update(check_double_post: false)
     update_security
     
+    return_result = nil
     ApplicationRecord.transaction do
       begin
         if @parent.nil?
@@ -425,19 +430,23 @@ class MyplaceonlineController < ApplicationController
         
         if check_double_post
           if do_check_double_post
-            return true
+            return_result = true
           end
         end
         
-        do_update_before_save
+        if return_result.nil?
+          do_update_before_save
 
-        #Rails.logger.debug{"saving updated obj: #{Myp.debug_print(@obj)}"}
+          #Rails.logger.debug{"saving updated obj: #{Myp.debug_print(@obj)}"}
 
-        @obj.save
+          return_result = @obj.save
+        end
+        
       ensure
         Permission.current_target = nil
       end
     end
+    return_result
   end
   
   def do_update_before_save
