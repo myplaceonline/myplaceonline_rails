@@ -5,7 +5,7 @@ gem "i18n", "~> 1.8.11"
 
 gem "irb"
 gem "rake"
-gem "rails", ">=8.0"
+gem "rails", ">=8.1"
 gem "sprockets"
 gem "pg"
 gem "sass-rails"

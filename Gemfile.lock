@@ -737,7 +737,7 @@ DEPENDENCIES
   progeny
   pry
   rack-cors
-  rails (>= 8.0)
+  rails (>= 8.1)
   rails-reverse-proxy
   rake
   rb_json5

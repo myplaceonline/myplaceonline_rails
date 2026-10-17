@@ -29,7 +29,7 @@ module Myplaceonline
   class Application < Rails::Application
     
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
     
     # Rails 7.0 changed some defaults but keep some older behavior
     config.active_record.partial_inserts = true
