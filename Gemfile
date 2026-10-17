@@ -22,7 +22,7 @@ gem "remotipart"
 gem "kt-paperclip"
 
 #gem "paperclip_database"
-gem 'paperclip_database', git: "https://github.com/myplaceonline/paperclip_database.git", branch: "master"
+gem 'paperclip_database_myplaceonline'
 
 gem "rubyzip"
 gem "cancancan"
