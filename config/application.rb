@@ -28,8 +28,7 @@ module Myplaceonline
   
   class Application < Rails::Application
     
-    puts "Loading application.rb"
-    
+    # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
     
     # Rails 7.0 changed some defaults but keep some older behavior
@@ -50,18 +49,19 @@ module Myplaceonline
     config.active_record.belongs_to_required_by_default = false
     config.eager_load = true
     
-    # https://guides.rubyonrails.org/autoloading_and_reloading_constants.html
-    lib = root.join("lib")
-    config.autoload_paths << lib
-    config.eager_load_paths << lib
-    Rails.autoloaders.main.ignore(
-      lib.join("assets"),
-      lib.join("tasks"),
-      lib.join("generators"),
-      lib.join("middleware"),
-      lib.join("myputils"),
-    )
-    
+    # Please, add to the `ignore` list any other `lib` subdirectories that do
+    # not contain `.rb` files, or that should not be reloaded or eager loaded.
+    # Common ones are `templates`, `generators`, or `middleware`, for example.
+    config.autoload_lib(ignore: %w[assets tasks generators middleware myputils])
+
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
+    #
+    # config.time_zone = "Central Time (US & Canada)"
+    # config.eager_load_paths << Rails.root.join("extras")
+
     require "middleware/myplaceonline_middleware"
     config.middleware.use(MyplaceonlineMiddleware)
     

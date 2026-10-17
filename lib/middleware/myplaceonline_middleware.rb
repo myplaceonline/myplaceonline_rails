@@ -8,13 +8,15 @@ class MyplaceonlineMiddleware
   def call(env)
     
     Rails.logger.debug{"MyplaceonlineMiddleware call processing request"}
+    #pp env
     
     # Clear the contexts just in case somehow it wasn't cleared from the last request
     ExecutionContext.clear
     
     ExecutionContext.stack do
       
-      query_string = env["rack.request.query_string"]
+      query_string = env["rack.request.query_string"] || env["QUERY_STRING"]
+      Rails.logger.debug{"MyplaceonlineMiddleware raw query_string: #{query_string}"}
       parsed_query_string = Rack::Utils.parse_nested_query(query_string)
       
       # If the request comes in with a security token, then log that user in

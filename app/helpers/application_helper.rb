@@ -2012,7 +2012,7 @@ module ApplicationHelper
         random_name = SecureRandom.hex(10)
         hidden_time = hidden_field_tag(
           random_name,
-          options[:value].blank? ? "" : options[:value].to_s(:timebox),
+          options[:value].blank? ? "" : options[:value].to_fs(:timebox),
           "data-role" => "datebox",
           "data-datebox-mode" => "timebox",
           "data-datebox-override-date-format" => Myplaceonline::JQM_DATEBOX_TIMEBOX_FORMAT,

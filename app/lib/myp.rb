@@ -1490,7 +1490,7 @@ module Myp
         time = time.in_time_zone(Rails.application.config.time_zone)
       end
       if !time.nil?
-        time.to_s(format)
+        time.to_fs(format)
       else
         nil
       end
@@ -2007,7 +2007,7 @@ module Myp
     body_plain += "\n\nProcess: #{process_info}"
     
     
-    t = Time.now.utc.to_s(:full)
+    t = Time.now.utc.to_fs(:full)
     body_html += "\n\n<p>Server Time: #{t}</p>"
     body_plain += "\n\nServer Time: #{t}"
 
