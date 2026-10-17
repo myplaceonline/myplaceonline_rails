@@ -103,9 +103,9 @@ GEM
     carmen-rails (1.0.1)
       carmen (~> 1.0.0)
       rails
-    chewy (7.2.2)
-      activesupport (>= 5.2)
-      elasticsearch (>= 7.12.0)
+    chewy (8.4.1)
+      activesupport (>= 7.2)
+      elasticsearch (>= 8.14, < 9.0)
       elasticsearch-dsl
     chunky_png (1.4.0)
     ckeditor (4.3.0)
@@ -164,11 +164,11 @@ GEM
     elastic-transport (8.5.3)
       faraday (< 3)
       multi_json
-    elasticsearch (9.5.0)
+    elasticsearch (8.19.3)
       elastic-transport (~> 8.3)
-      elasticsearch-api (= 9.5.0)
-    elasticsearch-api (9.5.0)
-      base64
+      elasticsearch-api (= 8.19.3)
+      ostruct
+    elasticsearch-api (8.19.3)
       multi_json
     elasticsearch-dsl (0.1.10)
     elasticsearch-rails (8.0.1)
@@ -292,7 +292,7 @@ GEM
     http_parser.rb (0.6.0)
     httpclient (2.9.0)
       mutex_m
-    i18n (1.8.11)
+    i18n (1.15.2)
       concurrent-ruby (~> 1.0)
     image_processing (2.2.0)
     immigrant (0.3.6)
@@ -671,7 +671,7 @@ DEPENDENCIES
   cancancan
   carmen
   carmen-rails
-  chewy
+  chewy (>= 8.4.1)
   ckeditor (~> 4)
   coffee-rails
   colorize
@@ -704,7 +704,7 @@ DEPENDENCIES
   hexdump
   htmlentities
   http-cookie
-  i18n (~> 1.8.11)
+  i18n
   image_processing
   immigrant
   irb

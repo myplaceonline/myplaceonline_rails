@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 
-# TODO: Due to Chewy
-gem "i18n", "~> 1.8.11"
-
+gem "i18n"
 gem "irb"
 gem "rake"
 gem "rails", ">=8.1"
@@ -53,7 +51,13 @@ gem "elasticsearch"
 gem "elasticsearch-rails"
 gem "elasticsearch-transport"
 gem "elasticsearch-dsl"
-gem "chewy"
+
+# For some reason, as of October 2026, not specifying a version would keep
+# chewy locked at 7.2.2 and running bundle update or install wouldn't upgrade
+# it but specifying an explicit version would. It doesn't seem to be a dependency
+# version issue.
+gem "chewy", '>= 8.4.1'
+
 gem "curb"
 gem "twilio-ruby"
 gem "jsTimezoneDetect-rails"
