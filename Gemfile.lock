@@ -550,6 +550,9 @@ GEM
     rtesseract (3.1.4)
     ruby-filemagic (0.7.3)
     ruby-ole (1.2.13.1)
+    ruby-vips (2.3.0)
+      ffi (~> 1.12)
+      logger
     ruby2_keywords (0.0.5)
     rubyntlm (0.6.8)
       base64
@@ -753,6 +756,7 @@ DEPENDENCIES
   rss
   rtesseract
   ruby-filemagic
+  ruby-vips
   rubyzip
   sass-rails
   sassc
