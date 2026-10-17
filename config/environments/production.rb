@@ -1,4 +1,7 @@
 require "active_support/core_ext/integer/time"
+require_relative "../../lib/myputils/myp_utils"
+require_relative "../../lib/myputils/myplaceonline_execution_context"
+require_relative "../../lib/myputils/execution_context"
 
 class DynamicDefaultUrlOptions
   def initialize(params = {})
@@ -24,7 +27,11 @@ class DynamicSmtpSettings
   end
   
   def method_missing(name, *args, &block)
-    @params[:domain] = MyplaceonlineExecutionContext.host
+    if ExecutionContext.available?
+      @params[:domain] = MyplaceonlineExecutionContext.host
+    else
+      @params[:domain] = MypUtils.default_host
+    end
     @params.send(name, *args, &block)
   end
 end
