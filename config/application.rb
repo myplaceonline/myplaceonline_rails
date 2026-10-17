@@ -35,6 +35,9 @@ module Myplaceonline
     # https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#upgrading-from-rails-6-1-to-rails-7-0-new-activesupport-cache-serialization-format
     config.active_support.cache_format_version = 6.1
     
+    # Rails 7.0 changed some defaults but keep some older behavior
+    Rails.application.config.active_record.partial_inserts = true
+    
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
