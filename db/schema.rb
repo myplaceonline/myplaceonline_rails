@@ -3211,7 +3211,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_16_233605) do
     t.boolean "zerocarbs"
     t.boolean "microwavable"
     t.boolean "fullycooked"
-    t.boolean "frozen"
+    t.boolean "isfrozen"
     t.boolean "pastureraised"
     t.boolean "grassfed"
     t.boolean "grassfinished"

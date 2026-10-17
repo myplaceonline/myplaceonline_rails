@@ -39,14 +39,7 @@ gem "htmlentities"
 gem "jquery-easing-rails"
 gem "magnific-popup-rails"
 gem "log4r"
-
-# NameError: uninitialized constant ActiveJob::QueueAdapters::AbstractAdapter (NameError)
-#
-#    class DelayedJobAdapter < ::ActiveJob::QueueAdapters::AbstractAdapter
-#
-# https://github.com/collectiveidea/delayed_job/issues/1246#issuecomment-5856104056
-gem "delayed_job", '~> 4.1.13'
-
+gem "delayed_job"
 gem "delayed_job_active_record"
 gem "daemons"
 
@@ -83,10 +76,7 @@ gem "reverse_markdown"
 gem "progeny"
 gem "colorize"
 gem 'concurrent-ruby'
-
-# Error: "unknown keyword: quirks_mode"
-gem "json", '< 3.0'
-
+gem "json"
 gem "active_record_query_trace"
 gem "ruby-filemagic"
 gem "doorkeeper"
