@@ -292,6 +292,7 @@ GEM
       mutex_m
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    image_processing (2.2.0)
     immigrant (0.3.6)
       activerecord (>= 3.0)
     io-console (0.9.4)
@@ -702,6 +703,7 @@ DEPENDENCIES
   htmlentities
   http-cookie
   i18n (~> 1.8.11)
+  image_processing
   immigrant
   irb
   jbuilder
@@ -735,7 +737,7 @@ DEPENDENCIES
   progeny
   pry
   rack-cors
-  rails (>= 7.2)
+  rails (>= 8.0)
   rails-reverse-proxy
   rake
   rb_json5

@@ -33,7 +33,6 @@ module Myplaceonline
     
     # Rails 7.0 changed some defaults but keep some older behavior
     config.active_record.partial_inserts = true
-    config.action_controller.raise_on_open_redirects = false
     config.action_dispatch.cookies_serializer = :hybrid
     config.active_support.disable_to_s_conversion = false
     
