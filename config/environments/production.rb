@@ -57,7 +57,11 @@ Rails.application.configure do
   #config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  
+  # Causes ES6 compiler issue:
+  # Uglifier::Error: Unexpected token: keyword (const). To use ES6 syntax, harmony mode must be enabled with Uglifier.new(:harmony => true). (Uglifier::Error)
+  #config.assets.js_compressor = :uglifier
+  
   # config.assets.js_compressor = NoCompression.new
   # config.assets.css_compressor = :sass
 

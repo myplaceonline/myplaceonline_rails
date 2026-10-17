@@ -14,7 +14,9 @@ class FoodInformation < ApplicationRecord
   end
 
   belongs_to :usda_food, class_name: "UsdaNutrientDatabase::Food", foreign_key: :usda_food_nutrient_databank_number
-  belongs_to :usda_weight, class_name: "UsdaNutrientDatabase::Weight", foreign_key: [:usda_weight_nutrient_databank_number, :usda_weight_sequence_number]
+
+  # TODO: composite keys removed
+  #belongs_to :usda_weight, class_name: "UsdaNutrientDatabase::Weight", foreign_key: [:usda_weight_nutrient_databank_number, :usda_weight_sequence_number]
 
   validates :food_name, presence: true
   

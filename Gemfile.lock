@@ -631,7 +631,6 @@ DEPENDENCIES
   ckeditor (~> 4)
   coffee-rails
   colorize
-  composite_primary_keys (~> 14)
   concurrent-ruby
   curb
   daemons

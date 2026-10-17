@@ -78,8 +78,11 @@ gem "listen"
 gem "faraday_middleware"
 gem "google-api-client"
 gem "googlemaps-services"
+
+# TODO: https://github.com/composite-primary-keys/composite_primary_keys/issues/608#issuecomment-1753130066
 # When updating rails, update the major version of composite_primary_keys: https://github.com/composite-primary-keys/composite_primary_keys
-gem "composite_primary_keys", "~> 14"
+#gem "composite_primary_keys", "~> 14"
+
 gem "usda-nutrient-database"
 gem "activerecord-import"
 gem "reverse_markdown"
