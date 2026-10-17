@@ -41,7 +41,13 @@ gem "htmlentities"
 gem "jquery-easing-rails"
 gem "magnific-popup-rails"
 gem "log4r"
-gem "delayed_job"
+
+# NameError: uninitialized constant ActiveJob::QueueAdapters::AbstractAdapter (NameError)
+#
+#    class DelayedJobAdapter < ::ActiveJob::QueueAdapters::AbstractAdapter
+#
+# https://github.com/collectiveidea/delayed_job/issues/1246#issuecomment-5856104056
+gem "delayed_job", '~> 4.1.13'
 gem "delayed_job_active_record"
 gem "daemons"
 # ckeditor 5 requires a CDN: https://github.com/galetahub/ckeditor/issues/881#issuecomment-599766616
