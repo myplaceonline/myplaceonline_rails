@@ -38,11 +38,10 @@ end
 
 Rails.application.configure do
 
-  config.active_support.report_deprecations = false
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
+  config.enable_reloading = false
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
@@ -117,7 +116,7 @@ Rails.application.configure do
   # information to avoid inadvertent exposure of personally identifiable information (PII). If you
   # want to log everything, set the level to "debug".
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
-  
+
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
@@ -158,19 +157,19 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  
+
   config.default_url_options = DynamicDefaultUrlOptions.new({protocol: "https"})
   config.action_mailer.default_url_options = config.default_url_options
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = DynamicSmtpSettings.new
   config.action_mailer.raise_delivery_errors = true
-  
+
   # https://stackoverflow.com/a/12003652/4135310
   config.action_view.logger = nil
-  
+
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
-  
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
