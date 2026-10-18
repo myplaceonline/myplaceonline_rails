@@ -1,6 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
   skip_authorization_check
   #skip_before_action :verify_authenticity_token, only: [:create]
+  skip_before_action :verify_authenticity_token
   # before_filter :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
