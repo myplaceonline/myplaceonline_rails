@@ -11,7 +11,9 @@ include Log4r
 
 # Load any engine gems
 Dir[Pathname.new(File.dirname(__FILE__)).join("../engines/**")].each do |engine|
-  require File.basename(engine)
+  #puts "Loading #{File.basename(engine)}"
+  require_relative "../engines/#{File.basename(engine)}/lib/#{File.basename(engine)}/engine"
+  #require File.basename(engine)
 end
 
 # Require the gems listed in Gemfile, including any gems

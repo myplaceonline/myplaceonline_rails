@@ -59,8 +59,8 @@ GEM
       activemodel (= 8.1.4)
       activesupport (= 8.1.4)
       timeout (>= 0.4.0)
-    activerecord-import (2.3.0)
-      activerecord (>= 4.2)
+    activerecord-import (3.0.0)
+      activerecord (>= 6.1)
     activestorage (8.1.4)
       actionpack (= 8.1.4)
       activejob (= 8.1.4)
@@ -157,7 +157,7 @@ GEM
       doorkeeper (>= 5.5, < 7.0)
       jwt (>= 2.5)
       ostruct (>= 0.5)
-    down (5.6.0)
+    down (5.6.1)
       addressable (~> 2.8)
       base64 (~> 0.3)
     drb (2.2.3)
@@ -237,7 +237,8 @@ GEM
     geocoder (1.8.6)
       base64 (>= 0.1.0)
       csv (>= 3.0.0)
-    github-markup (6.0.0)
+    github-markup (6.1.0)
+      rdoc (< 9)
     globalid (1.4.0)
       activesupport (>= 6.1)
     google-api-client (0.53.0)
@@ -452,6 +453,8 @@ GEM
       reline (>= 0.6.0)
     pstore (0.2.1)
     public_suffix (7.0.5)
+    puma (8.0.2)
+      nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.7)
     rack-cors (3.0.0)
@@ -601,6 +604,18 @@ GEM
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       sprockets (>= 3.0.0)
+    sqlite3 (2.10.0)
+      mini_portile2 (~> 2.8.0)
+    sqlite3 (2.10.0-aarch64-linux-gnu)
+    sqlite3 (2.10.0-aarch64-linux-musl)
+    sqlite3 (2.10.0-arm-linux-gnu)
+    sqlite3 (2.10.0-arm-linux-musl)
+    sqlite3 (2.10.0-arm64-darwin)
+    sqlite3 (2.10.0-x86-linux-gnu)
+    sqlite3 (2.10.0-x86-linux-musl)
+    sqlite3 (2.10.0-x86_64-darwin)
+    sqlite3 (2.10.0-x86_64-linux-gnu)
+    sqlite3 (2.10.0-x86_64-linux-musl)
     syslog (0.4.0)
       logger
     tempfile (0.3.2)
@@ -741,6 +756,7 @@ DEPENDENCIES
   prettyprint
   progeny
   pry
+  puma
   rack-cors
   rails (>= 8.1)
   rails-reverse-proxy
@@ -768,6 +784,8 @@ DEPENDENCIES
   spreadsheet
   spring
   sprockets
+  sprockets-rails
+  sqlite3
   syslog
   tempfile
   thin

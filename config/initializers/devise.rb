@@ -1,5 +1,3 @@
-Rails.logger.debug{"Loading devise.rb"}
-
 require_relative "../../lib/myputils/dynamic_cookie_options.rb"
 
 # Use this hook to configure devise mailer, warden hooks and so forth.

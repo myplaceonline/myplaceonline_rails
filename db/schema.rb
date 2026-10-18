@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_16_233605) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_155880) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
 
   create_table "accomplishments", id: :serial, force: :cascade do |t|
     t.string "name", limit: 255
@@ -6673,6 +6673,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_16_233605) do
     t.boolean "showtest"
     t.boolean "adminhidden"
     t.boolean "hidepublicprofile"
+    t.string "publiclink"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"

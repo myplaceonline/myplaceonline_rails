@@ -1,4 +1,3 @@
-#Rails.logger.debug{"Loading usda_nutrient_database.rb"}
 # https://github.com/mattbeedle/usda-nutrient-database
 # https://www.ars.usda.gov/ARSUserFiles/80400525/Data/SR/SR28/sr28_doc.pdf
 # UsdaNutrientDatabase::FoodGroup

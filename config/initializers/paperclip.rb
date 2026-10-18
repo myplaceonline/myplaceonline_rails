@@ -1,5 +1,3 @@
-Rails.logger.debug{"Loading paperclip.rb"}
-
 require 'paperclip/media_type_spoof_detector'
 require 'paperclip_database'
 

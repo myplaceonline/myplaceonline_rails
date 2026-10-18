@@ -1,4 +1,3 @@
-Rails.logger.debug{"Loading myplaceonline_init.rb"}
 class Object
   def is_true?
     self == true || self.is_a?(TrueClass) || self == "1" || self == "true"

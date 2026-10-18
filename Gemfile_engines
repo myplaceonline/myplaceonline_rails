@@ -2,6 +2,7 @@ eval_gemfile("Gemfile")
 
 group :custom, optional: true do
   Dir["engines/**"].each do |engine|
+    #puts "Using gem #{File.basename(engine)}"
     gem File.basename(engine), path: engine
   end
 end

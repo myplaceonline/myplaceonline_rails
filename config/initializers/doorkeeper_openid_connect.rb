@@ -1,4 +1,3 @@
-Rails.logger.debug{"Loading doorkeeper_openid_connect.rb"}
 Doorkeeper::OpenidConnect.configure do
   issuer "https://myplaceonline.com/"
 

@@ -1,5 +1,3 @@
-Rails.logger.debug{"Loading session_store.rb"}
-
 require_relative "../../lib/myputils/dynamic_cookie_options.rb"
 
 # The Rails session cookie is separate from the Devise rememberable cookie. If "Remember Me" is not checked, then the
