@@ -41,6 +41,9 @@ module Myplaceonline
     
     # Rails 8.1 changed some defaults but keep some older behavior
     config.action_controller.action_on_path_relative_redirect = :log
+    
+    config.active_support.key_generator_hash_digest_class = OpenSSL::Digest::SHA1
+    config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
