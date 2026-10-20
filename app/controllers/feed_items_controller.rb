@@ -57,7 +57,7 @@ class FeedItemsController < MyplaceonlineController
     set_obj
     @obj.is_read = true
     @obj.save!
-    redirect_to @obj.full_feed_link
+    redirect_to(@obj.full_feed_link, allow_other_host: true)
   end
   
   protected

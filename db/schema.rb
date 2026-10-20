@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_224442) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_18_226256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -6675,7 +6675,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_224442) do
     t.boolean "hidepublicprofile"
     t.string "publiclink"
     t.index ["identity_id"], name: "index_rabbl_community_memberships_on_identity_id"
-    t.index ["publiclink"], name: "index_rabbl_community_memberships_on_publiclink", unique: true
+    t.index ["rabbl_community_id", "publiclink"], name: "idx_on_rabbl_community_id_publiclink_32f64b689a", unique: true
     t.index ["rabbl_community_id"], name: "index_rabbl_community_memberships_on_rabbl_community_id"
     t.index ["rabbl_profile_id"], name: "index_rabbl_community_memberships_on_rabbl_profile_id"
     t.index ["rabbl_user_info_id"], name: "index_rabbl_community_memberships_on_rabbl_user_info_id"
