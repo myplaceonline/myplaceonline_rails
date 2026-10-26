@@ -45,6 +45,15 @@ class MyplaceonlineController < ApplicationController
       check_password(level: MyplaceonlineController::CHECK_PASSWORD_OPTIONAL)
     end
     
+    if self.model.name == "Category"
+      return render(
+        json: {
+          message: "404 Not Found"
+        },
+        status: 404,
+      )
+    end
+    
     @myplet = params[:myplet]
     @archived = param_bool(:archived)
     @dynamic_homepage = params[:dynamic_homepage]

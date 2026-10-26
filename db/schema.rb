@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_18_226256) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_24_203070) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -6813,6 +6813,37 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_18_226256) do
     t.string "facebook"
     t.string "x"
     t.string "website"
+    t.boolean "optionalfilled"
+    t.integer "children_have"
+    t.integer "children_want"
+    t.integer "educationlevel"
+    t.string "job_name"
+    t.string "job_title"
+    t.integer "sexualorientation"
+    t.string "pronouns"
+    t.integer "pets"
+    t.integer "drink"
+    t.integer "smoke"
+    t.integer "weed"
+    t.integer "drugs"
+    t.integer "exercise"
+    t.integer "activeonsocial"
+    t.integer "lookingfor"
+    t.integer "relationshiptype"
+    t.string "languages"
+    t.integer "interests"
+    t.string "status"
+    t.string "quote"
+    t.text "interests_general"
+    t.text "interests_music"
+    t.text "interests_movies"
+    t.text "interests_games"
+    t.text "interests_books"
+    t.text "interests_groups"
+    t.integer "desiredqualities"
+    t.integer "ethnicity"
+    t.integer "politics"
+    t.integer "religion"
     t.index ["identity_id"], name: "index_rabbl_profiles_on_identity_id"
     t.index ["user_id"], name: "index_rabbl_profiles_on_user_id"
   end
