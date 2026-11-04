@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_24_203070) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_01_232265) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -6743,6 +6743,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_24_203070) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "readwhen", precision: nil
+    t.boolean "sentnotifications"
     t.index ["rabbl_community_membership_destination_id"], name: "rbm_rcmd"
     t.index ["rabbl_community_membership_source_id"], name: "rbm_rcms"
     t.index ["rabbl_match_id"], name: "index_rabbl_match_messages_on_rabbl_match_id"
